@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2010 Jeff Boody
+ * Copyright (c) 2009-2011 Jeff Boody
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -38,20 +38,38 @@ public class GearsES2eclairAbout extends Activity
 		String text = "<html><body bgcolor=\"#37547c\" text=\"#FFFFFF\" link=\"#a08f6b\" vlink=\"#a08f6b\">" +
 		              "<h2>About Gears for Android(TM)</h2>" +
 		              "<p>" +
-		              "	Gears for Android(TM) is a heavily modified port of the infamous \"gears\" demo to Android/Java/GLES 1.0." +
-		              "</p>" +
-		              "<h2>FAQ</h2>" +
-		              "<p>" +
-		              "	Q: What do gears do?" +
+		              "	Gears for Android(TM) is a heavily modified port of the infamous \"gears\" demo to Android." +
 		              "</p>" +
 		              "<p>" +
-		              "	A: They spin ;-)" +
+		              "	The Gears demo is an open source project intended to help developers learn how to create " +
+		              "	OpenGL ES programs on Android. The Gears demo was originally written by Brian Paul as " +
+		              "	part of the Mesa3D project. My implementation includes variations for Java/OpenGL ES 1.x, " +
+		              "	Java/C/OpenGL ES 1.x and Java/C/OpenGL ES 2.0. I have also added several features not " +
+		              "	found in the original implementation including touch screen support, VBOs and an " +
+		              "	on-screen FPS counter." +
+		              "</p>" +
+		              "<p>" +
+		              "	The FPS (frames-per-second) counter is often used as a benchmark metric for graphics " +
+		              "	programs. On Android the frame rate is limited by v-sync (typically 60 FPS) which is " +
+		              "	the fastest rate that a display can refresh the screen. Since Gears is capable of " +
+		              "	rendering much faster than v-sync on most devices it provides limited benchmarking " +
+		              "	value." +
 		              "</p>" +
 		              "<h2>Source Code</h2>" +
 		              "<p>" +
 		              "	Source code is available at the <a href=\"http://www.jeffboody.net/gears4android.php\">Gears for Android(TM)</a> website" +
 		              "</p>" +
 		              "<h2>Release Notes</h2>" +
+		              "<p>20110501" +
+		              "	<ul>" +
+		              "		<li>For Android 2.0 (eclair)</li>" +
+		              "		<li>Fix lighting bug observed when zooming</li>" +
+		              "		<li>Replaced simclist library</li>" +
+		              "		<li>Compile in thumb mode</li>" +
+		              "		<li>Simplified a3d GL wrapper</li>" +
+		              "		<li>Updated Gears icon (again)</li>" +
+		              "		<li>Uploaded source to github</li>" +
+		              "	</ul>" +
 		              "<p>20101218" +
 		              "	<ul>" +
 		              "		<li>For Android 2.0 (eclair)</li>" +
@@ -133,7 +151,7 @@ public class GearsES2eclairAbout extends Activity
 		              "</p>" +
 		              "<h2>License</h2>" +
 		              "<p>" +
-		              "	Copyright (c) 2009-2010 Jeff Boody<br/>" +
+		              "	Copyright (c) 2009-2011 Jeff Boody<br/>" +
 		              "	Gears for Android(TM) is a heavily modified port of the infamous \"gears\" demo to " +
 		              "	Android/Java/GLES 1.0. As such, it is a derived work subject to the license " +
 		              "	requirements (below) of the original work.<br/>" +
