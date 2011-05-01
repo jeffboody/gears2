@@ -70,18 +70,21 @@ public class GearsES2eclairAbout extends Activity
 		              "		<li>Updated Gears icon (again)</li>" +
 		              "		<li>Uploaded source to github</li>" +
 		              "	</ul>" +
+		              "</p>" +
 		              "<p>20101218" +
 		              "	<ul>" +
 		              "		<li>For Android 2.0 (eclair)</li>" +
 		              "		<li>Workaround for rendering corruption on Nexus S and Galaxy S</li>" +
 		              "		<li>Updated Gears icon</li>" +
 		              "	</ul>" +
+		              "</p>" +
 		              "<p>20101113" +
 		              "	<ul>" +
 		              "		<li>For Android 2.0 (eclair)</li>" +
 		              "		<li>Reimplemented in OpenGL ES 2.0</li>" +
 		              "		<li>Based on 20100905 release</li>" +
 		              "	</ul>" +
+		              "</p>" +
 		              "<p>20100905" +
 		              "	<ul>" +
 		              "		<li>For Android 2.0 (eclair)</li>" +
