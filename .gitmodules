@@ -1,0 +1,9 @@
+[submodule "project/src/com/jeffboody/a3d"]
+	path = project/src/com/jeffboody/a3d
+	url = git@github.com:jeffboody/a3d-java.git
+[submodule "project/jni/a3d"]
+	path = project/jni/a3d
+	url = git@github.com:jeffboody/a3d-native.git
+[submodule "fonts"]
+	path = fonts
+	url = git@github.com:jeffboody/a3d-font.git
