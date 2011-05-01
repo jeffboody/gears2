@@ -1,14 +1,30 @@
 Gears for Android(TM) Readme
 
 [About]
-	Gears for Android(TM) is a heavily modified port of the infamous "gears" demo to Android/Java/GLES 1.0.
+	Gears for Android(TM) is a heavily modified port of the infamous "gears" demo to Android.
 
-[FAQ]
-	Q: What do gears do?
-	A: They spin ;-)
+	The Gears demo is an open source project intended to help developers learn how to create
+	OpenGL ES programs on Android. The Gears demo was originally written by Brian Paul as
+	part of the Mesa3D project. My implementation includes variations for Java/OpenGL ES 1.x,
+	Java/C/OpenGL ES 1.x and Java/C/OpenGL ES 2.0. I have also added several features not
+	found in the original implementation including touch screen support, VBOs and an
+	on-screen FPS counter.
+
+	The FPS (frames-per-second) counter is often used as a benchmark metric for graphics
+	programs. On Android the frame rate is limited by v-sync (typically 60 FPS) which is
+	the fastest rate that a display can refresh the screen. Since Gears is capable of
+	rendering much faster than v-sync on most devices it provides limited benchmarking
+	value.
+
+	See http://www.jeffboody.net/gears4android.php for more information.
 
 [Source Code]
-	Source code is available at the http://www.jeffboody.net/gears4android.php website
+	Source code is hosted on github at https://github.com/jeffboody/gears2
+
+	To clone the git repository enter the following commands:
+	git clone git@github.com:jeffboody/gears2.git
+	cd gears2
+	git submodule update --init
 
 [Building and Installing]
 	1) Install the Android(TM) SDK and NDK available from http://developer.android.com/
@@ -24,11 +40,14 @@ Gears for Android(TM) Readme
 [Uninstalling]
 	On the device/emulator, navigate to Settings, Applications, Manage applications
 
+	Or uninstall via adb
+		# ./uninstall.sh
+
 [Feedback]
 	Send questions or comments to Jeff Boody at jeffboody@gmail.com
 
 [License]
-	Copyright (c) 2009 Jeff Boody
+	Copyright (c) 2009-2011 Jeff Boody
 	Gears for Android(TM) is a heavily modified port of the infamous "gears" demo to
 	Android/Java/GLES 1.0. As such, it is a derived work subject to the license
 	requirements (below) of the original work.
