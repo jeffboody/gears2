@@ -1,6 +1,8 @@
 [submodule "project/src/com/jeffboody/a3d"]
 	path = project/src/com/jeffboody/a3d
-	url = git@github.com:jeffboody/a3d-java.git
+	# url = git@github.com:jeffboody/a3d-java.git # read-write
+	url = git://github.com/jeffboody/a3d-java.git # read-only
 [submodule "project/jni/a3d"]
 	path = project/jni/a3d
-	url = git@github.com:jeffboody/a3d-native.git
+	# url = git@github.com:jeffboody/a3d-native.git # read-write
+	url = git://github.com/jeffboody/a3d-native.git # read-only
