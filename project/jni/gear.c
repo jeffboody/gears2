@@ -53,8 +53,10 @@ static const char* FACE_VSHADER =
 	"}\n";
 
 static const char* FACE_FSHADER =
+	"#ifdef GL_ES\n"
 	"precision mediump float;\n"
 	"precision mediump int;\n"
+	"#endif\n"
 	"\n"
 	"uniform vec4 color;\n"
 	"\n"
@@ -94,8 +96,10 @@ static const char* OUTWARD_VSHADER =
 	"}\n";
 
 static const char* OUTWARD_FSHADER =
+	"#ifdef GL_ES\n"
 	"precision mediump float;\n"
 	"precision mediump int;\n"
+	"#endif\n"
 	"\n"
 	"varying vec4 varying_color;\n"
 	"\n"
@@ -119,8 +123,10 @@ static const char* CYLINDER_VSHADER =
 	"}\n";
 
 static const char* CYLINDER_FSHADER =
+	"#ifdef GL_ES\n"
 	"precision mediump float;\n"
 	"precision mediump int;\n"
+	"#endif\n"
 	"\n"
 	"uniform mat3 nm;\n"
 	"uniform vec4 color;\n"
