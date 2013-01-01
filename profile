@@ -8,9 +8,6 @@ export APP=GearsES2eclair
 SDK=/home/jeffboody/android/android-sdk
 NDK=/home/jeffboody/android/android-ndk
 
-# Path for jdk on Ubuntu 12.04 (required for manual install)
-export PATH=/home/jeffboody/jdk1.6.0_31/bin:$PATH
-
 #-- DON'T CHANGE BELOW LINE --
 
 export PATH=$SDK/tools:$SDK/platform-tools:$PATH
