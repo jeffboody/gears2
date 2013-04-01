@@ -6,3 +6,9 @@
 	path = project/jni/a3d
 	# url = git@github.com:jeffboody/a3d-native.git # read-write
 	url = git://github.com/jeffboody/a3d-native.git # read-only
+[submodule "project/jni/loax"]
+	path = project/jni/loax
+	url = git://github.com/jeffboody/loax
+[submodule "project/jni/net"]
+	path = project/jni/net
+	url = git://github.com/jeffboody/net
