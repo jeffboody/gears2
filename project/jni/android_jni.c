@@ -63,6 +63,10 @@ JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeCreate(JNI
 	}
 
 	gears_renderer = gears_renderer_new("/data/data/com.jeffboody.GearsES2eclair/files/whitrabt.tex.gz");
+	if(gears_renderer == NULL)
+	{
+		a3d_GL_unload();
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDestroy(JNIEnv* env)
