@@ -45,8 +45,6 @@ int main(int argc, char** argv)
 {
 	int w = 0;
 	int h = 0;
-	int new_w;
-	int new_h;
 	loax_client_t* c = loax_client_new();
 	if(c == NULL)
 	{
@@ -60,18 +58,17 @@ int main(int argc, char** argv)
 		return EXIT_FAILURE;
 	}
 
+	loax_client_size(c, &w, &h);
+	glViewport(0, 0, w, h);
 	do
 	{
-		loax_client_size(c, &new_w, &new_h);
-		if((w == new_w) && (h == new_h))
+		loax_event_t e;
+		while(loax_client_poll(c, &e))
 		{
-			// no resize
-		}
-		else
-		{
-			w = new_w;
-			h = new_h;
-			gears_renderer_resize(gears_renderer, w, h);
+			if(e.type == LOAX_EVENT_RESIZE)
+			{
+				gears_renderer_resize(gears_renderer, e.event_resize.w, e.event_resize.h);
+			}
 		}
 		gears_renderer_draw(gears_renderer);
 	} while(loax_client_swapbuffers(c));

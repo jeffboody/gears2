@@ -5,7 +5,7 @@ OBJECTS  = $(TARGET).o $(CLASSES:%=%.o)
 HFILES   = $(CLASSES:%=%.h)
 OPT      = -O2 -Wall
 CFLAGS   = $(OPT) -I. -DA3D_GLESv2_LOAX
-LDFLAGS  = -lm -La3d -la3d -Lloax -lloax -Lnet -lnet -lz
+LDFLAGS  = -lm -La3d -la3d -Lloax -lloax -Lnet -lnet -lz -lpthread
 CCC      = gcc
 
 all: $(TARGET)
