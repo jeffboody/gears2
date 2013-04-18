@@ -194,11 +194,18 @@ void gears_renderer_delete(gears_renderer_t** _self)
 void gears_renderer_resize(gears_renderer_t* self, GLsizei w, GLsizei h)
 {
 	assert(self);
-	LOGI("%ix%i", w, h);
 
-	self->w = w;
-	self->h = h;
-	glViewport(0, 0, w, h);
+	if((self->w == w) && (self->h == h))
+	{
+		// no resize
+	}
+	else
+	{
+		LOGI("%ix%i", w, h);
+		self->w = w;
+		self->h = h;
+		glViewport(0, 0, w, h);
+	}
 }
 
 void gears_renderer_rotate(gears_renderer_t* self, float dx, float dy)

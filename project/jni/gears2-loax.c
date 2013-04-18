@@ -23,6 +23,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
+#include <math.h>
 #include "loax/loax_client.h"
 #include "loax/loax_gl2.h"
 #include "loax/gl2.h"
@@ -36,6 +38,86 @@
 ***********************************************************/
 
 static gears_renderer_t* gears_renderer = NULL;
+
+/***********************************************************
+* touch state                                              *
+***********************************************************/
+
+#define TOUCH_STATE_INIT   0
+#define TOUCH_STATE_ROTATE 1
+#define TOUCH_STATE_ZOOM   2
+
+static int   g_touch_state = TOUCH_STATE_INIT;
+static float g_touch_x1    = 0.0f;
+static float g_touch_y1    = 0.0f;
+static float g_touch_x2    = 0.0f;
+static float g_touch_y2    = 0.0f;
+static float g_touch_s     = 0.0f;
+
+static void touch_event(gears_renderer_t* self, loax_event_t* e)
+{
+	assert(self);
+	assert(e);
+	LOGD("debug");
+
+	int type  = e->type;
+	int count = e->event_touch.count;
+	if(type == LOAX_EVENT_TOUCHUP)
+	{
+		// do nothing
+		g_touch_state = TOUCH_STATE_INIT;
+	}
+	else if(count == 1)
+	{
+		if(g_touch_state == TOUCH_STATE_ROTATE)
+		{
+			float dx = e->event_touch.coord[0].x - g_touch_x1;
+			float dy = e->event_touch.coord[0].y - g_touch_y1;
+			gears_renderer_rotate(self, dx, dy);
+			g_touch_x1 = e->event_touch.coord[0].x;
+			g_touch_y1 = e->event_touch.coord[0].y;
+		}
+		else
+		{
+			g_touch_x1    = e->event_touch.coord[0].x;
+			g_touch_y1    = e->event_touch.coord[0].y;
+			g_touch_state = TOUCH_STATE_ROTATE;
+		}
+	}
+	else if(count == 2)
+	{
+		if(g_touch_state == TOUCH_STATE_ZOOM)
+		{
+			// some unknown device throws an exception here
+			float x1 = e->event_touch.coord[0].x;
+			float y1 = e->event_touch.coord[0].y;
+			float x2 = e->event_touch.coord[1].x;
+			float y2 = e->event_touch.coord[1].y;
+
+			float dx = fabsf(x2 - x1);
+			float dy = fabsf(y2 - y1);
+			float s  = sqrtf((dx * dx) + (dy * dy));
+			gears_renderer_scale(gears_renderer, g_touch_s - s);
+			g_touch_x1 = x1;
+			g_touch_y1 = y1;
+			g_touch_x2 = x2;
+			g_touch_y2 = y2;
+			g_touch_s  = s;
+		}
+		else
+		{
+			g_touch_x1 = e->event_touch.coord[0].x;
+			g_touch_y1 = e->event_touch.coord[0].y;
+			g_touch_x2 = e->event_touch.coord[1].x;
+			g_touch_y2 = e->event_touch.coord[1].y;
+
+			float dx      = fabsf(g_touch_x2 - g_touch_x1);
+			float dy      = fabsf(g_touch_y2 - g_touch_y1);
+			g_touch_s     = sqrtf((dx * dx) + (dy * dy));
+			g_touch_state = TOUCH_STATE_ZOOM;
+		}
+	}
+}
 
 /***********************************************************
 * main                                                     *
@@ -58,18 +140,21 @@ int main(int argc, char** argv)
 		return EXIT_FAILURE;
 	}
 
-	loax_client_size(c, &w, &h);
-	glViewport(0, 0, w, h);
 	do
 	{
 		loax_event_t e;
 		while(loax_client_poll(c, &e))
 		{
-			if(e.type == LOAX_EVENT_RESIZE)
+			if((e.type == LOAX_EVENT_TOUCHDOWN) ||
+			   (e.type == LOAX_EVENT_TOUCHUP)   ||
+			   (e.type == LOAX_EVENT_TOUCHMOVE))
 			{
-				gears_renderer_resize(gears_renderer, e.event_resize.w, e.event_resize.h);
+				touch_event(gears_renderer, &e);
 			}
 		}
+
+		loax_client_size(c, &w, &h);
+		gears_renderer_resize(gears_renderer, w, h);
 		gears_renderer_draw(gears_renderer);
 	} while(loax_client_swapbuffers(c));
 
