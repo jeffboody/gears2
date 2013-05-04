@@ -141,6 +141,8 @@ gears_renderer_t* gears_renderer_new(const char* font)
 	self->t0         = a3d_utime();
 	self->t_last     = 0.0;
 	self->frames     = 0;
+	self->w          = 0;
+	self->h          = 0;
 	a3d_mat4f_identity(&self->pm);
 	a3d_mat4f_identity(&self->mvm);
 
