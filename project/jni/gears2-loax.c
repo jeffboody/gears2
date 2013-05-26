@@ -39,10 +39,7 @@
 
 static gears_renderer_t* gears_renderer = NULL;
 
-/***********************************************************
-* touch state                                              *
-***********************************************************/
-
+// touch state
 #define TOUCH_STATE_INIT   0
 #define TOUCH_STATE_ROTATE 1
 #define TOUCH_STATE_ZOOM   2
@@ -53,6 +50,12 @@ static float g_touch_y1    = 0.0f;
 static float g_touch_x2    = 0.0f;
 static float g_touch_y2    = 0.0f;
 static float g_touch_s     = 0.0f;
+
+// axis state
+static float g_axis_x1 = 0.0f;
+static float g_axis_y1 = 0.0f;
+static float g_axis_x2 = 0.0f;
+static float g_axis_y2 = 0.0f;
 
 static void touch_event(gears_renderer_t* self, loax_event_t* e)
 {
@@ -119,6 +122,25 @@ static void touch_event(gears_renderer_t* self, loax_event_t* e)
 	}
 }
 
+static void axis_update(gears_renderer_t* self, int w, int h)
+{
+	assert(self);
+	LOGD("debug w=%i, h=%i", w, h);
+
+	if((fabs(g_axis_x1) > 0.1f) || (fabs(g_axis_y1) > 0.1f))
+	{
+		float dx = 0.01f*g_axis_x1*w;
+		float dy = 0.01f*g_axis_y1*h;
+		gears_renderer_rotate(self, dx, dy);
+	}
+
+	if(fabs(g_axis_y2) > 0.1f)
+	{
+		float s = 0.05f*g_axis_y2*h;
+		gears_renderer_scale(gears_renderer, s);
+	}
+}
+
 /***********************************************************
 * main                                                     *
 ***********************************************************/
@@ -151,9 +173,31 @@ int main(int argc, char** argv)
 			{
 				touch_event(gears_renderer, &e);
 			}
+			else if(e.type == LOAX_EVENT_AXISMOVE)
+			{
+				int   axis  = e.event_axis.axis;
+				float value = e.event_axis.value;
+				if(axis == LOAX_AXIS_X1)
+				{
+					g_axis_x1 = value;
+				}
+				else if(axis == LOAX_AXIS_Y1)
+				{
+					g_axis_y1 = value;
+				}
+				else if(axis == LOAX_AXIS_X2)
+				{
+					g_axis_x2 = value;
+				}
+				else if(axis == LOAX_AXIS_Y2)
+				{
+					g_axis_y2 = value;
+				}
+			}
 		}
 
 		loax_client_size(c, &w, &h);
+		axis_update(gears_renderer, w, h);
 		gears_renderer_resize(gears_renderer, w, h);
 		gears_renderer_draw(gears_renderer);
 	} while(loax_client_swapbuffers(c));
