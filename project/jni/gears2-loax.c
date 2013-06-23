@@ -147,63 +147,65 @@ static void axis_update(gears_renderer_t* self, int w, int h)
 
 int main(int argc, char** argv)
 {
-	int w = 0;
-	int h = 0;
-	loax_client_t* c = loax_client_new();
-	if(c == NULL)
+	while(1)
 	{
-		return EXIT_FAILURE;
-	}
-
-	// Initialize gears renderer
-	gears_renderer = gears_renderer_new("whitrabt.texgz");
-	if(gears_renderer == NULL)
-	{
-		return EXIT_FAILURE;
-	}
-
-	do
-	{
-		loax_event_t e;
-		while(loax_client_poll(c, &e))
+		loax_client_t* c = loax_client_new();
+		if(c == NULL)
 		{
-			if((e.type == LOAX_EVENT_TOUCHDOWN) ||
-			   (e.type == LOAX_EVENT_TOUCHUP)   ||
-			   (e.type == LOAX_EVENT_TOUCHMOVE))
-			{
-				touch_event(gears_renderer, &e);
-			}
-			else if(e.type == LOAX_EVENT_AXISMOVE)
-			{
-				int   axis  = e.event_axis.axis;
-				float value = e.event_axis.value;
-				if(axis == LOAX_AXIS_X1)
-				{
-					g_axis_x1 = value;
-				}
-				else if(axis == LOAX_AXIS_Y1)
-				{
-					g_axis_y1 = value;
-				}
-				else if(axis == LOAX_AXIS_X2)
-				{
-					g_axis_x2 = value;
-				}
-				else if(axis == LOAX_AXIS_Y2)
-				{
-					g_axis_y2 = value;
-				}
-			}
+			return EXIT_FAILURE;
 		}
 
-		loax_client_size(c, &w, &h);
-		axis_update(gears_renderer, w, h);
-		gears_renderer_resize(gears_renderer, w, h);
-		gears_renderer_draw(gears_renderer);
-	} while(loax_client_swapbuffers(c));
+		// Initialize gears renderer
+		gears_renderer = gears_renderer_new("whitrabt.texgz");
+		if(gears_renderer == NULL)
+		{
+			loax_client_delete(&c);
+			return EXIT_FAILURE;
+		}
 
-	gears_renderer_delete(&gears_renderer);
-	loax_client_delete(&c);
+		do
+		{
+			loax_event_t e;
+			while(loax_client_poll(c, &e))
+			{
+				if((e.type == LOAX_EVENT_TOUCHDOWN) ||
+				   (e.type == LOAX_EVENT_TOUCHUP)   ||
+				   (e.type == LOAX_EVENT_TOUCHMOVE))
+				{
+					touch_event(gears_renderer, &e);
+				}
+				else if(e.type == LOAX_EVENT_AXISMOVE)
+				{
+					int   axis  = e.event_axis.axis;
+					float value = e.event_axis.value;
+					if(axis == LOAX_AXIS_X1)
+					{
+						g_axis_x1 = value;
+					}
+					else if(axis == LOAX_AXIS_Y1)
+					{
+						g_axis_y1 = value;
+					}
+					else if(axis == LOAX_AXIS_X2)
+					{
+						g_axis_x2 = value;
+					}
+					else if(axis == LOAX_AXIS_Y2)
+					{
+						g_axis_y2 = value;
+					}
+				}
+			}
 
-	return EXIT_SUCCESS;
+			int w = 0;
+			int h = 0;
+			loax_client_size(c, &w, &h);
+			axis_update(gears_renderer, w, h);
+			gears_renderer_resize(gears_renderer, w, h);
+			gears_renderer_draw(gears_renderer);
+		} while(loax_client_swapbuffers(c));
+
+		gears_renderer_delete(&gears_renderer);
+		loax_client_delete(&c);
+	}
 }
