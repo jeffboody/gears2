@@ -509,6 +509,9 @@ void gear_delete(gear_t** _self)
 	if(self)
 	{
 		LOGD("debug");
+		glDeleteProgram(self->cylinder_program);
+		glDeleteProgram(self->outward_program);
+		glDeleteProgram(self->face_program);
 		glDeleteBuffers(1, &self->cylinder_nid);
 		glDeleteBuffers(1, &self->cylinder_vid);
 		glDeleteBuffers(1, &self->outward_nid);
