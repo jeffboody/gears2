@@ -101,6 +101,26 @@ static void touch_event(gears_renderer_t* self, loax_event_t* e)
 			float dy = fabsf(y2 - y1);
 			float s  = sqrtf((dx * dx) + (dy * dy));
 			gears_renderer_scale(gears_renderer, g_touch_s - s);
+
+			// a.b = mag_a*mag_b*cos(roll)
+			// direction or roll is determined by axb
+			float ax = x2 - x1;
+			float ay = y2 - y1;
+			float bx = g_touch_x2 - g_touch_x1;
+			float by = g_touch_y2 - g_touch_y1;
+			float mag_a = sqrtf(ax*ax + ay*ay);
+			float mag_b = sqrtf(bx*bx + by*by);
+			if((mag_a >= 5.0f) && (mag_b >= 5.0f))
+			{
+				float axb  = (ax*by - ay*bx);
+				float ab   = (ax*bx + ay*by);
+				float roll = (180.0f/M_PI)*acosf(ab/(mag_a*mag_b));
+				if(fabs(roll) >= 0.5f)
+				{
+					gears_renderer_roll(gears_renderer, (axb > 0.0f) ? roll : -roll);
+				}
+			}
+
 			g_touch_x1 = x1;
 			g_touch_y1 = y1;
 			g_touch_x2 = x2;

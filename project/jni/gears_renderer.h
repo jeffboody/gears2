@@ -30,6 +30,7 @@
 #define gears_renderer_H
 
 #include <pthread.h>
+#include "a3d/math/a3d_quaternion.h"
 #include "a3d/math/a3d_mat4f.h"
 #include "a3d/math/a3d_stack4f.h"
 #include "a3d/a3d_texfont.h"
@@ -50,11 +51,9 @@ typedef struct
 	GLsizei h;
 
 	// mutex protects view state
-	pthread_mutex_t mutex;
-	GLfloat view_scale;
-	GLfloat view_rot_x;
-	GLfloat view_rot_y;
-	GLfloat view_rot_z;
+	pthread_mutex_t  mutex;
+	GLfloat          view_scale;
+	a3d_quaternion_t view_q;
 
 	// animation state
 	GLfloat angle;
@@ -78,6 +77,7 @@ void              gears_renderer_delete(gears_renderer_t** _self);
 void              gears_renderer_resize(gears_renderer_t* self, int w, int h);
 void              gears_renderer_rotate(gears_renderer_t* self, float dx, float dy);
 void              gears_renderer_scale(gears_renderer_t* self, float ds);
+void              gears_renderer_roll(gears_renderer_t* self, float roll);
 void              gears_renderer_draw(gears_renderer_t* self);
 
 #endif

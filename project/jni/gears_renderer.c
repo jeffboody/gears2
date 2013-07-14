@@ -133,10 +133,13 @@ gears_renderer_t* gears_renderer_new(const char* font)
 	}
 
 	// initialize state
+	a3d_quaternion_t qx;
+	a3d_quaternion_t qy;
+	a3d_quaternion_loadeuler(&qx, -20.0f,   0.0f, 0.0f);
+	a3d_quaternion_loadeuler(&qy,   0.0f, -30.0f, 0.0f);
+	a3d_quaternion_rotateq_copy(&qy, &qx, &self->view_q);
+
 	self->view_scale = 1.0f;
-	self->view_rot_x = 20.0f;
-	self->view_rot_y = 30.0f;
-	self->view_rot_z = 0.0f;
 	self->angle      = 0.0f;
 	self->t0         = a3d_utime();
 	self->t_last     = 0.0;
@@ -221,10 +224,13 @@ void gears_renderer_rotate(gears_renderer_t* self, float dx, float dy)
 	// rotating around x-axis is equivalent to moving up-and-down on touchscreen
 	// rotating around y-axis is equivalent to moving left-and-right on touchscreen
 	// 360 degrees is equivalent to moving completly across the touchscreen
-	float w = (float) self->w;
-	float h = (float) self->h;
-	self->view_rot_x += 360.0f * dy / h;
-	self->view_rot_y += 360.0f * dx / w;
+	float   w  = (float) self->w;
+	float   h  = (float) self->h;
+	GLfloat rx = 360.0f * dy / h;
+	GLfloat ry = 360.0f * dx / w;
+	a3d_quaternion_t q;
+	a3d_quaternion_loadeuler(&q, -rx, -ry, 0.0f);
+	a3d_quaternion_rotateq(&self->view_q, &q);
 
 	if(pthread_mutex_unlock(&self->mutex) != 0)
 		LOGE("pthread_mutex_unlock failed");
@@ -247,6 +253,22 @@ void gears_renderer_scale(gears_renderer_t* self, float ds)
 	self->view_scale -= ds / sqrtf(w*w + h*h);
 	if(self->view_scale < min)  self->view_scale = min;
 	if(self->view_scale >= max) self->view_scale = max;
+
+	if(pthread_mutex_unlock(&self->mutex) != 0)
+		LOGE("pthread_mutex_unlock failed");
+}
+
+void gears_renderer_roll(gears_renderer_t* self, float roll)
+{
+	assert(self);
+	LOGD("debug roll=%f", roll);
+
+	if(pthread_mutex_lock(&self->mutex) != 0)
+		LOGE("pthread_mutex_lock failed");
+
+	a3d_quaternion_t q;
+	a3d_quaternion_loadeuler(&q, 0.0f, 0.0f, -roll);
+	a3d_quaternion_rotateq(&self->view_q, &q);
 
 	if(pthread_mutex_unlock(&self->mutex) != 0)
 		LOGE("pthread_mutex_unlock failed");
@@ -279,9 +301,7 @@ void gears_renderer_draw(gears_renderer_t* self)
 	if(pthread_mutex_lock(&self->mutex) != 0)
 		LOGE("pthread_mutex_lock failed");
 	a3d_mat4f_scale(&self->mvm, 0, self->view_scale, self->view_scale, self->view_scale);
-	a3d_mat4f_rotate(&self->mvm, 0, self->view_rot_x, 1.0f, 0.0f, 0.0f);
-	a3d_mat4f_rotate(&self->mvm, 0, self->view_rot_y, 0.0f, 1.0f, 0.0f);
-	a3d_mat4f_rotate(&self->mvm, 0, self->view_rot_z, 0.0f, 0.0f, 1.0f);
+	a3d_mat4f_rotateq(&self->mvm, 0, &self->view_q);
 	if(pthread_mutex_unlock(&self->mutex) != 0)
 		LOGE("pthread_mutex_unlock failed");
 
