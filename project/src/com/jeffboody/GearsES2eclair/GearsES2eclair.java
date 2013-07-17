@@ -166,13 +166,6 @@ public class GearsES2eclair extends Activity
 				NativeRotate(dx, dy);
 				X1 = event.getX();
 				Y1 = event.getY();
-
-				// Only need to do this for rotation input - limiting it
-				// to 30Hz. This has the extra advantage of not interlocking
-				// the render and input threads as frequently, which would
-				// otherwise, also drive down our max render rate.
-				try { Thread.sleep((long) (1000.0F/30.0F)); }
-				catch(InterruptedException e) { }
 			}
 		}
 		else if(count == 2)
@@ -227,13 +220,6 @@ public class GearsES2eclair extends Activity
 				X2 = x2;
 				Y2 = y2;
 				S = s;
-
-				// Only need to do this for rotation input - limiting it
-				// to 30Hz. This has the extra advantage of not interlocking
-				// the render and input threads as frequently, which would
-				// otherwise, also drive down our max render rate.
-				try { Thread.sleep((long) (1000.0F/30.0F)); }
-				catch(InterruptedException e) { }
 			}
 		}
 
