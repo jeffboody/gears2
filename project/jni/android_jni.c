@@ -133,3 +133,14 @@ JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeSc
 		gears_renderer_scale(gears_renderer, (float) ds);
 	}
 }
+
+JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRoll(JNIEnv* env, jobject  obj, jfloat roll)
+{
+	assert(env);
+	LOGD("debug roll=%f", (float) roll);
+
+	if(gears_renderer)
+	{
+		gears_renderer_roll(gears_renderer, (float) roll);
+	}
+}

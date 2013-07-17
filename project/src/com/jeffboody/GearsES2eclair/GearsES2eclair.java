@@ -66,6 +66,7 @@ public class GearsES2eclair extends Activity
 	// Native interface
 	private native void NativeRotate(float dx, float dy);
 	private native void NativeScale(float ds);
+	private native void NativeRoll(float roll);
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -215,6 +216,26 @@ public class GearsES2eclair extends Activity
 				double dy = Math.abs((double) (y2 - y1));
 				float s = (float) Math.sqrt((dx * dx) + (dy * dy));
 				NativeScale(S - s);
+
+				// a.b = mag_a*mag_b*cos(roll)
+				// direction or roll is determined by axb
+				double ax = x2 - x1;
+				double ay = y2 - y1;
+				double bx = X2 - X1;
+				double by = Y2 - Y1;
+				double mag_a = Math.sqrt(ax*ax + ay*ay);
+				double mag_b = Math.sqrt(bx*bx + by*by);
+				if((mag_a >= 5.0) && (mag_b >= 5.0))
+				{
+					double axb  = (ax*by - ay*bx);
+					double ab   = (ax*bx + ay*by);
+					float  roll = (float) ((180.0/Math.PI)*Math.acos(ab/(mag_a*mag_b)));
+					if(Math.abs((double) roll) >= 0.5)
+					{
+						NativeRoll((axb > 0.0) ? roll : -roll);
+					}
+				}
+
 				X1 = x1;
 				Y1 = y1;
 				X2 = x2;
