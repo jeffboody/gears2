@@ -78,6 +78,10 @@ static void gears_renderer_step(gears_renderer_t* self)
 		// make the gears rotate at a constant rate
 		// red gear rotates at 1 revolution per 7 seconds
 		self->angle += 360.0f * dt_last / 7.0f;
+		if(self->angle >= 360.0f)
+		{
+			self->angle -= 360.0f;
+		}
 	}
 	self->t_last = t;
 }
