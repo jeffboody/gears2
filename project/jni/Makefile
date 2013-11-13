@@ -5,7 +5,7 @@ OBJECTS  = $(TARGET).o $(CLASSES:%=%.o)
 HFILES   = $(CLASSES:%=%.h)
 OPT      = -O2 -Wall
 CFLAGS   = $(OPT) -I. `sdl-config --cflags` -DA3D_GL2
-LDFLAGS  = -lGLEW -lGL -lGLU -lm -L/usr/lib `sdl-config --libs` -La3d -la3d
+LDFLAGS  = -lGLEW -lGL -lGLU -lm -L/usr/lib `sdl-config --libs` -La3d -la3d -lz
 CCC      = gcc
 
 all: $(TARGET)
