@@ -38,7 +38,7 @@ public class GearsES2eclairAbout extends Activity
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		WebView wv = new WebView(this);
-		String text = "<html><body bgcolor=\"#37547c\" text=\"#FFFFFF\" link=\"#a08f6b\" vlink=\"#a08f6b\">" +
+		String text = "<html>" +
 		              "<h2>About Gears for Android</h2>" +
 		              "<p>" +
 		              "	Gears for Android is a heavily modified port of the famous \"gears\" demo to Android." +
@@ -60,9 +60,15 @@ public class GearsES2eclairAbout extends Activity
 		              "</p>" +
 		              "<h2>Source Code</h2>" +
 		              "<p>" +
-		              "	Source code is available at the <a href=\"http://www.jeffboody.net/gears4android.php\">Gears for Android(TM)</a> website" +
+		              "	Source code is available at <a href=\"https://github.com/jeffboody/gears2\">Github</a>." +
 		              "</p>" +
 		              "<h2>Release Notes</h2>" +
+		              "<p>20131113" +
+		              "	<ul>" +
+		              "		<li>Added quaternions for natural rotations and rolling</li>" +
+		              "		<li>Miscelaneous cleanup</li>" +
+		              "		<li>Added ports for SDL and LOAX environments</li>" +
+		              "	</ul>" +
 		              "<p>20110501" +
 		              "	<ul>" +
 		              "		<li>For Android 2.0 (eclair)</li>" +
