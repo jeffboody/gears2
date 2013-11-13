@@ -26,6 +26,7 @@ package com.jeffboody.GearsES2eclair;
 import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
+import android.view.Window;
 
 public class GearsES2eclairAbout extends Activity
 {
@@ -34,9 +35,11 @@ public class GearsES2eclairAbout extends Activity
 	{
 		super.onCreate(savedInstanceState);
 
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		WebView wv = new WebView(this);
 		String text = "<html><body bgcolor=\"#37547c\" text=\"#FFFFFF\" link=\"#a08f6b\" vlink=\"#a08f6b\">" +
-		              "<h2>About Gears for Android(TM)</h2>" +
+		              "<h2>About Gears for Android</h2>" +
 		              "<p>" +
 		              "	Gears for Android is a heavily modified port of the famous \"gears\" demo to Android." +
 		              "</p>" +
