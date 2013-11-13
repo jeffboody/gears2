@@ -1,8 +1,9 @@
 /*
  * Copyright (c) 2009-2010 Jeff Boody
- * Gears for Android(TM) is a heavily modified port of the infamous "gears" demo to
- * Android/Java/GLES 1.0. As such, it is a derived work subject to the license
- * requirements (below) of the original work.
+ *
+ * Gears for Android is a heavily modified port of the famous "gears" demo.
+ * As such, it is a derived work subject to the license requirements (below)
+ * of the original work.
  *
  * Copyright (c) 1999-2001  Brian Paul   All Rights Reserved.
  *

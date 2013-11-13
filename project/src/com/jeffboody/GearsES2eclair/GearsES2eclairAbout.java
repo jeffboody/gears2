@@ -38,7 +38,7 @@ public class GearsES2eclairAbout extends Activity
 		String text = "<html><body bgcolor=\"#37547c\" text=\"#FFFFFF\" link=\"#a08f6b\" vlink=\"#a08f6b\">" +
 		              "<h2>About Gears for Android(TM)</h2>" +
 		              "<p>" +
-		              "	Gears for Android(TM) is a heavily modified port of the infamous \"gears\" demo to Android." +
+		              "	Gears for Android is a heavily modified port of the famous \"gears\" demo to Android." +
 		              "</p>" +
 		              "<p>" +
 		              "	The Gears demo is an open source project intended to help developers learn how to create " +
@@ -155,9 +155,10 @@ public class GearsES2eclairAbout extends Activity
 		              "<h2>License</h2>" +
 		              "<p>" +
 		              "	Copyright (c) 2009-2011 Jeff Boody<br/>" +
-		              "	Gears for Android(TM) is a heavily modified port of the infamous \"gears\" demo to " +
-		              "	Android/Java/GLES 1.0. As such, it is a derived work subject to the license " +
-		              "	requirements (below) of the original work.<br/>" +
+		              "<br/>" +
+		              "	Gears for Android is a heavily modified port of the famous \"gears\" demo. " +
+		              "	As such, it is a derived work subject to the license requirements (below) " +
+		              "	of the original work.<br/>" +
 		              "	<br/>" +
 		              "	Copyright (c) 1999-2001  Brian Paul   All Rights Reserved.<br/>" +
 		              "	<br/>" +
