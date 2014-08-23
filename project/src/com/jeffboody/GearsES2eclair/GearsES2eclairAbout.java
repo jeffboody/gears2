@@ -63,12 +63,18 @@ public class GearsES2eclairAbout extends Activity
 		              "	Source code is available at <a href=\"https://github.com/jeffboody/gears2\">Github</a>." +
 		              "</p>" +
 		              "<h2>Release Notes</h2>" +
+		              "<p>20140823" +
+		              "	<ul>" +
+		              "		<li>Fixed memory corruption</li>" +
+		              "	</ul>" +
+		              "</p>" +
 		              "<p>20131113" +
 		              "	<ul>" +
 		              "		<li>Added quaternions for natural rotations and rolling</li>" +
 		              "		<li>Miscelaneous cleanup</li>" +
 		              "		<li>Added ports for SDL and LOAX environments</li>" +
 		              "	</ul>" +
+		              "</p>" +
 		              "<p>20110501" +
 		              "	<ul>" +
 		              "		<li>For Android 2.0 (eclair)</li>" +
