@@ -33,7 +33,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.content.Intent;
 import java.lang.Math;
-import java.lang.ArrayIndexOutOfBoundsException;
+import java.lang.Exception;
 import com.jeffboody.a3d.A3DSurfaceView;
 import com.jeffboody.a3d.A3DNativeRenderer;
 import com.jeffboody.a3d.A3DResource;
@@ -183,7 +183,7 @@ public class GearsES2eclair extends Activity
 					X2 = event.getX(event.findPointerIndex(1));
 					Y2 = event.getY(event.findPointerIndex(1));
 				}
-				catch(ArrayIndexOutOfBoundsException e)
+				catch(Exception e)
 				{
 					// fail silently
 					return false;
@@ -207,7 +207,7 @@ public class GearsES2eclair extends Activity
 					x2 = event.getX(event.findPointerIndex(1));
 					y2 = event.getY(event.findPointerIndex(1));
 				}
-				catch(ArrayIndexOutOfBoundsException e)
+				catch(Exception e)
 				{
 					// fail silently
 					return false;

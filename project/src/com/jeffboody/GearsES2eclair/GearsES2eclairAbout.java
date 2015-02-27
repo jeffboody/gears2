@@ -63,6 +63,11 @@ public class GearsES2eclairAbout extends Activity
 		              "	Source code is available at <a href=\"https://github.com/jeffboody/gears2\">Github</a>." +
 		              "</p>" +
 		              "<h2>Release Notes</h2>" +
+		              "<p>20150227" +
+		              "	<ul>" +
+		              "		<li>Fixed IllegalArgumentException for multitouch</li>" +
+		              "	</ul>" +
+		              "</p>" +
 		              "<p>20140902" +
 		              "	<ul>" +
 		              "		<li>Fixed Java signing issue</li>" +
