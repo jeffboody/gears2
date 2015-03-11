@@ -41,9 +41,9 @@
 ***********************************************************/
 
 // gear colors
-static const a3d_vec4f_t RED   = { 0.8f, 0.1f,  0.0f, 1.0f };
-static const a3d_vec4f_t GREEN = { 0.0f, 0.8f,  0.2f, 1.0f };
-static const a3d_vec4f_t BLUE  = { 0.2f, 0.2f,  1.0f, 1.0f };
+static const a3d_vec4f_t RED   = { .r=0.8f, .g=0.1f, .b=0.0f, .a=1.0f };
+static const a3d_vec4f_t GREEN = { .r=0.0f, .g=0.8f, .b=0.2f, .a=1.0f };
+static const a3d_vec4f_t BLUE  = { .r=0.2f, .g=0.2f, .b=1.0f, .a=1.0f };
 
 // light position
 static const GLfloat LIGHT_POSITION[] = { 5.0f, 5.0f, 10.0f, 0.0f };
@@ -156,6 +156,7 @@ gears_renderer_t* gears_renderer_new(const char* font)
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// success
 	return self;
