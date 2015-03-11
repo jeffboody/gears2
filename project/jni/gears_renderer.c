@@ -64,7 +64,7 @@ static void gears_renderer_step(gears_renderer_t* self)
 		double fps     = (double) self->frames / seconds;
 
 		// LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, fps);
-		a3d_texstring_printf(self->fps, "%i fps", (int) fps);
+		a3d_texstring_printf(self->fps, "%i fps", (int) (fps + 0.5));
 
 		self->t0     = t;
 		self->frames = 0;
