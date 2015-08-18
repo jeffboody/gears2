@@ -1,0 +1,413 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9094E2CF1B82DF8A002B98FD /* gears2-sdl2.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2CE1B82DF8A002B98FD /* gears2-sdl2.c */; };
+		9094E2D11B82DFC5002B98FD /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9094E2D01B82DFC5002B98FD /* SDL2.framework */; };
+		9094E2EB1B82E047002B98FD /* a3d_cache.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2D21B82E047002B98FD /* a3d_cache.c */; };
+		9094E2EC1B82E047002B98FD /* a3d_GL.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2D41B82E047002B98FD /* a3d_GL.c */; };
+		9094E2EE1B82E047002B98FD /* a3d_glsm.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2D71B82E047002B98FD /* a3d_glsm.c */; };
+		9094E2EF1B82E047002B98FD /* a3d_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2D91B82E047002B98FD /* a3d_list.c */; };
+		9094E2F01B82E047002B98FD /* a3d_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2DB1B82E047002B98FD /* a3d_log.c */; };
+		9094E2F11B82E047002B98FD /* a3d_shader.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2DD1B82E047002B98FD /* a3d_shader.c */; };
+		9094E2F21B82E047002B98FD /* a3d_tex.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2DF1B82E047002B98FD /* a3d_tex.c */; };
+		9094E2F31B82E047002B98FD /* a3d_texfont.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2E11B82E047002B98FD /* a3d_texfont.c */; };
+		9094E2F41B82E047002B98FD /* a3d_texstring.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2E31B82E047002B98FD /* a3d_texstring.c */; };
+		9094E2F51B82E047002B98FD /* a3d_time.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2E51B82E047002B98FD /* a3d_time.c */; };
+		9094E2F61B82E047002B98FD /* a3d_unit.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2E71B82E047002B98FD /* a3d_unit.c */; };
+		9094E2F71B82E047002B98FD /* a3d_workq.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2E91B82E047002B98FD /* a3d_workq.c */; };
+		9094E3121B82E07C002B98FD /* a3d_fplane.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2F81B82E07C002B98FD /* a3d_fplane.c */; };
+		9094E3131B82E07C002B98FD /* a3d_mat3f.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2FA1B82E07C002B98FD /* a3d_mat3f.c */; };
+		9094E3141B82E07C002B98FD /* a3d_mat4f.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2FC1B82E07C002B98FD /* a3d_mat4f.c */; };
+		9094E3151B82E07C002B98FD /* a3d_orientation.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E2FE1B82E07C002B98FD /* a3d_orientation.c */; };
+		9094E3161B82E07C002B98FD /* a3d_plane.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3001B82E07C002B98FD /* a3d_plane.c */; };
+		9094E3171B82E07C002B98FD /* a3d_quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3021B82E07C002B98FD /* a3d_quaternion.c */; };
+		9094E3181B82E07C002B98FD /* a3d_ray.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3041B82E07C002B98FD /* a3d_ray.c */; };
+		9094E3191B82E07C002B98FD /* a3d_regionf.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3061B82E07C002B98FD /* a3d_regionf.c */; };
+		9094E31A1B82E07C002B98FD /* a3d_sphere.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3081B82E07C002B98FD /* a3d_sphere.c */; };
+		9094E31B1B82E07C002B98FD /* a3d_stack4f.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E30A1B82E07C002B98FD /* a3d_stack4f.c */; };
+		9094E31C1B82E07C002B98FD /* a3d_vec2f.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E30C1B82E07C002B98FD /* a3d_vec2f.c */; };
+		9094E31D1B82E07C002B98FD /* a3d_vec3f.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E30E1B82E07C002B98FD /* a3d_vec3f.c */; };
+		9094E31E1B82E07C002B98FD /* a3d_vec4f.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3101B82E07C002B98FD /* a3d_vec4f.c */; };
+		9094E3201B82E165002B98FD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9094E31F1B82E165002B98FD /* libz.dylib */; };
+		9094E3251B82E3A5002B98FD /* gear.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3211B82E3A5002B98FD /* gear.c */; };
+		9094E3261B82E3A5002B98FD /* gears_renderer.c in Sources */ = {isa = PBXBuildFile; fileRef = 9094E3231B82E3A5002B98FD /* gears_renderer.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9094E2C21B82D8B9002B98FD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		9094E2C41B82D8B9002B98FD /* gears2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = gears2; sourceTree = BUILT_PRODUCTS_DIR; };
+		9094E2CE1B82DF8A002B98FD /* gears2-sdl2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "gears2-sdl2.c"; path = "project/jni/gears2-sdl2.c"; sourceTree = "<group>"; };
+		9094E2D01B82DFC5002B98FD /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		9094E2D21B82E047002B98FD /* a3d_cache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_cache.c; path = project/jni/a3d/a3d_cache.c; sourceTree = "<group>"; };
+		9094E2D31B82E047002B98FD /* a3d_cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_cache.h; path = project/jni/a3d/a3d_cache.h; sourceTree = "<group>"; };
+		9094E2D41B82E047002B98FD /* a3d_GL.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_GL.c; path = project/jni/a3d/a3d_GL.c; sourceTree = "<group>"; };
+		9094E2D51B82E047002B98FD /* a3d_GL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_GL.h; path = project/jni/a3d/a3d_GL.h; sourceTree = "<group>"; };
+		9094E2D71B82E047002B98FD /* a3d_glsm.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_glsm.c; path = project/jni/a3d/a3d_glsm.c; sourceTree = "<group>"; };
+		9094E2D81B82E047002B98FD /* a3d_glsm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_glsm.h; path = project/jni/a3d/a3d_glsm.h; sourceTree = "<group>"; };
+		9094E2D91B82E047002B98FD /* a3d_list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_list.c; path = project/jni/a3d/a3d_list.c; sourceTree = "<group>"; };
+		9094E2DA1B82E047002B98FD /* a3d_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_list.h; path = project/jni/a3d/a3d_list.h; sourceTree = "<group>"; };
+		9094E2DB1B82E047002B98FD /* a3d_log.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_log.c; path = project/jni/a3d/a3d_log.c; sourceTree = "<group>"; };
+		9094E2DC1B82E047002B98FD /* a3d_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_log.h; path = project/jni/a3d/a3d_log.h; sourceTree = "<group>"; };
+		9094E2DD1B82E047002B98FD /* a3d_shader.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_shader.c; path = project/jni/a3d/a3d_shader.c; sourceTree = "<group>"; };
+		9094E2DE1B82E047002B98FD /* a3d_shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_shader.h; path = project/jni/a3d/a3d_shader.h; sourceTree = "<group>"; };
+		9094E2DF1B82E047002B98FD /* a3d_tex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_tex.c; path = project/jni/a3d/a3d_tex.c; sourceTree = "<group>"; };
+		9094E2E01B82E047002B98FD /* a3d_tex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_tex.h; path = project/jni/a3d/a3d_tex.h; sourceTree = "<group>"; };
+		9094E2E11B82E047002B98FD /* a3d_texfont.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_texfont.c; path = project/jni/a3d/a3d_texfont.c; sourceTree = "<group>"; };
+		9094E2E21B82E047002B98FD /* a3d_texfont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_texfont.h; path = project/jni/a3d/a3d_texfont.h; sourceTree = "<group>"; };
+		9094E2E31B82E047002B98FD /* a3d_texstring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_texstring.c; path = project/jni/a3d/a3d_texstring.c; sourceTree = "<group>"; };
+		9094E2E41B82E047002B98FD /* a3d_texstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_texstring.h; path = project/jni/a3d/a3d_texstring.h; sourceTree = "<group>"; };
+		9094E2E51B82E047002B98FD /* a3d_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_time.c; path = project/jni/a3d/a3d_time.c; sourceTree = "<group>"; };
+		9094E2E61B82E047002B98FD /* a3d_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_time.h; path = project/jni/a3d/a3d_time.h; sourceTree = "<group>"; };
+		9094E2E71B82E047002B98FD /* a3d_unit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_unit.c; path = project/jni/a3d/a3d_unit.c; sourceTree = "<group>"; };
+		9094E2E81B82E047002B98FD /* a3d_unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_unit.h; path = project/jni/a3d/a3d_unit.h; sourceTree = "<group>"; };
+		9094E2E91B82E047002B98FD /* a3d_workq.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_workq.c; path = project/jni/a3d/a3d_workq.c; sourceTree = "<group>"; };
+		9094E2EA1B82E047002B98FD /* a3d_workq.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_workq.h; path = project/jni/a3d/a3d_workq.h; sourceTree = "<group>"; };
+		9094E2F81B82E07C002B98FD /* a3d_fplane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_fplane.c; path = project/jni/a3d/math/a3d_fplane.c; sourceTree = "<group>"; };
+		9094E2F91B82E07C002B98FD /* a3d_fplane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_fplane.h; path = project/jni/a3d/math/a3d_fplane.h; sourceTree = "<group>"; };
+		9094E2FA1B82E07C002B98FD /* a3d_mat3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_mat3f.c; path = project/jni/a3d/math/a3d_mat3f.c; sourceTree = "<group>"; };
+		9094E2FB1B82E07C002B98FD /* a3d_mat3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_mat3f.h; path = project/jni/a3d/math/a3d_mat3f.h; sourceTree = "<group>"; };
+		9094E2FC1B82E07C002B98FD /* a3d_mat4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_mat4f.c; path = project/jni/a3d/math/a3d_mat4f.c; sourceTree = "<group>"; };
+		9094E2FD1B82E07C002B98FD /* a3d_mat4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_mat4f.h; path = project/jni/a3d/math/a3d_mat4f.h; sourceTree = "<group>"; };
+		9094E2FE1B82E07C002B98FD /* a3d_orientation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_orientation.c; path = project/jni/a3d/math/a3d_orientation.c; sourceTree = "<group>"; };
+		9094E2FF1B82E07C002B98FD /* a3d_orientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_orientation.h; path = project/jni/a3d/math/a3d_orientation.h; sourceTree = "<group>"; };
+		9094E3001B82E07C002B98FD /* a3d_plane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_plane.c; path = project/jni/a3d/math/a3d_plane.c; sourceTree = "<group>"; };
+		9094E3011B82E07C002B98FD /* a3d_plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_plane.h; path = project/jni/a3d/math/a3d_plane.h; sourceTree = "<group>"; };
+		9094E3021B82E07C002B98FD /* a3d_quaternion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_quaternion.c; path = project/jni/a3d/math/a3d_quaternion.c; sourceTree = "<group>"; };
+		9094E3031B82E07C002B98FD /* a3d_quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_quaternion.h; path = project/jni/a3d/math/a3d_quaternion.h; sourceTree = "<group>"; };
+		9094E3041B82E07C002B98FD /* a3d_ray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_ray.c; path = project/jni/a3d/math/a3d_ray.c; sourceTree = "<group>"; };
+		9094E3051B82E07C002B98FD /* a3d_ray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_ray.h; path = project/jni/a3d/math/a3d_ray.h; sourceTree = "<group>"; };
+		9094E3061B82E07C002B98FD /* a3d_regionf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_regionf.c; path = project/jni/a3d/math/a3d_regionf.c; sourceTree = "<group>"; };
+		9094E3071B82E07C002B98FD /* a3d_regionf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_regionf.h; path = project/jni/a3d/math/a3d_regionf.h; sourceTree = "<group>"; };
+		9094E3081B82E07C002B98FD /* a3d_sphere.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_sphere.c; path = project/jni/a3d/math/a3d_sphere.c; sourceTree = "<group>"; };
+		9094E3091B82E07C002B98FD /* a3d_sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_sphere.h; path = project/jni/a3d/math/a3d_sphere.h; sourceTree = "<group>"; };
+		9094E30A1B82E07C002B98FD /* a3d_stack4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_stack4f.c; path = project/jni/a3d/math/a3d_stack4f.c; sourceTree = "<group>"; };
+		9094E30B1B82E07C002B98FD /* a3d_stack4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_stack4f.h; path = project/jni/a3d/math/a3d_stack4f.h; sourceTree = "<group>"; };
+		9094E30C1B82E07C002B98FD /* a3d_vec2f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_vec2f.c; path = project/jni/a3d/math/a3d_vec2f.c; sourceTree = "<group>"; };
+		9094E30D1B82E07C002B98FD /* a3d_vec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_vec2f.h; path = project/jni/a3d/math/a3d_vec2f.h; sourceTree = "<group>"; };
+		9094E30E1B82E07C002B98FD /* a3d_vec3f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_vec3f.c; path = project/jni/a3d/math/a3d_vec3f.c; sourceTree = "<group>"; };
+		9094E30F1B82E07C002B98FD /* a3d_vec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_vec3f.h; path = project/jni/a3d/math/a3d_vec3f.h; sourceTree = "<group>"; };
+		9094E3101B82E07C002B98FD /* a3d_vec4f.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = a3d_vec4f.c; path = project/jni/a3d/math/a3d_vec4f.c; sourceTree = "<group>"; };
+		9094E3111B82E07C002B98FD /* a3d_vec4f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = a3d_vec4f.h; path = project/jni/a3d/math/a3d_vec4f.h; sourceTree = "<group>"; };
+		9094E31F1B82E165002B98FD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		9094E3211B82E3A5002B98FD /* gear.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gear.c; path = project/jni/gear.c; sourceTree = "<group>"; };
+		9094E3221B82E3A5002B98FD /* gear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gear.h; path = project/jni/gear.h; sourceTree = "<group>"; };
+		9094E3231B82E3A5002B98FD /* gears_renderer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = gears_renderer.c; path = project/jni/gears_renderer.c; sourceTree = "<group>"; };
+		9094E3241B82E3A5002B98FD /* gears_renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gears_renderer.h; path = project/jni/gears_renderer.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9094E2C11B82D8B9002B98FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9094E3201B82E165002B98FD /* libz.dylib in Frameworks */,
+				9094E2D11B82DFC5002B98FD /* SDL2.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9094E2BB1B82D8B9002B98FD = {
+			isa = PBXGroup;
+			children = (
+				9094E3211B82E3A5002B98FD /* gear.c */,
+				9094E3221B82E3A5002B98FD /* gear.h */,
+				9094E3231B82E3A5002B98FD /* gears_renderer.c */,
+				9094E3241B82E3A5002B98FD /* gears_renderer.h */,
+				9094E31F1B82E165002B98FD /* libz.dylib */,
+				9094E2D01B82DFC5002B98FD /* SDL2.framework */,
+				9094E2CE1B82DF8A002B98FD /* gears2-sdl2.c */,
+				9094E2F81B82E07C002B98FD /* a3d_fplane.c */,
+				9094E2F91B82E07C002B98FD /* a3d_fplane.h */,
+				9094E2FA1B82E07C002B98FD /* a3d_mat3f.c */,
+				9094E2FB1B82E07C002B98FD /* a3d_mat3f.h */,
+				9094E2FC1B82E07C002B98FD /* a3d_mat4f.c */,
+				9094E2FD1B82E07C002B98FD /* a3d_mat4f.h */,
+				9094E2FE1B82E07C002B98FD /* a3d_orientation.c */,
+				9094E2FF1B82E07C002B98FD /* a3d_orientation.h */,
+				9094E3001B82E07C002B98FD /* a3d_plane.c */,
+				9094E3011B82E07C002B98FD /* a3d_plane.h */,
+				9094E3021B82E07C002B98FD /* a3d_quaternion.c */,
+				9094E3031B82E07C002B98FD /* a3d_quaternion.h */,
+				9094E3041B82E07C002B98FD /* a3d_ray.c */,
+				9094E3051B82E07C002B98FD /* a3d_ray.h */,
+				9094E3061B82E07C002B98FD /* a3d_regionf.c */,
+				9094E3071B82E07C002B98FD /* a3d_regionf.h */,
+				9094E3081B82E07C002B98FD /* a3d_sphere.c */,
+				9094E3091B82E07C002B98FD /* a3d_sphere.h */,
+				9094E30A1B82E07C002B98FD /* a3d_stack4f.c */,
+				9094E30B1B82E07C002B98FD /* a3d_stack4f.h */,
+				9094E30C1B82E07C002B98FD /* a3d_vec2f.c */,
+				9094E30D1B82E07C002B98FD /* a3d_vec2f.h */,
+				9094E30E1B82E07C002B98FD /* a3d_vec3f.c */,
+				9094E30F1B82E07C002B98FD /* a3d_vec3f.h */,
+				9094E3101B82E07C002B98FD /* a3d_vec4f.c */,
+				9094E3111B82E07C002B98FD /* a3d_vec4f.h */,
+				9094E2D21B82E047002B98FD /* a3d_cache.c */,
+				9094E2D31B82E047002B98FD /* a3d_cache.h */,
+				9094E2D41B82E047002B98FD /* a3d_GL.c */,
+				9094E2D51B82E047002B98FD /* a3d_GL.h */,
+				9094E2D71B82E047002B98FD /* a3d_glsm.c */,
+				9094E2D81B82E047002B98FD /* a3d_glsm.h */,
+				9094E2D91B82E047002B98FD /* a3d_list.c */,
+				9094E2DA1B82E047002B98FD /* a3d_list.h */,
+				9094E2DB1B82E047002B98FD /* a3d_log.c */,
+				9094E2DC1B82E047002B98FD /* a3d_log.h */,
+				9094E2DD1B82E047002B98FD /* a3d_shader.c */,
+				9094E2DE1B82E047002B98FD /* a3d_shader.h */,
+				9094E2DF1B82E047002B98FD /* a3d_tex.c */,
+				9094E2E01B82E047002B98FD /* a3d_tex.h */,
+				9094E2E11B82E047002B98FD /* a3d_texfont.c */,
+				9094E2E21B82E047002B98FD /* a3d_texfont.h */,
+				9094E2E31B82E047002B98FD /* a3d_texstring.c */,
+				9094E2E41B82E047002B98FD /* a3d_texstring.h */,
+				9094E2E51B82E047002B98FD /* a3d_time.c */,
+				9094E2E61B82E047002B98FD /* a3d_time.h */,
+				9094E2E71B82E047002B98FD /* a3d_unit.c */,
+				9094E2E81B82E047002B98FD /* a3d_unit.h */,
+				9094E2E91B82E047002B98FD /* a3d_workq.c */,
+				9094E2EA1B82E047002B98FD /* a3d_workq.h */,
+				9094E2C51B82D8B9002B98FD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9094E2C51B82D8B9002B98FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9094E2C41B82D8B9002B98FD /* gears2 */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9094E2C31B82D8B9002B98FD /* gears2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9094E2CB1B82D8B9002B98FD /* Build configuration list for PBXNativeTarget "gears2" */;
+			buildPhases = (
+				9094E2C01B82D8B9002B98FD /* Sources */,
+				9094E2C11B82D8B9002B98FD /* Frameworks */,
+				9094E2C21B82D8B9002B98FD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gears2;
+			productName = gears2;
+			productReference = 9094E2C41B82D8B9002B98FD /* gears2 */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9094E2BC1B82D8B9002B98FD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Jeff Boody";
+				TargetAttributes = {
+					9094E2C31B82D8B9002B98FD = {
+						CreatedOnToolsVersion = 6.4;
+					};
+				};
+			};
+			buildConfigurationList = 9094E2BF1B82D8B9002B98FD /* Build configuration list for PBXProject "gears2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 9094E2BB1B82D8B9002B98FD;
+			productRefGroup = 9094E2C51B82D8B9002B98FD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9094E2C31B82D8B9002B98FD /* gears2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9094E2C01B82D8B9002B98FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9094E3141B82E07C002B98FD /* a3d_mat4f.c in Sources */,
+				9094E2F21B82E047002B98FD /* a3d_tex.c in Sources */,
+				9094E2F51B82E047002B98FD /* a3d_time.c in Sources */,
+				9094E31E1B82E07C002B98FD /* a3d_vec4f.c in Sources */,
+				9094E3191B82E07C002B98FD /* a3d_regionf.c in Sources */,
+				9094E31D1B82E07C002B98FD /* a3d_vec3f.c in Sources */,
+				9094E2EC1B82E047002B98FD /* a3d_GL.c in Sources */,
+				9094E2F71B82E047002B98FD /* a3d_workq.c in Sources */,
+				9094E2CF1B82DF8A002B98FD /* gears2-sdl2.c in Sources */,
+				9094E3261B82E3A5002B98FD /* gears_renderer.c in Sources */,
+				9094E3171B82E07C002B98FD /* a3d_quaternion.c in Sources */,
+				9094E2F31B82E047002B98FD /* a3d_texfont.c in Sources */,
+				9094E2F01B82E047002B98FD /* a3d_log.c in Sources */,
+				9094E3181B82E07C002B98FD /* a3d_ray.c in Sources */,
+				9094E3251B82E3A5002B98FD /* gear.c in Sources */,
+				9094E2F61B82E047002B98FD /* a3d_unit.c in Sources */,
+				9094E3151B82E07C002B98FD /* a3d_orientation.c in Sources */,
+				9094E31B1B82E07C002B98FD /* a3d_stack4f.c in Sources */,
+				9094E2F11B82E047002B98FD /* a3d_shader.c in Sources */,
+				9094E31C1B82E07C002B98FD /* a3d_vec2f.c in Sources */,
+				9094E2EF1B82E047002B98FD /* a3d_list.c in Sources */,
+				9094E2EE1B82E047002B98FD /* a3d_glsm.c in Sources */,
+				9094E3161B82E07C002B98FD /* a3d_plane.c in Sources */,
+				9094E2EB1B82E047002B98FD /* a3d_cache.c in Sources */,
+				9094E3121B82E07C002B98FD /* a3d_fplane.c in Sources */,
+				9094E3131B82E07C002B98FD /* a3d_mat3f.c in Sources */,
+				9094E2F41B82E047002B98FD /* a3d_texstring.c in Sources */,
+				9094E31A1B82E07C002B98FD /* a3d_sphere.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9094E2C91B82D8B9002B98FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		9094E2CA1B82D8B9002B98FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		9094E2CC1B82D8B9002B98FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		9094E2CD1B82D8B9002B98FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9094E2BF1B82D8B9002B98FD /* Build configuration list for PBXProject "gears2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9094E2C91B82D8B9002B98FD /* Debug */,
+				9094E2CA1B82D8B9002B98FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9094E2CB1B82D8B9002B98FD /* Build configuration list for PBXNativeTarget "gears2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9094E2CC1B82D8B9002B98FD /* Debug */,
+				9094E2CD1B82D8B9002B98FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9094E2BC1B82D8B9002B98FD /* Project object */;
+}
