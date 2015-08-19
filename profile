@@ -5,8 +5,8 @@
 export APP=GearsES2eclair
 
 # Update SDK/NDK to point to the Android SDK and NDK
-SDK=/home/jeffboody/android/android-sdk
-NDK=/home/jeffboody/android/android-ndk
+SDK=$HOME/android/android-sdk
+NDK=$HOME/android/android-ndk
 
 #-- DON'T CHANGE BELOW LINE --
 

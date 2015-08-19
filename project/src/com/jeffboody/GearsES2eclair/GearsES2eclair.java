@@ -249,6 +249,7 @@ public class GearsES2eclair extends Activity
 
 	static
 	{
+		System.loadLibrary("texgz");
 		System.loadLibrary("a3d");
 		System.loadLibrary("GearsES2eclair");
 	}

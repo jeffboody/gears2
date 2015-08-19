@@ -12,3 +12,6 @@
 [submodule "project/jni/net"]
 	path = project/jni/net
 	url = git://github.com/jeffboody/net
+[submodule "project/jni/texgz"]
+	path = project/jni/texgz
+	url = git://github.com/jeffboody/texgz.git
