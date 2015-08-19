@@ -69,6 +69,7 @@ typedef struct
 	double           t_last;
 	double           t_start;
 	int              frames;
+	float            last_fps;
 	a3d_texfont_t*   font;
 	a3d_texstring_t* fps;
 } gears_renderer_t;

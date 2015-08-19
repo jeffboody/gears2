@@ -60,11 +60,11 @@ static void gears_renderer_step(gears_renderer_t* self)
 	// don't update fps every frame
 	if(dt0 >= 1.0 * A3D_USEC)
 	{
-		double seconds = dt0 / A3D_USEC;
-		double fps     = (double) self->frames / seconds;
+		float seconds  = (float) (dt0/A3D_USEC);
+		self->last_fps = ((float) self->frames)/seconds;
 
-		// LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, fps);
-		a3d_texstring_printf(self->fps, "%i fps", (int) (fps + 0.5));
+		// LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, self->last_fps);
+		a3d_texstring_printf(self->fps, "%i fps", (int) (self->last_fps + 0.5));
 
 		self->t0     = t;
 		self->frames = 0;
@@ -74,6 +74,11 @@ static void gears_renderer_step(gears_renderer_t* self)
 	if(self->t_last > 0.0)
 	{
 		float dt_last = (float) ((t - self->t_last) / A3D_USEC);
+
+		if(self->last_fps > 30.0f)
+		{
+			dt_last = 1.0f/self->last_fps;
+		}
 	
 		// make the gears rotate at a constant rate
 		// red gear rotates at 1 revolution per 7 seconds
@@ -124,6 +129,7 @@ gears_renderer_t* gears_renderer_new(const char* font)
 	self->fps = a3d_texstring_new(self->font, 16, 48, A3D_TEXSTRING_BOTTOM_RIGHT, 1.0f, 1.0f, 0.235f, 1.0f);
 	if(self->fps == NULL)
 		goto fail_fps;
+	self->last_fps = 0.0f;
 
 	self->mvm_stack = a3d_stack4f_new();
 	if(self->mvm_stack == NULL)
