@@ -109,6 +109,7 @@ int main(int argc, const char** argv)
 	}
 
 	// success
+	gears_renderer_delete(&gears_renderer);
 	SDL_GL_DeleteContext(gContext);
 	SDL_DestroyWindow(gWindow);
 	SDL_Quit();
