@@ -92,13 +92,31 @@ int main(int argc, const char** argv)
 	                      SCREEN_HEIGHT);
 
 	// main loop
-	int running = 1;
+	int fullscreen = 0;
+	int running    = 1;
 	while(running)
 	{
 		SDL_Event e;
 		while(SDL_PollEvent(&e))
 		{
-			if(e.type == SDL_QUIT)
+			if(e.type == SDL_KEYDOWN)
+			{
+				if(e.key.keysym.sym == SDLK_F1)
+				{
+					int toggle = SDL_WINDOW_FULLSCREEN - fullscreen;
+					if(SDL_SetWindowFullscreen(gWindow, toggle) == 0)
+					{
+						// mac fails to return from fullscreen
+						// https://bugzilla.libsdl.org/show_bug.cgi?id=2479
+						fullscreen = toggle;
+					}
+				}
+				else if(e.key.keysym.sym == SDLK_ESCAPE)
+				{
+					running = 0;
+				}
+			}
+			else if(e.type == SDL_QUIT)
 			{
 				running = 0;
 			}
@@ -109,6 +127,10 @@ int main(int argc, const char** argv)
 	}
 
 	// success
+	if(fullscreen)
+	{
+		SDL_SetWindowFullscreen(gWindow, 0);
+	}
 	gears_renderer_delete(&gears_renderer);
 	SDL_GL_DeleteContext(gContext);
 	SDL_DestroyWindow(gWindow);
