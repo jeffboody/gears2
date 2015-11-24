@@ -29,6 +29,42 @@ Source Code
 	cd gears2
 	git submodule update --init
 
+Installing JDK on Ubuntu
+========================
+
+1. Download the "Java SE Development Kit"
+
+	jdk-xxxx-linux-x64.tar.gz
+
+2. Extract the jdk to /opt
+
+	<replace the xxxx as needed>
+	sudo mv jdk-xxxx-linux-x64.tar.gz /opt
+	sudo cd /opt
+	sudo tar -xzf jdk-xxxx-linux-x64.tar.gz
+	sudo rm jdk-xxxx-linux-x64.tar.gz
+	sudo ln -s jdkXXXX jdk
+
+3. Update alternatives
+
+	# install jdk
+	sudo update-alternatives --install /usr/bin/jar jar /opt/jdk/bin/jar 100
+	sudo update-alternatives --install /usr/bin/jarsigner jarsigner /opt/jdk/bin/jarsigner 100
+	sudo update-alternatives --install /usr/bin/java java /opt/jdk/bin/java 100
+	sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/bin/javac 100
+	sudo update-alternatives --install /usr/bin/javadoc javadoc /opt/jdk/bin/javadoc 100
+
+	# update defaults (if needed)
+	sudo update-alternatives --config jar
+	sudo update-alternatives --config jarsigner
+	sudo update-alternatives --config java
+	sudo update-alternatives --config javac
+	sudo update-alternatives --config javadoc
+
+4. Update dependencies for 32-bit libraries needed by aapt
+
+	sudo apt-get install gcc-multilib lib32z1 lib32stdc++6
+
 Building and Installing
 =======================
 
