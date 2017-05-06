@@ -23,8 +23,6 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_opengl.h>
 #include "gears_renderer.h"
 
 #define LOG_TAG "gears"
@@ -39,8 +37,8 @@ static gears_renderer_t* gears_renderer = NULL;
 static SDL_Window*   gWindow = NULL;
 static SDL_GLContext gContext;
 
-static const int SCREEN_WIDTH  = 1280;
-static const int SCREEN_HEIGHT = 720;
+static const int SCREEN_WIDTH  = 1920;
+static const int SCREEN_HEIGHT = 1080;
 
 /***********************************************************
 * main                                                     *
@@ -62,7 +60,9 @@ int main(int argc, const char** argv)
 	                           SDL_WINDOWPOS_UNDEFINED,
 	                           SCREEN_WIDTH,
 	                           SCREEN_HEIGHT,
-	                           SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+	                           SDL_WINDOW_FULLSCREEN |
+	                           SDL_WINDOW_OPENGL     |
+	                           SDL_WINDOW_SHOWN);
 	if(gWindow == NULL)
 	{
 		LOGE("SDL_CreateWindow failed: %s", SDL_GetError());
@@ -81,15 +81,27 @@ int main(int argc, const char** argv)
 		LOGW("SDL_GL_SetSwapInterval failed: %s", SDL_GetError());
 	}
 
+	// Initialize Glew
+	GLenum glew_error = glewInit();
+	if(GLEW_OK != glew_error)
+	{
+		LOGE("%s", glewGetErrorString(glew_error));
+		return EXIT_FAILURE;
+	}
+
 	// Initialize gears renderer
 	gears_renderer = gears_renderer_new("whitrabt.texgz");
 	if(gears_renderer == NULL)
 	{
 		goto fail_renderer;
 	}
+
+	int screen_width  = SCREEN_WIDTH;
+	int screen_height = SCREEN_HEIGHT;
+	SDL_GL_GetDrawableSize(gWindow, &screen_width, &screen_height);
 	gears_renderer_resize(gears_renderer,
-	                      SCREEN_WIDTH,
-	                      SCREEN_HEIGHT);
+	                      screen_width,
+	                      screen_height);
 
 	// main loop
 	int fullscreen = 0;

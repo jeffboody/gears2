@@ -31,7 +31,7 @@
 #include <assert.h>
 #include <math.h>
 #include "gears_renderer.h"
-#include "a3d/a3d_time.h"
+#include "a3d/a3d_timestamp.h"
 
 #define LOG_TAG "gears"
 #include "a3d/a3d_log.h"
@@ -53,14 +53,14 @@ static void gears_renderer_step(gears_renderer_t* self)
 	assert(self);
 	LOGD("debug");
 
-	double t     = a3d_utime();
+	double t     = a3d_timestamp();
 	double dt0   = t - self->t0;
 	++self->frames;
 
 	// don't update fps every frame
-	if(dt0 >= 1.0 * A3D_USEC)
+	if(dt0 >= 1.0)
 	{
-		float seconds  = (float) (dt0/A3D_USEC);
+		float seconds  = (float) dt0;
 		self->last_fps = ((float) self->frames)/seconds;
 
 		// LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, self->last_fps);
@@ -73,7 +73,7 @@ static void gears_renderer_step(gears_renderer_t* self)
 	// next frame
 	if(self->t_last > 0.0)
 	{
-		float dt_last = (float) ((t - self->t_last) / A3D_USEC);
+		float dt_last = (float) (t - self->t_last);
 
 		if(self->last_fps > 30.0f)
 		{
@@ -152,7 +152,7 @@ gears_renderer_t* gears_renderer_new(const char* font)
 
 	self->view_scale = 1.0f;
 	self->angle      = 0.0f;
-	self->t0         = a3d_utime();
+	self->t0         = a3d_timestamp();
 	self->t_last     = 0.0;
 	self->frames     = 0;
 	self->w          = 0;
