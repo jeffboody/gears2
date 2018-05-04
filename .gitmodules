@@ -1,0 +1,3 @@
+[submodule "app/src/main/java/com/jeffboody/a3d"]
+	path = app/src/main/java/com/jeffboody/a3d
+	url = git://github.com/jeffboody/a3d-java.git
