@@ -17,4 +17,4 @@
 	url = git://github.com/jeffboody/texgz.git
 [submodule "project/jni/libpak"]
 	path = project/jni/libpak
-	url = git://github.com:jeffboody/libpak.git
+	url = git://github.com/jeffboody/libpak.git
