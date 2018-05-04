@@ -11,20 +11,13 @@ cmake_minimum_required(VERSION 3.4.1)
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-             GearsES2eclair
+             gltest
 
-             # Sets the library as a shared library.
-             SHARED
+             # Sets the library as a static library.
+             STATIC
 
              # Provides a relative path to your source file(s).
-             src/main/cpp/android_jni.c )
-
-# Add submodules
-
-add_subdirectory("src/main/cpp/gltest")
-add_library( lib_gltest STATIC IMPORTED )
-set_target_properties( lib_gltest PROPERTIES IMPORTED_LOCATION
-                       ${lib_build_DIR}/${ANDROID_ABI}/lib_gltest.a )
+             gltest.c )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -51,9 +44,6 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-                       GearsES2eclair
-
-                       # Link the submodules
                        gltest
 
                        # Links the target library to the log library

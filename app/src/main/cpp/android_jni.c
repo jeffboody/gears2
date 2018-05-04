@@ -31,7 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <GLES2/gl2.h>
+#include "gltest/gltest.h"
 
 /***********************************************************
 * private                                                  *
@@ -55,8 +55,7 @@ JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeChangeSurf
 
 JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDraw(JNIEnv* env)
 {
-	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	gltest_clear();
 }
 
 JNIEXPORT int JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeClientVersion(JNIEnv* env)
