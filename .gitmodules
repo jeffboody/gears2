@@ -4,3 +4,6 @@
 [submodule "app/src/main/cpp/texgz"]
 	path = app/src/main/cpp/texgz
 	url = git://github.com/jeffboody/texgz
+[submodule "app/src/main/cpp/libpak"]
+	path = app/src/main/cpp/libpak
+	url = git://github.com/jeffboody/libpak.git
