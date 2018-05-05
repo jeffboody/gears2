@@ -1,0 +1,29 @@
+TARGET   = gears2-sdl2
+CLASSES  = gears_renderer gear
+SOURCE   = $(TARGET).c $(CLASSES:%=%.c)
+OBJECTS  = $(TARGET).o $(CLASSES:%=%.o)
+HFILES   = $(CLASSES:%=%.h)
+OPT      = -O2 -Wall
+CFLAGS   = $(OPT) -I. `sdl2-config --cflags` -DA3D_GL2
+LDFLAGS  = -lGLEW -lGL -lGLU -lm -L/usr/lib `sdl2-config --libs` -Llibpak -lpak -La3d -la3d -lz
+CCC      = gcc
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS) libpak a3d
+	$(CCC) $(OPT) $(OBJECTS) -o $@ $(LDFLAGS)
+
+.PHONY: libpak a3d
+
+libpak:
+	$(MAKE) -C libpak
+
+a3d:
+	$(MAKE) -C a3d -f Makefile.sdl
+
+clean:
+	rm -f $(OBJECTS) *~ \#*\# $(TARGET)
+	$(MAKE) -C libpak clean
+	$(MAKE) -C a3d -f Makefile.sdl clean
+
+$(OBJECTS): $(HFILES)

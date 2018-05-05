@@ -31,11 +31,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "gltest/gltest.h"
+#include "gears_renderer.h"
+
+#define LOG_TAG "gears"
+#include "a3d/a3d_log.h"
 
 /***********************************************************
 * private                                                  *
 ***********************************************************/
+
+static gears_renderer_t* gears_renderer = NULL;
 
 /***********************************************************
 * public                                                   *
@@ -43,38 +48,100 @@
 
 JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeCreate(JNIEnv* env)
 {
+	assert(env);
+	LOGD("debug");
+
+	if(gears_renderer != NULL)
+	{
+		LOGE("renderer already exists");
+		return;
+	}
+
+	if(a3d_GL_load() == 0)
+	{
+		LOGE("a3d_GL_load failed");
+		return;
+	}
+
+	gears_renderer = gears_renderer_new("/data/data/com.jeffboody.GearsES2eclair/files/whitrabt.tex.gz");
+	if(gears_renderer == NULL)
+	{
+		a3d_GL_unload();
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDestroy(JNIEnv* env)
 {
+	assert(env);
+	LOGD("debug");
+
+	if(gears_renderer)
+	{
+		gears_renderer_delete(&gears_renderer);
+		a3d_GL_unload();
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeChangeSurface(JNIEnv* env, jobject  obj, jint w, jint h)
 {
+	assert(env);
+	LOGD("debug");
+
+	if(gears_renderer)
+	{
+		gears_renderer_resize(gears_renderer, w, h);
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDraw(JNIEnv* env)
 {
-	gltest_clear();
+	assert(env);
+	LOGD("debug");
+
+	if(gears_renderer)
+	{
+		a3d_GL_frame_begin();
+		gears_renderer_draw(gears_renderer);
+		a3d_GL_frame_end();
+	}
 }
 
 JNIEXPORT int JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeClientVersion(JNIEnv* env)
 {
 	assert(env);
+	LOGD("debug");
 	return 2;
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRotate(JNIEnv* env, jobject  obj, jfloat dx, jfloat dy)
 {
 	assert(env);
+	LOGD("debug dx=%f, dy=%f", (float) dx, (float) dy);
+
+	if(gears_renderer)
+	{
+		gears_renderer_rotate(gears_renderer, (float) dx, (float) dy);
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeScale(JNIEnv* env, jobject  obj, jfloat ds)
 {
 	assert(env);
+	LOGD("debug ds=%f", (float) ds);
+
+	if(gears_renderer)
+	{
+		gears_renderer_scale(gears_renderer, (float) ds);
+	}
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRoll(JNIEnv* env, jobject  obj, jfloat roll)
 {
 	assert(env);
+	LOGD("debug roll=%f", (float) roll);
+
+	if(gears_renderer)
+	{
+		gears_renderer_roll(gears_renderer, (float) roll);
+	}
 }

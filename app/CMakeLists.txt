@@ -9,15 +9,19 @@ if(TEXGZ_USE_JPEG)
         libmyjpeg)
 endif()
 
+# Compiler options
+add_compile_options(-DA3D_GLESv2)
+
 # Main library
 add_library(GearsES2eclair
             SHARED
 
             # Source
-            src/main/cpp/android_jni.c)
+            src/main/cpp/android_jni.c
+            src/main/cpp/gear.c
+            src/main/cpp/gears_renderer.c)
 
 # Submodules
-add_subdirectory("src/main/cpp/gltest")
 add_subdirectory("src/main/cpp/a3d")
 add_subdirectory("src/main/cpp/libpak")
 add_subdirectory("src/main/cpp/texgz")
@@ -27,7 +31,6 @@ target_link_libraries(GearsES2eclair
 
                       # Submodule libraries
                       ${LIBS_JPEG}
-                      gltest
                       a3d
                       pak
                       texgz
