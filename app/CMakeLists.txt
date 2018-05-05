@@ -18,6 +18,7 @@ add_library(GearsES2eclair
 
 # Submodules
 add_subdirectory("src/main/cpp/gltest")
+add_subdirectory("src/main/cpp/a3d")
 add_subdirectory("src/main/cpp/libpak")
 add_subdirectory("src/main/cpp/texgz")
 
@@ -27,6 +28,7 @@ target_link_libraries(GearsES2eclair
                       # Submodule libraries
                       ${LIBS_JPEG}
                       gltest
+                      a3d
                       pak
                       texgz
 
