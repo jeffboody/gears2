@@ -10,3 +10,6 @@
 [submodule "app/src/main/cpp/a3d"]
 	path = app/src/main/cpp/a3d
 	url = git://github.com/jeffboody/a3d-native.git
+[submodule "app/src/main/cpp/libexpat"]
+	path = app/src/main/cpp/libexpat
+	url = git@github.com:jeffboody/libexpat.git

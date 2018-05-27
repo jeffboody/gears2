@@ -90,7 +90,7 @@ int main(int argc, const char** argv)
 	}
 
 	// Initialize gears renderer
-	gears_renderer = gears_renderer_new("whitrabt.texgz");
+	gears_renderer = gears_renderer_new();
 	if(gears_renderer == NULL)
 	{
 		goto fail_renderer;

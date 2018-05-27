@@ -25,6 +25,7 @@ add_library(GearsES2eclair
 add_subdirectory("src/main/cpp/a3d")
 add_subdirectory("src/main/cpp/libpak")
 add_subdirectory("src/main/cpp/texgz")
+add_subdirectory("src/main/cpp/libexpat/expat/lib")
 
 # Linking
 target_link_libraries(GearsES2eclair
@@ -32,6 +33,7 @@ target_link_libraries(GearsES2eclair
                       # Submodule libraries
                       ${LIBS_JPEG}
                       a3d
+                      expat
                       pak
                       texgz
 

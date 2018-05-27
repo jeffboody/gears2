@@ -34,8 +34,6 @@
 #include "a3d/math/a3d_quaternion.h"
 #include "a3d/math/a3d_mat4f.h"
 #include "a3d/math/a3d_stack4f.h"
-#include "a3d/a3d_texfont.h"
-#include "a3d/a3d_texstring.h"
 #include "gear.h"
 
 /***********************************************************
@@ -65,16 +63,14 @@ typedef struct
 	a3d_stack4f_t* mvm_stack;
 
 	// fps state
-	double           t0;
-	double           t_last;
-	double           t_start;
-	int              frames;
-	float            last_fps;
-	a3d_texfont_t*   font;
-	a3d_texstring_t* fps;
+	double t0;
+	double t_last;
+	double t_start;
+	int    frames;
+	float  last_fps;
 } gears_renderer_t;
 
-gears_renderer_t* gears_renderer_new(const char* font);
+gears_renderer_t* gears_renderer_new(void);
 void              gears_renderer_delete(gears_renderer_t** _self);
 void              gears_renderer_resize(gears_renderer_t* self, int w, int h);
 void              gears_renderer_rotate(gears_renderer_t* self, float dx, float dy);

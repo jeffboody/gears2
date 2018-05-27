@@ -63,7 +63,7 @@ JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeCreate(JNI
 		return;
 	}
 
-	gears_renderer = gears_renderer_new("/data/data/com.jeffboody.GearsES2eclair/files/whitrabt.tex.gz");
+	gears_renderer = gears_renderer_new();
 	if(gears_renderer == NULL)
 	{
 		a3d_GL_unload();
@@ -111,6 +111,46 @@ JNIEXPORT int JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeClientVersi
 	assert(env);
 	LOGD("debug");
 	return 2;
+}
+
+JNIEXPORT int JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeRed(JNIEnv* env)
+{
+	assert(env);
+	LOGD("debug");
+	return 5;
+}
+
+JNIEXPORT int JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeGreen(JNIEnv* env)
+{
+	assert(env);
+	LOGD("debug");
+	return 6;
+}
+
+JNIEXPORT int JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeBlue(JNIEnv* env)
+{
+	assert(env);
+	LOGD("debug");
+	return 5;
+}
+
+JNIEXPORT int JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeAlpha(JNIEnv* env)
+{
+	assert(env);
+	LOGD("debug");
+	return 0;
+}
+
+JNIEXPORT int JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDepth(JNIEnv* env)
+{
+	assert(env);
+	LOGD("debug");
+	return 16;
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRotate(JNIEnv* env, jobject  obj, jfloat dx, jfloat dy)

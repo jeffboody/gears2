@@ -63,8 +63,7 @@ static void gears_renderer_step(gears_renderer_t* self)
 		float seconds  = (float) dt0;
 		self->last_fps = ((float) self->frames)/seconds;
 
-		// LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, self->last_fps);
-		a3d_texstring_printf(self->fps, "%i fps", (int) (self->last_fps + 0.5));
+		LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, self->last_fps);
 
 		self->t0     = t;
 		self->frames = 0;
@@ -95,7 +94,7 @@ static void gears_renderer_step(gears_renderer_t* self)
 * public                                                   *
 ***********************************************************/
 
-gears_renderer_t* gears_renderer_new(const char* font)
+gears_renderer_t* gears_renderer_new(void)
 {
 	LOGD("debug");
 
@@ -121,16 +120,6 @@ gears_renderer_t* gears_renderer_new(const char* font)
 	self->gear3 = gear_new(&BLUE, 1.3f, 2.0f, 0.5f, 10, 0.7f);
 	if(self->gear3 == NULL) goto fail_gear3;
 
-	// create the fps counter
-	self->font = a3d_texfont_new(font);
-	if(self->font == NULL)
-		goto fail_font;
-
-	self->fps = a3d_texstring_new(self->font, 16, 48, A3D_TEXSTRING_BOTTOM_RIGHT, 1.0f, 1.0f, 0.235f, 1.0f);
-	if(self->fps == NULL)
-		goto fail_fps;
-	self->last_fps = 0.0f;
-
 	self->mvm_stack = a3d_stack4f_new();
 	if(self->mvm_stack == NULL)
 		goto fail_stack;
@@ -150,6 +139,7 @@ gears_renderer_t* gears_renderer_new(const char* font)
 	a3d_quaternion_loadeuler(&qy,   0.0f, -30.0f, 0.0f);
 	a3d_quaternion_rotateq_copy(&qy, &qx, &self->view_q);
 
+	self->last_fps = 0.0f;
 	self->view_scale = 1.0f;
 	self->angle      = 0.0f;
 	self->t0         = a3d_timestamp();
@@ -171,10 +161,6 @@ gears_renderer_t* gears_renderer_new(const char* font)
 	fail_mutex_init:
 		a3d_stack4f_delete(&self->mvm_stack);
 	fail_stack:
-		a3d_texstring_delete(&self->fps);
-	fail_fps:
-		a3d_texfont_delete(&self->font);
-	fail_font:
 		gear_delete(&self->gear3);
 	fail_gear3:
 		gear_delete(&self->gear2);
@@ -197,8 +183,6 @@ void gears_renderer_delete(gears_renderer_t** _self)
 
 		pthread_mutex_destroy(&self->mutex);
 		a3d_stack4f_delete(&self->mvm_stack);
-		a3d_texstring_delete(&self->fps);
-		a3d_texfont_delete(&self->font);
 		gear_delete(&self->gear3);
 		gear_delete(&self->gear2);
 		gear_delete(&self->gear1);
@@ -345,9 +329,6 @@ void gears_renderer_draw(gears_renderer_t* self)
 	a3d_stack4f_pop(self->mvm_stack, &self->mvm);
 
 	gears_renderer_step(self);
-
-	// draw fps
-	a3d_texstring_draw(self->fps, (float) self->w - 16.0f, (float) self->h - 16.0f, self->w, self->h);
 
 	A3D_GL_GETERROR();
 }
