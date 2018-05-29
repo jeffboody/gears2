@@ -20,7 +20,8 @@ add_library(GearsES2eclair
             src/main/cpp/android_jni.c
             src/main/cpp/gear.c
             src/main/cpp/gears_renderer.c
-            src/main/cpp/gears_overlay.c)
+            src/main/cpp/gears_overlay.c
+            src/main/cpp/gears_layerHud.c)
 
 # Submodules
 add_subdirectory("src/main/cpp/a3d")

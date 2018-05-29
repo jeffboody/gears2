@@ -24,18 +24,18 @@
 #ifndef gears_overlay_H
 #define gears_overlay_H
 
+#include "gears_layerHud.h"
 #include "a3d/widget/a3d_font.h"
 #include "a3d/widget/a3d_screen.h"
 #include "a3d/widget/a3d_layer.h"
-#include "a3d/widget/a3d_text.h"
 
-typedef struct
+typedef struct gears_overlay_s
 {
-	a3d_font_t*    font_regular;
-	a3d_font_t*    font_bold;
-	a3d_screen_t*  screen;
-	a3d_layer_t*   layer_show;
-	a3d_text_t*    text_fps;
+	a3d_font_t*       font_regular;
+	a3d_font_t*       font_bold;
+	a3d_screen_t*     screen;
+	a3d_layer_t*      layer_show;
+	gears_layerHud_t* layer_hud;
 } gears_overlay_t;
 
 gears_overlay_t* gears_overlay_new(void);
@@ -43,6 +43,6 @@ void             gears_overlay_delete(gears_overlay_t** _self);
 void             gears_overlay_draw(gears_overlay_t* self,
                                     int w, int h, float density);
 void             gears_overlay_updateFps(gears_overlay_t* self,
-                                         float fps);
+                                         int fps);
 
 #endif

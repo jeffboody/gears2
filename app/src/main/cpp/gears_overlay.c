@@ -54,14 +54,6 @@ gears_overlay_t* gears_overlay_new(void)
 		.a = 0.0f
 	};
 
-	a3d_vec4f_t white =
-	{
-		.r = 1.0f,
-		.g = 1.0f,
-		.b = 1.0f,
-		.a = 1.0f
-	};
-
 	gears_overlay_t* self = (gears_overlay_t*)
 	                        malloc(sizeof(gears_overlay_t));
 	if(self == NULL)
@@ -107,8 +99,7 @@ gears_overlay_t* gears_overlay_new(void)
 	                                 A3D_WIDGET_WRAP_STRETCH_PARENT,
 	                                 A3D_WIDGET_STRETCH_ASPECT,
 	                                 1.0f,
-	                                 // TODO - A3D_WIDGET_BORDER_NONE,
-	                                 A3D_WIDGET_BORDER_LARGE,
+	                                 A3D_WIDGET_BORDER_NONE,
 	                                 A3D_WIDGET_LINE_NONE,
 	                                 &clear, &clear,
 	                                 A3D_LAYER_MODE_FRONT);
@@ -117,32 +108,22 @@ gears_overlay_t* gears_overlay_new(void)
 		goto fail_layer_show;
 	}
 
-	self->text_fps = a3d_text_new(self->screen,
-	                              0,
-	                              A3D_WIDGET_ANCHOR_BR,
-	                              A3D_WIDGET_BORDER_NONE,
-	                              A3D_WIDGET_LINE_NONE,
-	                              A3D_TEXT_STYLE_SMALL,
-	                              &clear, &clear, &white,
-	                              16,
-	                              NULL,
-	                              NULL);
-	if(self->text_fps == NULL)
+	self->layer_hud = gears_layerHud_new(self);
+	if(self->layer_hud == NULL)
 	{
-		goto fail_text_fps;
+		goto fail_layer_hud;
 	}
-	a3d_text_printf(self->text_fps, "%s", "0 fps");
 
 	a3d_screen_top(self->screen,
 	               (a3d_widget_t*) self->layer_show);
 	a3d_layer_bringFront(self->layer_show,
-	                     (a3d_widget_t*) self->text_fps);
+	                     (a3d_widget_t*) self->layer_hud);
 
 	// success
 	return self;
 
 	// failure
-	fail_text_fps:
+	fail_layer_hud:
 		a3d_layer_delete(&self->layer_show);
 	fail_layer_show:
 		a3d_screen_delete(&self->screen);
@@ -162,7 +143,7 @@ void gears_overlay_delete(gears_overlay_t** _self)
 	gears_overlay_t* self = *_self;
 	if(self)
 	{
-		a3d_text_delete(&self->text_fps);
+		gears_layerHud_delete(&self->layer_hud);
 		a3d_layer_delete(&self->layer_show);
 		a3d_screen_delete(&self->screen);
 		a3d_font_delete(&self->font_bold);
@@ -184,10 +165,9 @@ void gears_overlay_draw(gears_overlay_t* self,
 	glEnable(GL_DEPTH_TEST);
 }
 
-void gears_overlay_updateFps(gears_overlay_t* self, float fps)
+void gears_overlay_updateFps(gears_overlay_t* self, int fps)
 {
 	assert(self);
 
-	a3d_text_printf(self->text_fps, "%i fps",
-	                (int) (fps + 0.5f));
+	gears_layerHud_updateFps(self->layer_hud, fps);
 }

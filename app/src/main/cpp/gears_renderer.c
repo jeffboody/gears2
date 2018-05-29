@@ -64,7 +64,7 @@ static void gears_renderer_step(gears_renderer_t* self)
 		self->last_fps = ((float) self->frames)/seconds;
 
 		//LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, self->last_fps);
-		gears_overlay_updateFps(self->overlay, self->last_fps);
+		gears_overlay_updateFps(self->overlay, (int) (self->last_fps + 0.5f));
 
 		self->t0     = t;
 		self->frames = 0;
