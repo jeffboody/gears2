@@ -74,7 +74,7 @@ public class GearsES2eclair extends Activity
 		super.onCreate(savedInstanceState);
 
 		A3DResource r = new A3DResource(this, R.raw.timestamp);
-		r.Add(R.raw.whitrabt, "whitrabt.tex.gz");
+		r.Add(R.raw.resource, "resource.pak");
 
 		// Make window fullscreen
 		requestWindowFeature(Window.FEATURE_NO_TITLE);

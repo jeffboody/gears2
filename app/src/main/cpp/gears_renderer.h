@@ -34,6 +34,7 @@
 #include "a3d/math/a3d_quaternion.h"
 #include "a3d/math/a3d_mat4f.h"
 #include "a3d/math/a3d_stack4f.h"
+#include "gears_overlay.h"
 #include "gear.h"
 
 /***********************************************************
@@ -68,6 +69,9 @@ typedef struct
 	double t_start;
 	int    frames;
 	float  last_fps;
+
+	// overlay
+	gears_overlay_t* overlay;
 } gears_renderer_t;
 
 gears_renderer_t* gears_renderer_new(void);

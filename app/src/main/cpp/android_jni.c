@@ -93,6 +93,29 @@ JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeChangeSurf
 	}
 }
 
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeChangeDensity(JNIEnv* env, jobject obj, jfloat density)
+{
+	assert(env);
+	LOGD("debug");
+
+	// TODO - NativeChangeDensity
+}
+
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeResume(JNIEnv* env)
+{
+	assert(env);
+	LOGD("debug");
+}
+
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativePause(JNIEnv* env)
+{
+	assert(env);
+	LOGD("debug");
+}
+
 JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDraw(JNIEnv* env)
 {
 	assert(env);
@@ -151,6 +174,20 @@ Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDepth(JNIEnv* env)
 	assert(env);
 	LOGD("debug");
 	return 16;
+}
+
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DSurfaceView_NativeTouch(JNIEnv* env, jobject obj,
+                                                  jint action, jint count,
+                                                  jfloat x0, jfloat y0,
+                                                  jfloat x1, jfloat y1,
+                                                  jfloat x2, jfloat y2,
+                                                  jfloat x3, jfloat y3,
+                                                  jdouble ts)
+{
+	assert(env);
+
+	// TODO - NativeTouch
 }
 
 JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRotate(JNIEnv* env, jobject  obj, jfloat dx, jfloat dy)

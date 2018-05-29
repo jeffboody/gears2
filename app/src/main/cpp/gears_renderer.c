@@ -63,7 +63,8 @@ static void gears_renderer_step(gears_renderer_t* self)
 		float seconds  = (float) dt0;
 		self->last_fps = ((float) self->frames)/seconds;
 
-		LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, self->last_fps);
+		//LOGI("%i frames in %.2lf seconds = %.2lf FPS", self->frames, seconds, self->last_fps);
+		gears_overlay_updateFps(self->overlay, self->last_fps);
 
 		self->t0     = t;
 		self->frames = 0;
@@ -132,6 +133,12 @@ gears_renderer_t* gears_renderer_new(void)
 		goto fail_mutex_init;
 	}
 
+	self->overlay = gears_overlay_new();
+	if(self->overlay == NULL)
+	{
+		goto fail_overlay;
+	}
+
 	// initialize state
 	a3d_quaternion_t qx;
 	a3d_quaternion_t qy;
@@ -158,6 +165,8 @@ gears_renderer_t* gears_renderer_new(void)
 	return self;
 
 	// failure
+	fail_overlay:
+		pthread_mutex_destroy(&self->mutex);
 	fail_mutex_init:
 		a3d_stack4f_delete(&self->mvm_stack);
 	fail_stack:
@@ -181,6 +190,7 @@ void gears_renderer_delete(gears_renderer_t** _self)
 	{
 		LOGD("debug");
 
+		gears_overlay_delete(&self->overlay);
 		pthread_mutex_destroy(&self->mutex);
 		a3d_stack4f_delete(&self->mvm_stack);
 		gear_delete(&self->gear3);
@@ -328,6 +338,7 @@ void gears_renderer_draw(gears_renderer_t* self)
 
 	a3d_stack4f_pop(self->mvm_stack, &self->mvm);
 
+	gears_overlay_draw(self->overlay, self->w, self->h, 3.0f);
 	gears_renderer_step(self);
 
 	A3D_GL_GETERROR();
