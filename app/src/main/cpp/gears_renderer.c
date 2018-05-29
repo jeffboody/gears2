@@ -69,7 +69,7 @@ static void gears_renderer_step(gears_renderer_t* self)
 		self->t0     = t;
 		self->frames = 0;
 	}
-	
+
 	// next frame
 	if(self->t_last > 0.0)
 	{
@@ -79,7 +79,7 @@ static void gears_renderer_step(gears_renderer_t* self)
 		{
 			dt_last = 1.0f/self->last_fps;
 		}
-	
+
 		// make the gears rotate at a constant rate
 		// red gear rotates at 1 revolution per 7 seconds
 		self->angle += 360.0f * dt_last / 7.0f;
@@ -89,6 +89,51 @@ static void gears_renderer_step(gears_renderer_t* self)
 		}
 	}
 	self->t_last = t;
+}
+
+static void gears_renderer_rotate(gears_renderer_t* self,
+                                  float dx, float dy)
+{
+	assert(self);
+	LOGD("debug dx=%f, dy=%f", dx, dy);
+
+	if(pthread_mutex_lock(&self->mutex) != 0)
+		LOGE("pthread_mutex_lock failed");
+
+	// rotating around x-axis is equivalent to moving up-and-down on touchscreen
+	// rotating around y-axis is equivalent to moving left-and-right on touchscreen
+	// 360 degrees is equivalent to moving completly across the touchscreen
+	float   w  = (float) self->w;
+	float   h  = (float) self->h;
+	GLfloat rx = 360.0f * dy / h;
+	GLfloat ry = 360.0f * dx / w;
+	a3d_quaternion_t q;
+	a3d_quaternion_loadeuler(&q, rx, ry, 0.0f);
+	a3d_quaternion_rotateq(&self->view_q, &q);
+
+	if(pthread_mutex_unlock(&self->mutex) != 0)
+		LOGE("pthread_mutex_unlock failed");
+}
+
+static void gears_renderer_scale(gears_renderer_t* self,
+                                 float scale)
+{
+	assert(self);
+	LOGD("debug ds=%f", ds);
+
+	if(pthread_mutex_lock(&self->mutex) != 0)
+		LOGE("pthread_mutex_lock failed");
+
+	// scale range
+	float min = 0.25f;
+	float max = 2.0f;
+
+	self->view_scale *= scale;
+	if(self->view_scale < min)  self->view_scale = min;
+	if(self->view_scale >= max) self->view_scale = max;
+
+	if(pthread_mutex_unlock(&self->mutex) != 0)
+		LOGE("pthread_mutex_unlock failed");
 }
 
 /***********************************************************
@@ -142,8 +187,8 @@ gears_renderer_t* gears_renderer_new(void)
 	// initialize state
 	a3d_quaternion_t qx;
 	a3d_quaternion_t qy;
-	a3d_quaternion_loadeuler(&qx, -20.0f,   0.0f, 0.0f);
-	a3d_quaternion_loadeuler(&qy,   0.0f, -30.0f, 0.0f);
+	a3d_quaternion_loadeuler(&qx, 20.0f,  0.0f, 0.0f);
+	a3d_quaternion_loadeuler(&qy,  0.0f, 30.0f, 0.0f);
 	a3d_quaternion_rotateq_copy(&qy, &qx, &self->view_q);
 
 	self->last_fps = 0.0f;
@@ -156,6 +201,11 @@ gears_renderer_t* gears_renderer_new(void)
 	self->h          = 0;
 	a3d_mat4f_identity(&self->pm);
 	a3d_mat4f_identity(&self->mvm);
+
+	self->touch_state = GEARS_TOUCH_STATE_INIT;
+	self->touch_x1    = 0.0f;
+	self->touch_y1    = 0.0f;
+	self->touch_ds    = 1.0f;
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -217,67 +267,6 @@ void gears_renderer_resize(gears_renderer_t* self, GLsizei w, GLsizei h)
 		self->h = h;
 		glViewport(0, 0, w, h);
 	}
-}
-
-void gears_renderer_rotate(gears_renderer_t* self, float dx, float dy)
-{
-	assert(self);
-	LOGD("debug dx=%f, dy=%f", dx, dy);
-
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
-
-	// rotating around x-axis is equivalent to moving up-and-down on touchscreen
-	// rotating around y-axis is equivalent to moving left-and-right on touchscreen
-	// 360 degrees is equivalent to moving completly across the touchscreen
-	float   w  = (float) self->w;
-	float   h  = (float) self->h;
-	GLfloat rx = 360.0f * dy / h;
-	GLfloat ry = 360.0f * dx / w;
-	a3d_quaternion_t q;
-	a3d_quaternion_loadeuler(&q, -rx, -ry, 0.0f);
-	a3d_quaternion_rotateq(&self->view_q, &q);
-
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
-}
-
-void gears_renderer_scale(gears_renderer_t* self, float ds)
-{
-	assert(self);
-	LOGD("debug ds=%f", ds);
-
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
-
-	// scale range
-	float min = 0.25f;
-	float max = 2.0f;
-
-	float w = (float) self->w;
-	float h = (float) self->h;
-	self->view_scale -= ds / sqrtf(w*w + h*h);
-	if(self->view_scale < min)  self->view_scale = min;
-	if(self->view_scale >= max) self->view_scale = max;
-
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
-}
-
-void gears_renderer_roll(gears_renderer_t* self, float roll)
-{
-	assert(self);
-	LOGD("debug roll=%f", roll);
-
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
-
-	a3d_quaternion_t q;
-	a3d_quaternion_loadeuler(&q, 0.0f, 0.0f, -roll);
-	a3d_quaternion_rotateq(&self->view_q, &q);
-
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
 }
 
 void gears_renderer_draw(gears_renderer_t* self)
@@ -342,4 +331,59 @@ void gears_renderer_draw(gears_renderer_t* self)
 	gears_renderer_step(self);
 
 	A3D_GL_GETERROR();
+}
+
+void gears_renderer_touch(gears_renderer_t* self,
+                          int action, int count, double ts,
+                          float x0, float y0,
+                          float x1, float y1,
+                          float x2, float y2,
+                          float x3, float y3)
+{
+	assert(self);
+
+	if(action == GEARS_TOUCH_ACTION_UP)
+	{
+		// Do nothing
+		self->touch_state = GEARS_TOUCH_STATE_INIT;
+	}
+	else if(count == 1)
+	{
+		if(self->touch_state == GEARS_TOUCH_STATE_ROTATE)
+		{
+			float dx = x0 - self->touch_x1;
+			float dy = y0 - self->touch_y1;
+			gears_renderer_rotate(self, dx, dy);
+			self->touch_x1 = x0;
+			self->touch_y1 = y0;
+		}
+		else
+		{
+			self->touch_x1    = x0;
+			self->touch_y1    = y0;
+			self->touch_state = GEARS_TOUCH_STATE_ROTATE;
+		}
+	}
+	else if(count == 2)
+	{
+		if(self->touch_state == GEARS_TOUCH_STATE_ZOOM)
+		{
+			float dx = fabsf(x1 - x0);
+			float dy = fabsf(y1 - y0);
+			float ds = sqrtf(dx*dx + dy*dy);
+
+			gears_renderer_scale(self, ds/self->touch_ds);
+
+			self->touch_ds = ds;
+		}
+		else
+		{
+			float dx = fabsf(x1 - x0);
+			float dy = fabsf(y1 - y0);
+			float ds = sqrtf(dx*dx + dy*dy);
+
+			self->touch_ds    = ds;
+			self->touch_state = GEARS_TOUCH_STATE_ZOOM;
+		}
+	}
 }

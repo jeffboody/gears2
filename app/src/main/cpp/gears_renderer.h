@@ -37,6 +37,14 @@
 #include "gears_overlay.h"
 #include "gear.h"
 
+#define GEARS_TOUCH_ACTION_DOWN 0
+#define GEARS_TOUCH_ACTION_UP   1
+#define GEARS_TOUCH_ACTION_MOVE 2
+
+#define GEARS_TOUCH_STATE_INIT   0
+#define GEARS_TOUCH_STATE_ROTATE 1
+#define GEARS_TOUCH_STATE_ZOOM   2
+
 /***********************************************************
 * public                                                   *
 ***********************************************************/
@@ -70,6 +78,12 @@ typedef struct
 	int    frames;
 	float  last_fps;
 
+	// touch state
+	int   touch_state;
+	float touch_x1;
+	float touch_y1;
+	float touch_ds;
+
 	// overlay
 	gears_overlay_t* overlay;
 } gears_renderer_t;
@@ -77,9 +91,12 @@ typedef struct
 gears_renderer_t* gears_renderer_new(void);
 void              gears_renderer_delete(gears_renderer_t** _self);
 void              gears_renderer_resize(gears_renderer_t* self, int w, int h);
-void              gears_renderer_rotate(gears_renderer_t* self, float dx, float dy);
-void              gears_renderer_scale(gears_renderer_t* self, float ds);
-void              gears_renderer_roll(gears_renderer_t* self, float roll);
 void              gears_renderer_draw(gears_renderer_t* self);
+void              gears_renderer_touch(gears_renderer_t* self,
+                                       int action, int count, double ts,
+                                       float x0, float y0,
+                                       float x1, float y1,
+                                       float x2, float y2,
+                                       float x3, float y3);
 
 #endif

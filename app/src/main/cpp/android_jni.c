@@ -192,41 +192,11 @@ Java_com_jeffboody_a3d_A3DSurfaceView_NativeTouch(JNIEnv* env, jobject obj,
 {
 	assert(env);
 
-	// TODO - NativeTouch
-}
-
-JNIEXPORT void JNICALL
-Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRotate(JNIEnv* env, jobject  obj, jfloat dx, jfloat dy)
-{
-	assert(env);
-	LOGD("debug dx=%f, dy=%f", (float) dx, (float) dy);
-
 	if(gears_renderer)
 	{
-		gears_renderer_rotate(gears_renderer, (float) dx, (float) dy);
-	}
-}
-
-JNIEXPORT void JNICALL
-Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeScale(JNIEnv* env, jobject  obj, jfloat ds)
-{
-	assert(env);
-	LOGD("debug ds=%f", (float) ds);
-
-	if(gears_renderer)
-	{
-		gears_renderer_scale(gears_renderer, (float) ds);
-	}
-}
-
-JNIEXPORT void JNICALL
-Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRoll(JNIEnv* env, jobject  obj, jfloat roll)
-{
-	assert(env);
-	LOGD("debug roll=%f", (float) roll);
-
-	if(gears_renderer)
-	{
-		gears_renderer_roll(gears_renderer, (float) roll);
+		gears_renderer_touch(gears_renderer,
+		                     action, count, ts,
+		                     x0, y0, x1, y1,
+		                     x2, y2, x3, y3);
 	}
 }
