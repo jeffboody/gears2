@@ -46,7 +46,8 @@ static gears_renderer_t* gears_renderer = NULL;
 * public                                                   *
 ***********************************************************/
 
-JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeCreate(JNIEnv* env)
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeCreate(JNIEnv* env)
 {
 	assert(env);
 	LOGD("debug");
@@ -70,7 +71,8 @@ JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeCreate(JNI
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDestroy(JNIEnv* env)
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDestroy(JNIEnv* env)
 {
 	assert(env);
 	LOGD("debug");
@@ -82,7 +84,8 @@ JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDestroy(JN
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeChangeSurface(JNIEnv* env, jobject  obj, jint w, jint h)
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeChangeSurface(JNIEnv* env, jobject obj, jint w, jint h)
 {
 	assert(env);
 	LOGD("debug");
@@ -116,7 +119,8 @@ Java_com_jeffboody_a3d_A3DNativeRenderer_NativePause(JNIEnv* env)
 	LOGD("debug");
 }
 
-JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDraw(JNIEnv* env)
+JNIEXPORT void JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDraw(JNIEnv* env)
 {
 	assert(env);
 	LOGD("debug");
@@ -129,7 +133,8 @@ JNIEXPORT void JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDraw(JNIEn
 	}
 }
 
-JNIEXPORT int JNICALL Java_com_jeffboody_a3d_A3DNativeRenderer_NativeClientVersion(JNIEnv* env)
+JNIEXPORT int JNICALL
+Java_com_jeffboody_a3d_A3DNativeRenderer_NativeClientVersion(JNIEnv* env)
 {
 	assert(env);
 	LOGD("debug");
@@ -190,7 +195,8 @@ Java_com_jeffboody_a3d_A3DSurfaceView_NativeTouch(JNIEnv* env, jobject obj,
 	// TODO - NativeTouch
 }
 
-JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRotate(JNIEnv* env, jobject  obj, jfloat dx, jfloat dy)
+JNIEXPORT void JNICALL
+Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRotate(JNIEnv* env, jobject  obj, jfloat dx, jfloat dy)
 {
 	assert(env);
 	LOGD("debug dx=%f, dy=%f", (float) dx, (float) dy);
@@ -201,7 +207,8 @@ JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRo
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeScale(JNIEnv* env, jobject  obj, jfloat ds)
+JNIEXPORT void JNICALL
+Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeScale(JNIEnv* env, jobject  obj, jfloat ds)
 {
 	assert(env);
 	LOGD("debug ds=%f", (float) ds);
@@ -212,7 +219,8 @@ JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeSc
 	}
 }
 
-JNIEXPORT void JNICALL Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRoll(JNIEnv* env, jobject  obj, jfloat roll)
+JNIEXPORT void JNICALL
+Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeRoll(JNIEnv* env, jobject  obj, jfloat roll)
 {
 	assert(env);
 	LOGD("debug roll=%f", (float) roll);
