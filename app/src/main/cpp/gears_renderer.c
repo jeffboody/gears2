@@ -281,6 +281,10 @@ void gears_renderer_resize(gears_renderer_t* self, GLsizei w, GLsizei h)
 	{
 		// no resize
 	}
+	else if(w*h == 0)
+	{
+		// ignore
+	}
 	else
 	{
 		LOGI("%ix%i", w, h);
@@ -404,7 +408,7 @@ void gears_renderer_touch(gears_renderer_t* self,
 			self->touch_x1 = x0;
 			self->touch_y1 = y0;
 		}
-		else
+		else if(action == GEARS_TOUCH_ACTION_DOWN)
 		{
 			self->touch_x1    = x0;
 			self->touch_y1    = y0;

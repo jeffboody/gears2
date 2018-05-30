@@ -9,3 +9,7 @@
 /captures
 .externalNativeBuild
 app/src/main/res/raw/timestamp.raw
+
+# Apple
+Gears-OSX/Gears/Gears.xcodeproj/project.xcworkspace/xcuserdata
+Gears-OSX/Gears/Gears.xcodeproj/xcuserdata/
