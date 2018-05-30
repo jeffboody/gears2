@@ -16,7 +16,8 @@ typedef struct
 	a3d_layer_t layer;
 
 	// widgets
-	a3d_text_t* text_fps;
+	a3d_sprite_t* sprite_about;
+	a3d_text_t*   text_fps;
 
 	// cached state
 	int fps;

@@ -15,6 +15,21 @@
 * private                                                  *
 ***********************************************************/
 
+static int clickAbout(a3d_widget_t* widget,
+                      int state,
+                      float x, float y)
+{
+	assert(widget);
+
+	gears_overlay_t* overlay = (gears_overlay_t*) widget->priv;
+	if(state == A3D_WIDGET_POINTER_UP)
+	{
+		a3d_layer_bringFront(overlay->layer_show,
+		                     (a3d_widget_t*) overlay->view_about);
+	}
+	return 1;
+}
+
 /***********************************************************
 * public                                                   *
 ***********************************************************/
@@ -29,6 +44,14 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 		.g = 0.0f,
 		.b = 0.0f,
 		.a = 0.0f
+	};
+
+	a3d_vec4f_t white =
+	{
+		.r = 1.0f,
+		.g = 1.0f,
+		.b = 1.0f,
+		.a = 1.0f
 	};
 
 	a3d_vec4f_t yellow =
@@ -57,6 +80,27 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	}
 	a3d_widget_priv((a3d_widget_t*) self, (void*) overlay);
 
+	self->sprite_about = a3d_sprite_new(overlay->screen, 0,
+	                                    A3D_WIDGET_ANCHOR_TL,
+	                                    A3D_WIDGET_WRAP_STRETCH_TEXT_MEDIUM,
+	                                    A3D_WIDGET_WRAP_STRETCH_TEXT_MEDIUM,
+	                                    A3D_WIDGET_STRETCH_SQUARE,
+	                                    1.0f,
+	                                    A3D_WIDGET_BORDER_MEDIUM,
+	                                    A3D_WIDGET_LINE_NONE,
+	                                    &clear,
+	                                    &clear,
+	                                    &white,
+	                                    clickAbout,
+	                                    NULL,
+	                                    1);
+	if(self->sprite_about == NULL)
+	{
+		goto fail_sprite_about;
+	}
+	a3d_widget_priv((a3d_widget_t*) self->sprite_about,
+	                (void*) overlay);
+
 	self->text_fps = a3d_text_new(overlay->screen,
 	                              0,
 	                              A3D_WIDGET_ANCHOR_BR,
@@ -74,14 +118,25 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	a3d_text_printf(self->text_fps, "%s", "0 fps");
 	self->fps = 0;
 
+	if(a3d_sprite_load(self->sprite_about, 0,
+	                   "$ic_info_outline_white_24dp.texz") == 0)
+	{
+		goto fail_icon;
+	}
+
 	a3d_layer_t* layer = (a3d_layer_t*) self;
+	a3d_list_push(layer->list, self->sprite_about);
 	a3d_list_push(layer->list, self->text_fps);
 
 	// success
 	return self;
 
 	// failure
+	fail_icon:
+		a3d_text_delete(&self->text_fps);
 	fail_text_fps:
+		a3d_sprite_delete(&self->sprite_about);
+	fail_sprite_about:
 		a3d_layer_delete((a3d_layer_t**) &self);
 	return NULL;
 }
@@ -104,6 +159,7 @@ void gears_layerHud_delete(gears_layerHud_t** _self)
 		}
 
 		a3d_text_delete(&self->text_fps);
+		a3d_sprite_delete(&self->sprite_about);
 		a3d_layer_delete((a3d_layer_t**) _self);
 	}
 }

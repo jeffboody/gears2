@@ -25,17 +25,22 @@
 #define gears_overlay_H
 
 #include "gears_layerHud.h"
+#include "gears_viewAbout.h"
 #include "a3d/widget/a3d_font.h"
 #include "a3d/widget/a3d_screen.h"
 #include "a3d/widget/a3d_layer.h"
 
+#define GEARS_OVERLAY_DRAWMODE_HUD   0
+#define GEARS_OVERLAY_DRAWMODE_ABOUT 1
+
 typedef struct gears_overlay_s
 {
-	a3d_font_t*       font_regular;
-	a3d_font_t*       font_bold;
-	a3d_screen_t*     screen;
-	a3d_layer_t*      layer_show;
-	gears_layerHud_t* layer_hud;
+	a3d_font_t*        font_regular;
+	a3d_font_t*        font_bold;
+	a3d_screen_t*      screen;
+	a3d_layer_t*       layer_show;
+	gears_layerHud_t*  layer_hud;
+	gears_viewAbout_t* view_about;
 } gears_overlay_t;
 
 gears_overlay_t* gears_overlay_new(void);
@@ -44,5 +49,11 @@ void             gears_overlay_draw(gears_overlay_t* self,
                                     int w, int h, float density);
 void             gears_overlay_updateFps(gears_overlay_t* self,
                                          int fps);
+int              gears_overlay_pointerDown(gears_overlay_t* self,
+                                           float x, float y, double t0);
+int              gears_overlay_pointerUp(gears_overlay_t* self,
+                                         float x, float y, double t0);
+int              gears_overlay_pointerMove(gears_overlay_t* self,
+                                           float x, float y, double t0);
 
 #endif

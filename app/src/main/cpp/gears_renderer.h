@@ -41,9 +41,10 @@
 #define GEARS_TOUCH_ACTION_UP   1
 #define GEARS_TOUCH_ACTION_MOVE 2
 
-#define GEARS_TOUCH_STATE_INIT   0
-#define GEARS_TOUCH_STATE_ROTATE 1
-#define GEARS_TOUCH_STATE_ZOOM   2
+#define GEARS_TOUCH_STATE_INIT    0
+#define GEARS_TOUCH_STATE_ROTATE  1
+#define GEARS_TOUCH_STATE_ZOOM    2
+#define GEARS_TOUCH_STATE_OVERLAY 3
 
 /***********************************************************
 * public                                                   *

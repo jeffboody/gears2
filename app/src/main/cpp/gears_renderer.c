@@ -344,12 +344,27 @@ void gears_renderer_touch(gears_renderer_t* self,
 
 	if(action == GEARS_TOUCH_ACTION_UP)
 	{
+		if(self->touch_state == GEARS_TOUCH_STATE_OVERLAY)
+		{
+			gears_overlay_pointerUp(self->overlay, x0, y0, ts);
+		}
+
 		// Do nothing
 		self->touch_state = GEARS_TOUCH_STATE_INIT;
 	}
 	else if(count == 1)
 	{
-		if(self->touch_state == GEARS_TOUCH_STATE_ROTATE)
+		if((self->touch_state == GEARS_TOUCH_STATE_INIT) &&
+		   (action == GEARS_TOUCH_ACTION_DOWN) &&
+		   gears_overlay_pointerDown(self->overlay, x0, y0, ts))
+		{
+			self->touch_state = GEARS_TOUCH_STATE_OVERLAY;
+		}
+		else if(self->touch_state == GEARS_TOUCH_STATE_OVERLAY)
+		{
+			gears_overlay_pointerMove(self->overlay, x0, y0, ts);
+		}
+		else if(self->touch_state == GEARS_TOUCH_STATE_ROTATE)
 		{
 			float dx = x0 - self->touch_x1;
 			float dy = y0 - self->touch_y1;
@@ -366,7 +381,11 @@ void gears_renderer_touch(gears_renderer_t* self,
 	}
 	else if(count == 2)
 	{
-		if(self->touch_state == GEARS_TOUCH_STATE_ZOOM)
+		if(self->touch_state == GEARS_TOUCH_STATE_OVERLAY)
+		{
+			// ignore
+		}
+		else if(self->touch_state == GEARS_TOUCH_STATE_ZOOM)
 		{
 			float dx = fabsf(x1 - x0);
 			float dy = fabsf(y1 - y0);

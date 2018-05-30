@@ -40,6 +40,22 @@ static void playClick(void* ptr)
 	// TODO - playClick
 }
 
+static int clickBack(a3d_widget_t* widget,
+                     int state,
+                     float x, float y)
+{
+	assert(widget);
+	LOGD("debug x=%f, y=%f", x, y);
+
+	gears_overlay_t* overlay = (gears_overlay_t*) widget->priv;
+	if(state == A3D_WIDGET_POINTER_UP)
+	{
+		a3d_layer_bringFront(overlay->layer_show,
+		                     (a3d_widget_t*) overlay->layer_hud);
+	}
+	return 1;
+}
+
 /***********************************************************
 * public                                                   *
 ***********************************************************/
@@ -108,6 +124,12 @@ gears_overlay_t* gears_overlay_new(void)
 		goto fail_layer_show;
 	}
 
+	self->view_about = gears_viewAbout_new(self, clickBack);
+	if(self->view_about == NULL)
+	{
+		goto fail_view_about;
+	}
+
 	self->layer_hud = gears_layerHud_new(self);
 	if(self->layer_hud == NULL)
 	{
@@ -123,6 +145,8 @@ gears_overlay_t* gears_overlay_new(void)
 	return self;
 
 	// failure
+	fail_view_about:
+		gears_layerHud_delete(&self->layer_hud);
 	fail_layer_hud:
 		a3d_layer_delete(&self->layer_show);
 	fail_layer_show:
@@ -143,6 +167,14 @@ void gears_overlay_delete(gears_overlay_t** _self)
 	gears_overlay_t* self = *_self;
 	if(self)
 	{
+		// empty layer
+		a3d_listitem_t* iter = a3d_list_head(self->layer_show->list);
+		while(iter)
+		{
+			a3d_list_remove(self->layer_show->list, &iter);
+		}
+
+		gears_viewAbout_delete(&self->view_about);
 		gears_layerHud_delete(&self->layer_hud);
 		a3d_layer_delete(&self->layer_show);
 		a3d_screen_delete(&self->screen);
@@ -170,4 +202,25 @@ void gears_overlay_updateFps(gears_overlay_t* self, int fps)
 	assert(self);
 
 	gears_layerHud_updateFps(self->layer_hud, fps);
+}
+
+int gears_overlay_pointerDown(gears_overlay_t* self,
+                              float x, float y, double t0)
+{
+	assert(self);
+	return a3d_screen_pointerDown(self->screen, x, y, t0);
+}
+
+int gears_overlay_pointerUp(gears_overlay_t* self,
+                            float x, float y, double t0)
+{
+	assert(self);
+	return a3d_screen_pointerUp(self->screen, x, y, t0);
+}
+
+int gears_overlay_pointerMove(gears_overlay_t* self,
+                              float x, float y, double t0)
+{
+	assert(self);
+	return a3d_screen_pointerMove(self->screen, x, y, t0);
 }
