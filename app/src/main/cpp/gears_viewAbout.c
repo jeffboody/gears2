@@ -26,7 +26,7 @@ static int clickGithub(a3d_widget_t* widget,
 	{
 		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
 		gears_renderer_t* renderer = overlay->renderer;
-		gears_renderer_loadURL(renderer, "https://github.com/jeffboody/gears2");
+		gears_renderer_loadURL(renderer, "https://github.com/jeffboody/gears2/");
 	}
 	return 1;
 }
@@ -449,7 +449,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_textbox_printf(textbox_intro, "%s", "");
 	a3d_textbox_printf(textbox_intro, "%s", "Send questions or comments to Jeff Boody at jeffboody@gmail.com.");
 	a3d_textbox_printf(textbox_intro, "%s", "");
-	a3d_textbox_printf(linkbox_github, "%s", "https://github.com/jeffboody/gears2");
+	a3d_textbox_printf(linkbox_github, "%s", "https://github.com/jeffboody/gears2/");
 	a3d_textbox_printf(linkbox_github, "%s", "");
 
 	a3d_text_printf(text_icons, "%s", "Material Design Icons");
@@ -463,7 +463,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_textbox_printf(linkbox_barlow, "%s", "https://github.com/jpt/barlow/");
 	a3d_textbox_printf(linkbox_barlow, "%s", "");
 
-	a3d_text_printf(text_license, "%s", "Source License");
+	a3d_text_printf(text_license, "%s", "Gears Source License");
 	a3d_textbox_printf(textbox_license, "%s", "Copyright (c) 2009-2011 Jeff Boody");
 	a3d_textbox_printf(textbox_license, "%s", "");
 	a3d_textbox_printf(textbox_license, "%s", "Gears for Android is a heavily modified port of the famous \"gears\" demo. ");
