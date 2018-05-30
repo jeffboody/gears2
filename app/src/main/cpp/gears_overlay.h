@@ -37,6 +37,8 @@ struct gears_renderer_s;
 
 typedef struct gears_overlay_s
 {
+	int draw_mode;
+
 	struct gears_renderer_s* renderer;
 
 	a3d_font_t*        font_regular;
@@ -49,6 +51,7 @@ typedef struct gears_overlay_s
 
 gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer);
 void             gears_overlay_delete(gears_overlay_t** _self);
+int              gears_overlay_escape(gears_overlay_t* self);
 void             gears_overlay_draw(gears_overlay_t* self,
                                     int w, int h, float density);
 void             gears_overlay_updateFps(gears_overlay_t* self,

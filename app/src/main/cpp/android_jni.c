@@ -265,3 +265,26 @@ Java_com_jeffboody_a3d_A3DSurfaceView_NativeTouch(JNIEnv* env, jobject obj,
 		                     x2, y2, x3, y3);
 	}
 }
+
+JNIEXPORT void JNICALL
+Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeKeyDown(JNIEnv* env, jobject obj,
+                                                               jint keycode, jint meta, jdouble ts)
+{
+	assert(env);
+	LOGD("debug keycode=0x%X, meta=0x%X, ts=%lf", keycode, meta, ts);
+
+	// ignore
+}
+
+JNIEXPORT void JNICALL
+Java_com_jeffboody_GearsES2eclair_GearsES2eclair_NativeKeyUp(JNIEnv* env, jobject obj,
+                                                             jint keycode, jint meta, jdouble ts)
+{
+	assert(env);
+	LOGD("debug keycode=0x%X, meta=0x%X, ts=%lf", keycode, meta, ts);
+
+	if(gears_renderer)
+	{
+		gears_renderer_keyPress(gears_renderer, keycode, meta);
+	}
+}

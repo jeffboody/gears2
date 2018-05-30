@@ -31,6 +31,7 @@
 #include <assert.h>
 #include <math.h>
 #include "gears_renderer.h"
+#include "a3d/widget/a3d_key.h"
 #include "a3d/a3d_timestamp.h"
 
 #define LOG_TAG "gears"
@@ -197,6 +198,7 @@ gears_renderer_t* gears_renderer_new(gears_renderer_cmd_fn cmd_fn)
 	self->touch_x1    = 0.0f;
 	self->touch_y1    = 0.0f;
 	self->touch_ds    = 1.0f;
+	self->escape_t0   = a3d_timestamp();
 	self->cmd_fn      = cmd_fn;
 
 	glEnable(GL_CULL_FACE);
@@ -433,6 +435,39 @@ void gears_renderer_touch(gears_renderer_t* self,
 
 			self->touch_ds    = ds;
 			self->touch_state = GEARS_TOUCH_STATE_ZOOM;
+		}
+	}
+
+	if(pthread_mutex_unlock(&self->mutex) != 0)
+		LOGE("pthread_mutex_unlock failed");
+}
+
+void gears_renderer_keyPress(gears_renderer_t* self,
+                             int keycode, int meta)
+{
+	assert(self);
+
+	if(pthread_mutex_lock(&self->mutex) != 0)
+		LOGE("pthread_mutex_lock failed");
+
+	if(keycode == A3D_KEY_ESCAPE)
+	{
+		if(gears_overlay_escape(self->overlay))
+		{
+			// ignore
+		}
+		else
+		{
+			// double tap back to exit
+			double t1 = a3d_timestamp();
+			if((t1 - self->escape_t0) < 0.5)
+			{
+				gears_renderer_exit(self);
+			}
+			else
+			{
+				self->escape_t0 = t1;
+			}
 		}
 	}
 

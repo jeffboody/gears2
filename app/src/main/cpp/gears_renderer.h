@@ -92,6 +92,9 @@ typedef struct gears_renderer_s
 	float touch_y1;
 	float touch_ds;
 
+	// escape state
+	double escape_t0;
+
 	// overlay
 	gears_overlay_t* overlay;
 
@@ -114,5 +117,7 @@ void              gears_renderer_touch(gears_renderer_t* self,
                                        float x1, float y1,
                                        float x2, float y2,
                                        float x3, float y3);
+void              gears_renderer_keyPress(gears_renderer_t* self,
+                                          int keycode, int meta);
 
 #endif

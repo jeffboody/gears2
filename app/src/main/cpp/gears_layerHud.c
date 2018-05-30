@@ -24,6 +24,8 @@ static int clickAbout(a3d_widget_t* widget,
 	gears_overlay_t* overlay = (gears_overlay_t*) widget->priv;
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
+		overlay->draw_mode = GEARS_OVERLAY_DRAWMODE_ABOUT;
+		a3d_viewbox_scrollTop((a3d_viewbox_t*) overlay->view_about);
 		a3d_layer_bringFront(overlay->layer_show,
 		                     (a3d_widget_t*) overlay->view_about);
 	}

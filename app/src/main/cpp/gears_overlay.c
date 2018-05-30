@@ -44,6 +44,7 @@ static int clickBack(a3d_widget_t* widget,
 	gears_overlay_t* overlay = (gears_overlay_t*) widget->priv;
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
+		overlay->draw_mode = GEARS_OVERLAY_DRAWMODE_HUD;
 		a3d_layer_bringFront(overlay->layer_show,
 		                     (a3d_widget_t*) overlay->layer_hud);
 	}
@@ -135,6 +136,7 @@ gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer)
 
 	a3d_screen_top(self->screen,
 	               (a3d_widget_t*) self->layer_show);
+	self->draw_mode = GEARS_OVERLAY_DRAWMODE_HUD;
 	a3d_layer_bringFront(self->layer_show,
 	                     (a3d_widget_t*) self->layer_hud);
 
@@ -180,6 +182,21 @@ void gears_overlay_delete(gears_overlay_t** _self)
 		free(self);
 		*_self = NULL;
 	}
+}
+
+int gears_overlay_escape(gears_overlay_t* self)
+{
+	assert(self);
+
+	if(self->draw_mode == GEARS_OVERLAY_DRAWMODE_ABOUT)
+	{
+		self->draw_mode = GEARS_OVERLAY_DRAWMODE_HUD;
+		a3d_layer_bringFront(self->layer_show,
+		                     (a3d_widget_t*) self->layer_hud);
+		return 1;
+	}
+
+	return 0;
 }
 
 void gears_overlay_draw(gears_overlay_t* self,

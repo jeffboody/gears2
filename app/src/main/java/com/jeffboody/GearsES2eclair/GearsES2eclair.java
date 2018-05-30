@@ -36,7 +36,9 @@ import android.content.Intent;
 import android.os.Message;
 import android.os.Handler;
 import android.os.Handler.Callback;
+import android.os.SystemClock;
 import android.net.Uri;
+import android.view.KeyEvent;
 import android.media.AudioManager;
 import java.lang.Math;
 import java.lang.Exception;
@@ -75,6 +77,36 @@ implements Handler.Callback
 	// handler is used to trigger commands on UI thread
 	private static Handler mHandler = null;
 	private static String  mURL     = "";
+
+	// key events
+	private static final int GEARS_KEY_ENTER     = 0x00D;
+	private static final int GEARS_KEY_ESCAPE    = 0x01B;
+	private static final int GEARS_KEY_BACKSPACE = 0x008;
+	private static final int GEARS_KEY_DELETE    = 0x07F;
+	private static final int GEARS_KEY_UP        = 0x100;
+	private static final int GEARS_KEY_DOWN      = 0x101;
+	private static final int GEARS_KEY_LEFT      = 0x102;
+	private static final int GEARS_KEY_RIGHT     = 0x103;
+	private static final int GEARS_KEY_HOME      = 0x104;
+	private static final int GEARS_KEY_END       = 0x105;
+	private static final int GEARS_KEY_PGUP      = 0x106;
+	private static final int GEARS_KEY_PGDOWN    = 0x107;
+	private static final int GEARS_KEY_INSERT    = 0x108;
+
+	private static double getTimestamp(double t0)
+	{
+		// convert "uptime" timestamp to UTC timestamp
+		double now = (double) System.currentTimeMillis();
+		double t1  = (double) SystemClock.uptimeMillis();
+		return (now + t0 - t1)/1000.0;
+	}
+
+	/*
+	 * Native interface
+	 */
+
+	private native void NativeKeyDown(int keycode, int meta, double ts);
+	private native void NativeKeyUp(int keycode, int meta, double ts);
 
 	/*
 	 * Command Queue - A queue is needed to ensure commands
@@ -216,6 +248,98 @@ implements Handler.Callback
 		Renderer = null;
 		mHandler = null;
         super.onDestroy();
+	}
+
+	private static int getKey(int keycode, KeyEvent event)
+	{
+		int ascii = event.getUnicodeChar(0);
+		if(keycode == KeyEvent.KEYCODE_ENTER)
+		{
+			return GEARS_KEY_ENTER;
+		}
+		else if(keycode == KeyEvent.KEYCODE_ESCAPE)
+		{
+			return GEARS_KEY_ESCAPE;
+		}
+		else if(keycode == KeyEvent.KEYCODE_DEL)
+		{
+			return GEARS_KEY_BACKSPACE;
+		}
+		else if(keycode == KeyEvent.KEYCODE_FORWARD_DEL)
+		{
+			return GEARS_KEY_DELETE;
+		}
+		else if(keycode == KeyEvent.KEYCODE_DPAD_UP)
+		{
+			return GEARS_KEY_UP;
+		}
+		else if(keycode == KeyEvent.KEYCODE_DPAD_DOWN)
+		{
+			return GEARS_KEY_DOWN;
+		}
+		else if(keycode == KeyEvent.KEYCODE_DPAD_LEFT)
+		{
+			return GEARS_KEY_LEFT;
+		}
+		else if(keycode == KeyEvent.KEYCODE_DPAD_RIGHT)
+		{
+			return GEARS_KEY_RIGHT;
+		}
+		else if(keycode == KeyEvent.KEYCODE_MOVE_HOME)
+		{
+			return GEARS_KEY_HOME;
+		}
+		else if(keycode == KeyEvent.KEYCODE_MOVE_END)
+		{
+			return GEARS_KEY_END;
+		}
+		else if(keycode == KeyEvent.KEYCODE_PAGE_UP)
+		{
+			return GEARS_KEY_PGUP;
+		}
+		else if(keycode == KeyEvent.KEYCODE_PAGE_DOWN)
+		{
+			return GEARS_KEY_PGDOWN;
+		}
+		else if(keycode == KeyEvent.KEYCODE_BACK)
+		{
+			return GEARS_KEY_ESCAPE;
+		}
+		else if((ascii > 0) && (ascii < 128))
+		{
+			return ascii;
+		}
+		return 0;
+	}
+
+	@Override
+	public boolean onKeyDown(int keycode, KeyEvent event)
+	{
+		int    ascii = getKey(keycode, event);
+		int    meta  = event.getMetaState();
+		double ts    = getTimestamp(event.getEventTime());
+
+		if(ascii > 0)
+		{
+			NativeKeyDown(ascii, meta, ts);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean onKeyUp(int keycode, KeyEvent event)
+	{
+		int    ascii = getKey(keycode, event);
+		int    meta  = event.getMetaState();
+		double ts    = getTimestamp(event.getEventTime());
+
+		if(ascii > 0)
+		{
+			NativeKeyUp(ascii, meta, ts);
+		}
+
+		return true;
 	}
 
 	static
