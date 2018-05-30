@@ -5,6 +5,7 @@
 #ifndef gears_layerHud_H
 #define gears_layerHud_H
 
+#include "a3d/widget/a3d_bulletbox.h"
 #include "a3d/widget/a3d_layer.h"
 #include "a3d/widget/a3d_text.h"
 #include "a3d/math/a3d_vec4f.h"
@@ -16,8 +17,8 @@ typedef struct
 	a3d_layer_t layer;
 
 	// widgets
-	a3d_sprite_t* sprite_about;
-	a3d_text_t*   text_fps;
+	a3d_bulletbox_t* bulletbox_about;
+	a3d_text_t*      text_fps;
 
 	// cached state
 	int fps;

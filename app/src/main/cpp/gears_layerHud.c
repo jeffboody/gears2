@@ -80,26 +80,24 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	}
 	a3d_widget_priv((a3d_widget_t*) self, (void*) overlay);
 
-	self->sprite_about = a3d_sprite_new(overlay->screen, 0,
-	                                    A3D_WIDGET_ANCHOR_TL,
-	                                    A3D_WIDGET_WRAP_STRETCH_TEXT_MEDIUM,
-	                                    A3D_WIDGET_WRAP_STRETCH_TEXT_MEDIUM,
-	                                    A3D_WIDGET_STRETCH_SQUARE,
-	                                    1.0f,
-	                                    A3D_WIDGET_BORDER_MEDIUM,
-	                                    A3D_WIDGET_LINE_NONE,
-	                                    &clear,
-	                                    &clear,
-	                                    &white,
-	                                    clickAbout,
-	                                    NULL,
-	                                    1);
-	if(self->sprite_about == NULL)
+	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
+	                                          0,
+	                                          A3D_WIDGET_ANCHOR_TL,
+	                                          A3D_WIDGET_BORDER_MEDIUM,
+	                                          A3D_WIDGET_LINE_NONE,
+	                                          A3D_TEXT_STYLE_MEDIUM,
+	                                          &clear, &clear, &white, &white,
+	                                          16, 1,
+	                                          clickAbout,
+	                                          NULL);
+	if(self->bulletbox_about == NULL)
 	{
-		goto fail_sprite_about;
+		goto fail_bulletbox_about;
 	}
-	a3d_widget_priv((a3d_widget_t*) self->sprite_about,
+	a3d_widget_priv((a3d_widget_t*) self->bulletbox_about,
 	                (void*) overlay);
+	a3d_bulletbox_textPrintf(self->bulletbox_about,
+	                         "%s", "Gears");
 
 	self->text_fps = a3d_text_new(overlay->screen,
 	                              0,
@@ -118,14 +116,14 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	a3d_text_printf(self->text_fps, "%s", "0 fps");
 	self->fps = 0;
 
-	if(a3d_sprite_load(self->sprite_about, 0,
-	                   "$ic_info_outline_white_24dp.texz") == 0)
+	if(a3d_bulletbox_spriteLoad(self->bulletbox_about, 0,
+	                            "$ic_info_outline_white_24dp.texz") == 0)
 	{
 		goto fail_icon;
 	}
 
 	a3d_layer_t* layer = (a3d_layer_t*) self;
-	a3d_list_push(layer->list, self->sprite_about);
+	a3d_list_push(layer->list, self->bulletbox_about);
 	a3d_list_push(layer->list, self->text_fps);
 
 	// success
@@ -135,8 +133,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	fail_icon:
 		a3d_text_delete(&self->text_fps);
 	fail_text_fps:
-		a3d_sprite_delete(&self->sprite_about);
-	fail_sprite_about:
+		a3d_bulletbox_delete(&self->bulletbox_about);
+	fail_bulletbox_about:
 		a3d_layer_delete((a3d_layer_t**) &self);
 	return NULL;
 }
@@ -159,7 +157,7 @@ void gears_layerHud_delete(gears_layerHud_t** _self)
 		}
 
 		a3d_text_delete(&self->text_fps);
-		a3d_sprite_delete(&self->sprite_about);
+		a3d_bulletbox_delete(&self->bulletbox_about);
 		a3d_layer_delete((a3d_layer_t**) _self);
 	}
 }
