@@ -20,6 +20,17 @@ See http://www.jeffboody.net/gears4android.php for more information.
 
 Send questions or comments to Jeff Boody at jeffboody@gmail.com
 
+Source Branches
+===============
+
+The master branch contains upgraded source code for Android Studio, Gradle
+and CMake. This code base was derived from the legacy branch but tweaked
+to fit the new directory structure and build requirements. The legacy branch
+contains older source code for Ant and ndk build. For the legacy branch you
+may have the best luck with the last official commit.
+
+a750aa2 update version for 20150227
+
 Source Code
 ===========
 
