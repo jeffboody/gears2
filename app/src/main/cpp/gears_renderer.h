@@ -57,6 +57,7 @@ typedef struct
 
 	GLsizei w;
 	GLsizei h;
+	float   density;
 
 	// mutex protects view state
 	pthread_mutex_t  mutex;
@@ -91,6 +92,7 @@ typedef struct
 gears_renderer_t* gears_renderer_new(void);
 void              gears_renderer_delete(gears_renderer_t** _self);
 void              gears_renderer_resize(gears_renderer_t* self, int w, int h);
+void              gears_renderer_density(gears_renderer_t* self, float density);
 void              gears_renderer_draw(gears_renderer_t* self);
 void              gears_renderer_touch(gears_renderer_t* self,
                                        int action, int count, double ts,

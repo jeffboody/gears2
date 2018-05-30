@@ -97,9 +97,6 @@ static void gears_renderer_rotate(gears_renderer_t* self,
 	assert(self);
 	LOGD("debug dx=%f, dy=%f", dx, dy);
 
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
-
 	// rotating around x-axis is equivalent to moving up-and-down on touchscreen
 	// rotating around y-axis is equivalent to moving left-and-right on touchscreen
 	// 360 degrees is equivalent to moving completly across the touchscreen
@@ -110,9 +107,6 @@ static void gears_renderer_rotate(gears_renderer_t* self,
 	a3d_quaternion_t q;
 	a3d_quaternion_loadeuler(&q, rx, ry, 0.0f);
 	a3d_quaternion_rotateq(&self->view_q, &q);
-
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
 }
 
 static void gears_renderer_scale(gears_renderer_t* self,
@@ -121,9 +115,6 @@ static void gears_renderer_scale(gears_renderer_t* self,
 	assert(self);
 	LOGD("debug ds=%f", ds);
 
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
-
 	// scale range
 	float min = 0.25f;
 	float max = 2.0f;
@@ -131,9 +122,6 @@ static void gears_renderer_scale(gears_renderer_t* self,
 	self->view_scale *= scale;
 	if(self->view_scale < min)  self->view_scale = min;
 	if(self->view_scale >= max) self->view_scale = max;
-
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
 }
 
 /***********************************************************
@@ -199,6 +187,7 @@ gears_renderer_t* gears_renderer_new(void)
 	self->frames     = 0;
 	self->w          = 0;
 	self->h          = 0;
+	self->density    = 1.0f;
 	a3d_mat4f_identity(&self->pm);
 	a3d_mat4f_identity(&self->mvm);
 
@@ -269,6 +258,14 @@ void gears_renderer_resize(gears_renderer_t* self, GLsizei w, GLsizei h)
 	}
 }
 
+void gears_renderer_density(gears_renderer_t* self,
+                            float density)
+{
+	assert(self);
+
+	self->density = density;
+}
+
 void gears_renderer_draw(gears_renderer_t* self)
 {
 	assert(self);
@@ -327,7 +324,7 @@ void gears_renderer_draw(gears_renderer_t* self)
 
 	a3d_stack4f_pop(self->mvm_stack, &self->mvm);
 
-	gears_overlay_draw(self->overlay, self->w, self->h, 3.0f);
+	gears_overlay_draw(self->overlay, self->w, self->h, self->density);
 	gears_renderer_step(self);
 
 	A3D_GL_GETERROR();
@@ -341,6 +338,9 @@ void gears_renderer_touch(gears_renderer_t* self,
                           float x3, float y3)
 {
 	assert(self);
+
+	if(pthread_mutex_lock(&self->mutex) != 0)
+		LOGE("pthread_mutex_lock failed");
 
 	if(action == GEARS_TOUCH_ACTION_UP)
 	{
@@ -386,4 +386,7 @@ void gears_renderer_touch(gears_renderer_t* self,
 			self->touch_state = GEARS_TOUCH_STATE_ZOOM;
 		}
 	}
+
+	if(pthread_mutex_unlock(&self->mutex) != 0)
+		LOGE("pthread_mutex_unlock failed");
 }

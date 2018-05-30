@@ -102,7 +102,10 @@ Java_com_jeffboody_a3d_A3DNativeRenderer_NativeChangeDensity(JNIEnv* env, jobjec
 	assert(env);
 	LOGD("debug");
 
-	// TODO - NativeChangeDensity
+	if(gears_renderer)
+	{
+		gears_renderer_density(gears_renderer, density);
+	}
 }
 
 JNIEXPORT void JNICALL
