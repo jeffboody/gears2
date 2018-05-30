@@ -21,18 +21,21 @@ typedef struct
 	a3d_text_t* text_intro;
 	a3d_text_t* text_icons;
 	a3d_text_t* text_barlow;
+	a3d_text_t* text_expat;
 	a3d_text_t* text_license;
 
 	// paragraphs
 	a3d_textbox_t* textbox_intro;
 	a3d_textbox_t* textbox_icons;
 	a3d_textbox_t* textbox_barlow;
+	a3d_textbox_t* textbox_expat;
 	a3d_textbox_t* textbox_license;
 
 	// links
 	a3d_textbox_t* linkbox_github;
 	a3d_textbox_t* linkbox_icons;
 	a3d_textbox_t* linkbox_barlow;
+	a3d_textbox_t* linkbox_expat;
 } gears_viewAbout_t;
 
 gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,

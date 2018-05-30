@@ -63,6 +63,22 @@ static int clickBarlow(a3d_widget_t* widget,
 	return 1;
 }
 
+static int clickExpat(a3d_widget_t* widget,
+                      int state,
+                      float x, float y)
+{
+	assert(widget);
+	LOGD("debug x=%f, y=%f", x, y);
+
+	if(state == A3D_WIDGET_POINTER_UP)
+	{
+		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_renderer_t* renderer = overlay->renderer;
+		gears_renderer_loadURL(renderer, "https://github.com/jeffboody/libexpat/");
+	}
+	return 1;
+}
+
 /***********************************************************
 * public                                                   *
 ***********************************************************/
@@ -226,6 +242,24 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_text_font(text_barlow, A3D_SCREEN_FONT_BOLD);
 	self->text_barlow = text_barlow;
 
+	a3d_text_t* text_expat;
+	text_expat = a3d_text_new(overlay->screen,
+	                          0,
+	                          A3D_WIDGET_ANCHOR_TL,
+	                          A3D_WIDGET_BORDER_MEDIUM,
+	                          A3D_WIDGET_LINE_NONE,
+	                          A3D_TEXT_STYLE_MEDIUM,
+	                          &clear, &clear, &black,
+	                          80,
+	                          NULL,
+	                          NULL);
+	if(text_expat == NULL)
+	{
+		goto fail_text_expat;
+	}
+	a3d_text_font(text_expat, A3D_SCREEN_FONT_BOLD);
+	self->text_expat = text_expat;
+
 	a3d_text_t* text_license;
 	text_license = a3d_text_new(overlay->screen,
 	                            0,
@@ -318,6 +352,31 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 		goto fail_textbox_barlow;
 	}
 	self->textbox_barlow = textbox_barlow;
+
+	a3d_textbox_t* textbox_expat;
+	textbox_expat = a3d_textbox_new(overlay->screen,
+	                                0,
+	                                A3D_LISTBOX_ORIENTATION_VERTICAL,
+	                                A3D_WIDGET_ANCHOR_TL,
+	                                A3D_WIDGET_WRAP_STRETCH_PARENT,
+	                                A3D_WIDGET_WRAP_SHRINK,
+	                                A3D_WIDGET_STRETCH_NA,
+	                                1.0f,
+	                                A3D_WIDGET_BORDER_NONE,
+	                                A3D_WIDGET_LINE_NONE,
+	                                &clear, &clear,
+	                                A3D_WIDGET_ANCHOR_TL,
+	                                A3D_TEXT_WRAP_SHRINK,
+	                                A3D_WIDGET_BORDER_MEDIUM,
+	                                A3D_WIDGET_LINE_NONE,
+	                                A3D_TEXT_STYLE_MEDIUM,
+	                                &clear, &clear, &black,
+	                                80);
+	if(textbox_expat == NULL)
+	{
+		goto fail_textbox_expat;
+	}
+	self->textbox_expat = textbox_expat;
 
 	a3d_textbox_t* textbox_license;
 	textbox_license = a3d_textbox_new(overlay->screen,
@@ -428,6 +487,34 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_widget_priv(widget_barlow, (void*) overlay);
 	a3d_textbox_clickFn(linkbox_barlow, clickBarlow);
 
+	a3d_textbox_t* linkbox_expat;
+	linkbox_expat = a3d_textbox_new(overlay->screen,
+	                                0,
+	                                A3D_LISTBOX_ORIENTATION_VERTICAL,
+	                                A3D_WIDGET_ANCHOR_TL,
+	                                A3D_WIDGET_WRAP_STRETCH_PARENT,
+	                                A3D_WIDGET_WRAP_SHRINK,
+	                                A3D_WIDGET_STRETCH_NA,
+	                                1.0f,
+	                                A3D_WIDGET_BORDER_NONE,
+	                                A3D_WIDGET_LINE_NONE,
+	                                &clear, &clear,
+	                                A3D_WIDGET_ANCHOR_TL,
+	                                A3D_TEXT_WRAP_SHRINK,
+	                                A3D_WIDGET_BORDER_MEDIUM,
+	                                A3D_WIDGET_LINE_NONE,
+	                                A3D_TEXT_STYLE_MEDIUM,
+	                                &clear, &clear, &blue,
+	                                80);
+	if(linkbox_expat == NULL)
+	{
+		goto fail_linkbox_expat;
+	}
+	self->linkbox_expat = linkbox_expat;
+	a3d_widget_t* widget_expat = (a3d_widget_t*) linkbox_expat;
+	a3d_widget_priv(widget_expat, (void*) overlay);
+	a3d_textbox_clickFn(linkbox_expat, clickExpat);
+
 	a3d_viewbox_textPrintf(&self->viewbox, "%s", "About");
 
 	a3d_text_printf(text_intro, "%s", "Introduction");
@@ -462,6 +549,12 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_textbox_printf(textbox_barlow, "%s", "under the SIL Open Font License, Version 1.1.");
 	a3d_textbox_printf(linkbox_barlow, "%s", "https://github.com/jpt/barlow/");
 	a3d_textbox_printf(linkbox_barlow, "%s", "");
+
+	a3d_text_printf(text_expat, "%s", "Expat XML Parser");
+	a3d_textbox_printf(textbox_expat, "%s", "XML parsing provided by the Expat XML Parser");
+	a3d_textbox_printf(textbox_expat, "%s", "under the MIT license.");
+	a3d_textbox_printf(linkbox_expat, "%s", "https://github.com/jeffboody/libexpat/");
+	a3d_textbox_printf(linkbox_expat, "%s", "");
 
 	a3d_text_printf(text_license, "%s", "Gears Source License");
 	a3d_textbox_printf(textbox_license, "%s", "Copyright (c) 2009-2011 Jeff Boody");
@@ -500,6 +593,9 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_list_enqueue(list, (const void*) text_barlow);
 	a3d_list_enqueue(list, (const void*) textbox_barlow);
 	a3d_list_enqueue(list, (const void*) linkbox_barlow);
+	a3d_list_enqueue(list, (const void*) text_expat);
+	a3d_list_enqueue(list, (const void*) textbox_expat);
+	a3d_list_enqueue(list, (const void*) linkbox_expat);
 	a3d_list_enqueue(list, (const void*) text_license);
 	a3d_list_enqueue(list, (const void*) textbox_license);
 
@@ -507,6 +603,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	return self;
 
 	// failure
+	fail_linkbox_expat:
+		a3d_textbox_delete(&linkbox_barlow);
 	fail_linkbox_barlow:
 		a3d_textbox_delete(&linkbox_icons);
 	fail_linkbox_icons:
@@ -514,6 +612,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	fail_linkbox_github:
 		a3d_textbox_delete(&textbox_license);
 	fail_textbox_license:
+		a3d_textbox_delete(&textbox_expat);
+	fail_textbox_expat:
 		a3d_textbox_delete(&textbox_barlow);
 	fail_textbox_barlow:
 		a3d_textbox_delete(&textbox_icons);
@@ -522,6 +622,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	fail_textbox_intro:
 		a3d_text_delete(&text_license);
 	fail_text_license:
+		a3d_text_delete(&text_expat);
+	fail_text_expat:
 		a3d_text_delete(&text_barlow);
 	fail_text_barlow:
 		a3d_text_delete(&text_icons);
@@ -549,14 +651,17 @@ void gears_viewAbout_delete(gears_viewAbout_t** _self)
 			a3d_list_remove(self->listbox->list, &iter);
 		}
 
+		a3d_textbox_delete(&self->linkbox_expat);
 		a3d_textbox_delete(&self->linkbox_barlow);
 		a3d_textbox_delete(&self->linkbox_icons);
 		a3d_textbox_delete(&self->linkbox_github);
 		a3d_textbox_delete(&self->textbox_license);
+		a3d_textbox_delete(&self->textbox_expat);
 		a3d_textbox_delete(&self->textbox_barlow);
 		a3d_textbox_delete(&self->textbox_icons);
 		a3d_textbox_delete(&self->textbox_intro);
 		a3d_text_delete(&self->text_license);
+		a3d_text_delete(&self->text_expat);
 		a3d_text_delete(&self->text_barlow);
 		a3d_text_delete(&self->text_icons);
 		a3d_text_delete(&self->text_intro);
