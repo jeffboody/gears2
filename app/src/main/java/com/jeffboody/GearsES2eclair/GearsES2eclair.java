@@ -31,9 +31,20 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Message;
+import android.os.Handler;
+import android.os.Handler.Callback;
+import android.net.Uri;
+import android.media.AudioManager;
 import java.lang.Math;
 import java.lang.Exception;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import com.jeffboody.a3d.A3DSurfaceView;
 import com.jeffboody.a3d.A3DNativeRenderer;
 import com.jeffboody.a3d.A3DResource;
@@ -43,19 +54,121 @@ import com.jeffboody.a3d.A3DResource;
 // Add to Android.manifest: <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 // import android.os.Debug;
 
-public class GearsES2eclair extends Activity
+public class GearsES2eclair
+extends Activity
+implements Handler.Callback
 {
 	private static final String TAG = "GearsES2eclair";
 
 	private A3DNativeRenderer Renderer;
 	private A3DSurfaceView    Surface;
 
-	private static final int MENU_ABOUT  = 0;
+	// native commands
+	private static final int GEARS_CMD_PLAY_CLICK = 1;
+	private static final int GEARS_CMD_EXIT       = 2;
+	private static final int GEARS_CMD_LOADURL    = 3;
+
+	private static LinkedList<Integer> mCmdQueue = new LinkedList<Integer>();
+	private static Lock                mCmdLock  = new ReentrantLock();
+
+	// "singleton" used for callbacks
+	// handler is used to trigger commands on UI thread
+	private static Handler mHandler = null;
+	private static String  mURL     = "";
+
+	/*
+	 * Command Queue - A queue is needed to ensure commands
+	 * are not lost between the rendering thread and the
+	 * main thread when pausing the app.
+	 */
+
+	private void DrainCommandQueue(boolean handler)
+	{
+		mCmdLock.lock();
+		try
+		{
+			while(mCmdQueue.size() > 0)
+			{
+				int cmd = mCmdQueue.remove();
+				if(cmd == GEARS_CMD_PLAY_CLICK)
+				{
+					if(handler)
+					{
+						AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+						am.playSoundEffect(AudioManager.FX_KEY_CLICK, 0.5F);
+					}
+				}
+				else if(cmd == GEARS_CMD_LOADURL)
+				{
+					try
+					{
+						Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mURL));
+						startActivity(intent);
+					}
+					catch(Exception e)
+					{
+						// ignore
+					}
+				}
+				else if(cmd == GEARS_CMD_EXIT)
+				{
+					if(handler)
+					{
+						finish();
+					}
+				}
+				else
+				{
+					Log.w(TAG, "unknown cmd=" + cmd);
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			Log.e(TAG, "exception: " + e);
+		}
+		mCmdLock.unlock();
+	}
+
+	/*
+	 * Callback interface
+	 */
+
+	private static void CallbackCmd(int cmd, String msg)
+	{
+		try
+		{
+			if(cmd == GEARS_CMD_LOADURL)
+			{
+				mURL = msg;
+			}
+
+			mCmdLock.lock();
+			mHandler.sendMessage(Message.obtain(mHandler, cmd));
+			mCmdQueue.add(cmd);
+			mCmdLock.unlock();
+		}
+		catch(Exception e)
+		{
+			// ignore
+		}
+	}
+
+	/*
+	 * Handler.Callback interface
+	 */
+
+	public boolean handleMessage(Message msg)
+	{
+		DrainCommandQueue(true);
+		return true;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		mHandler = new Handler(this);
 
 		A3DResource r = new A3DResource(this, R.raw.timestamp);
 		r.Add(R.raw.resource, "resource.pak");
@@ -101,6 +214,7 @@ public class GearsES2eclair extends Activity
 		Surface.StopRenderer();
 		Surface = null;
 		Renderer = null;
+		mHandler = null;
         super.onDestroy();
 	}
 

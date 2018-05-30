@@ -33,8 +33,12 @@
 #define GEARS_OVERLAY_DRAWMODE_HUD   0
 #define GEARS_OVERLAY_DRAWMODE_ABOUT 1
 
+struct gears_renderer_s;
+
 typedef struct gears_overlay_s
 {
+	struct gears_renderer_s* renderer;
+
 	a3d_font_t*        font_regular;
 	a3d_font_t*        font_bold;
 	a3d_screen_t*      screen;
@@ -43,7 +47,7 @@ typedef struct gears_overlay_s
 	gears_viewAbout_t* view_about;
 } gears_overlay_t;
 
-gears_overlay_t* gears_overlay_new(void);
+gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer);
 void             gears_overlay_delete(gears_overlay_t** _self);
 void             gears_overlay_draw(gears_overlay_t* self,
                                     int w, int h, float density);

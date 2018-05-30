@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <math.h>
 #include "gears_overlay.h"
+#include "gears_renderer.h"
 
 #define LOG_TAG "gears"
 #include "a3d/a3d_log.h"
@@ -32,13 +33,6 @@
 /***********************************************************
 * private                                                  *
 ***********************************************************/
-
-static void playClick(void* ptr)
-{
-	assert(ptr);
-
-	// TODO - playClick
-}
 
 static int clickBack(a3d_widget_t* widget,
                      int state,
@@ -60,8 +54,10 @@ static int clickBack(a3d_widget_t* widget,
 * public                                                   *
 ***********************************************************/
 
-gears_overlay_t* gears_overlay_new(void)
+gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer)
 {
+	assert(renderer);
+
 	a3d_vec4f_t clear =
 	{
 		.r = 0.0f,
@@ -76,6 +72,7 @@ gears_overlay_t* gears_overlay_new(void)
 	{
 		return NULL;
 	}
+	self->renderer = renderer;
 
 	#ifdef ANDROID
 		const char resource[] = "/data/data/com.jeffboody.GearsES2eclair/files/resource.pak";
@@ -101,8 +98,8 @@ gears_overlay_t* gears_overlay_new(void)
 	self->screen = a3d_screen_new(resource,
 	                              self->font_regular,
 	                              self->font_bold,
-	                              (void*) self,
-	                              playClick);
+	                              (void*) renderer,
+	                              gears_renderer_playClick);
 	if(self->screen == NULL)
 	{
 		goto fail_screen;

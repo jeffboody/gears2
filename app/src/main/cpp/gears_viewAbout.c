@@ -6,6 +6,7 @@
 #include <assert.h>
 #include "gears_viewAbout.h"
 #include "gears_overlay.h"
+#include "gears_renderer.h"
 
 #define LOG_TAG "gears"
 #include "a3d/a3d_log.h"
@@ -23,6 +24,9 @@ static int clickGithub(a3d_widget_t* widget,
 
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
+		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_renderer_t* renderer = overlay->renderer;
+		gears_renderer_loadURL(renderer, "https://github.com/jeffboody/gears2");
 	}
 	return 1;
 }
@@ -36,6 +40,9 @@ static int clickIcons(a3d_widget_t* widget,
 
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
+		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_renderer_t* renderer = overlay->renderer;
+		gears_renderer_loadURL(renderer, "https://github.com/google/material-design-icons/");
 	}
 	return 1;
 }
@@ -49,6 +56,9 @@ static int clickBarlow(a3d_widget_t* widget,
 
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
+		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_renderer_t* renderer = overlay->renderer;
+		gears_renderer_loadURL(renderer, "https://github.com/jpt/barlow/");
 	}
 	return 1;
 }

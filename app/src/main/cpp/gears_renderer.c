@@ -128,8 +128,10 @@ static void gears_renderer_scale(gears_renderer_t* self,
 * public                                                   *
 ***********************************************************/
 
-gears_renderer_t* gears_renderer_new(void)
+gears_renderer_t* gears_renderer_new(gears_renderer_cmd_fn cmd_fn)
 {
+	assert(cmd_fn);
+
 	LOGD("debug");
 
 	LOGI("GL vendor     : %s", glGetString(GL_VENDOR));
@@ -166,7 +168,7 @@ gears_renderer_t* gears_renderer_new(void)
 		goto fail_mutex_init;
 	}
 
-	self->overlay = gears_overlay_new();
+	self->overlay = gears_overlay_new(self);
 	if(self->overlay == NULL)
 	{
 		goto fail_overlay;
@@ -195,6 +197,7 @@ gears_renderer_t* gears_renderer_new(void)
 	self->touch_x1    = 0.0f;
 	self->touch_y1    = 0.0f;
 	self->touch_ds    = 1.0f;
+	self->cmd_fn      = cmd_fn;
 
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
@@ -239,6 +242,33 @@ void gears_renderer_delete(gears_renderer_t** _self)
 		free(self);
 		*_self = NULL;
 	}
+}
+
+void gears_renderer_exit(gears_renderer_t* self)
+{
+	assert(self);
+
+	gears_renderer_cmd_fn cmd_fn = self->cmd_fn;
+	(*cmd_fn)(GEARS_CMD_EXIT, "");
+}
+
+void gears_renderer_loadURL(gears_renderer_t* self,
+                            const char* url)
+{
+	assert(self);
+	assert(url);
+
+	gears_renderer_cmd_fn cmd_fn = self->cmd_fn;
+	(*cmd_fn)(GEARS_CMD_LOADURL, url);
+}
+
+void gears_renderer_playClick(void* ptr)
+{
+	assert(ptr);
+
+	gears_renderer_t* self = (gears_renderer_t*) ptr;
+	gears_renderer_cmd_fn cmd_fn = self->cmd_fn;
+	(*cmd_fn)(GEARS_CMD_PLAY_CLICK, "");
 }
 
 void gears_renderer_resize(gears_renderer_t* self, GLsizei w, GLsizei h)

@@ -36,11 +36,57 @@
 #define LOG_TAG "gears"
 #include "a3d/a3d_log.h"
 
+static gears_renderer_t* gears_renderer = NULL;
+
 /***********************************************************
 * private                                                  *
 ***********************************************************/
 
-static gears_renderer_t* gears_renderer = NULL;
+static JavaVM* g_vm = NULL;
+
+static void cmd_fn(int cmd, const char* msg)
+{
+	LOGD("debug cmd=%i, msg=%s", cmd, msg);
+
+	if(g_vm == NULL)
+	{
+		LOGE("g_vm is NULL");
+		return;
+	}
+
+	JNIEnv* env = NULL;
+	if((*g_vm)->AttachCurrentThread(g_vm, &env, NULL) != 0)
+	{
+		LOGE("AttachCurrentThread failed");
+		return;
+	}
+
+	jclass cls = (*env)->FindClass(env, "com/jeffboody/GearsES2eclair/GearsES2eclair");
+	if(cls == NULL)
+	{
+		LOGE("FindClass failed");
+		return;
+	}
+
+	jmethodID mid = (*env)->GetStaticMethodID(env, cls,
+	                                          "CallbackCmd",
+	                                          "(ILjava/lang/String;)V");
+	if(mid == NULL)
+	{
+		LOGE("GetStaticMethodID failed");
+		return;
+	}
+
+	jstring jmsg = (*env)->NewStringUTF(env, msg);
+	if(jmsg == NULL)
+	{
+		LOGE("NewStringUTF failed");
+		return;
+	}
+
+	(*env)->CallStaticVoidMethod(env, cls, mid, cmd, jmsg);
+	(*env)->DeleteLocalRef(env, jmsg);
+}
 
 /***********************************************************
 * public                                                   *
@@ -58,17 +104,32 @@ Java_com_jeffboody_a3d_A3DNativeRenderer_NativeCreate(JNIEnv* env)
 		return;
 	}
 
-	if(a3d_GL_load() == 0)
+	if((*env)->GetJavaVM(env, &g_vm) != 0)
 	{
-		LOGE("a3d_GL_load failed");
+		LOGE("GetJavaVM failed");
 		return;
 	}
 
-	gears_renderer = gears_renderer_new();
+	if(a3d_GL_load() == 0)
+	{
+		LOGE("a3d_GL_load failed");
+		goto fail_load;
+	}
+
+	gears_renderer = gears_renderer_new(cmd_fn);
 	if(gears_renderer == NULL)
 	{
-		a3d_GL_unload();
+		goto fail_renderer;
 	}
+
+	// success
+	return;
+
+	// failure
+	fail_renderer:
+		a3d_GL_unload();
+	fail_load:
+		g_vm = NULL;
 }
 
 JNIEXPORT void JNICALL
@@ -81,6 +142,7 @@ Java_com_jeffboody_a3d_A3DNativeRenderer_NativeDestroy(JNIEnv* env)
 	{
 		gears_renderer_delete(&gears_renderer);
 		a3d_GL_unload();
+		g_vm = NULL;
 	}
 }
 

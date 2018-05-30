@@ -46,11 +46,17 @@
 #define GEARS_TOUCH_STATE_ZOOM    2
 #define GEARS_TOUCH_STATE_OVERLAY 3
 
+#define GEARS_CMD_PLAY_CLICK 1
+#define GEARS_CMD_EXIT       2
+#define GEARS_CMD_LOADURL    3
+
+typedef void (*gears_renderer_cmd_fn)(int cmd, const char* msg);
+
 /***********************************************************
 * public                                                   *
 ***********************************************************/
 
-typedef struct
+typedef struct gears_renderer_s
 {
 	gear_t* gear1;
 	gear_t* gear2;
@@ -88,10 +94,17 @@ typedef struct
 
 	// overlay
 	gears_overlay_t* overlay;
+
+	// JNI callback(s)
+	gears_renderer_cmd_fn cmd_fn;
 } gears_renderer_t;
 
-gears_renderer_t* gears_renderer_new(void);
+gears_renderer_t* gears_renderer_new(gears_renderer_cmd_fn cmd_fn);
 void              gears_renderer_delete(gears_renderer_t** _self);
+void              gears_renderer_exit(gears_renderer_t* self);
+void              gears_renderer_loadURL(gears_renderer_t* self,
+                                         const char* url);
+void              gears_renderer_playClick(void* ptr);
 void              gears_renderer_resize(gears_renderer_t* self, int w, int h);
 void              gears_renderer_density(gears_renderer_t* self, float density);
 void              gears_renderer_draw(gears_renderer_t* self);
