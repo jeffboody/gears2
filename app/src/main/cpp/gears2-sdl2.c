@@ -23,8 +23,8 @@
 
 #include <stdlib.h>
 #include <assert.h>
-#include "a3d/a3d_timestamp.h""
-#include "a3d/widget/a3d_key.h""
+#include "a3d/a3d_timestamp.h"
+#include "a3d/widget/a3d_key.h"
 #include "gears_renderer.h"
 
 #define LOG_TAG "gears"

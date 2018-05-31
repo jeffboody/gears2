@@ -1,29 +1,37 @@
 TARGET   = gears2-sdl2
-CLASSES  = gears_renderer gear
+CLASSES  = gears_renderer gear gears_overlay gears_layerHud gears_viewAbout
 SOURCE   = $(TARGET).c $(CLASSES:%=%.c)
 OBJECTS  = $(TARGET).o $(CLASSES:%=%.o)
 HFILES   = $(CLASSES:%=%.h)
 OPT      = -O2 -Wall
 CFLAGS   = $(OPT) -I. `sdl2-config --cflags` -DA3D_GL2
-LDFLAGS  = -lGLEW -lGL -lGLU -lm -L/usr/lib `sdl2-config --libs` -Llibpak -lpak -La3d -la3d -lz
+LDFLAGS  = -lGLEW -lGL -lGLU -lm -L/usr/lib `sdl2-config --libs` -La3d -la3d -Llibexpat/expat/lib -lexpat -Llibpak -lpak -Ltexgz -ltexgz -lz
 CCC      = gcc
 
 all: $(TARGET)
 
-$(TARGET): $(OBJECTS) libpak a3d
+$(TARGET): $(OBJECTS) libpak texgz a3d libexpat
 	$(CCC) $(OPT) $(OBJECTS) -o $@ $(LDFLAGS)
 
-.PHONY: libpak a3d
+.PHONY: libpak texgz a3d libexpat
 
 libpak:
 	$(MAKE) -C libpak
 
+texgz:
+	$(MAKE) -C texgz
+
 a3d:
 	$(MAKE) -C a3d -f Makefile.sdl
+
+libexpat:
+	$(MAKE) -C libexpat/expat/lib
 
 clean:
 	rm -f $(OBJECTS) *~ \#*\# $(TARGET)
 	$(MAKE) -C libpak clean
+	$(MAKE) -C texgz clean
 	$(MAKE) -C a3d -f Makefile.sdl clean
+	$(MAKE) -C libexpat/expat/lib clean
 
 $(OBJECTS): $(HFILES)
