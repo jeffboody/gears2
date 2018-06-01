@@ -30,7 +30,6 @@
 #ifndef gears_renderer_H
 #define gears_renderer_H
 
-#include <pthread.h>
 #include "a3d/math/a3d_quaternion.h"
 #include "a3d/math/a3d_mat4f.h"
 #include "a3d/math/a3d_stack4f.h"
@@ -66,8 +65,7 @@ typedef struct gears_renderer_s
 	GLsizei h;
 	float   density;
 
-	// mutex protects view state
-	pthread_mutex_t  mutex;
+	// view state
 	GLfloat          view_scale;
 	a3d_quaternion_t view_q;
 

@@ -161,14 +161,6 @@ gears_renderer_t* gears_renderer_new(gears_renderer_cmd_fn cmd_fn)
 	if(self->mvm_stack == NULL)
 		goto fail_stack;
 
-	// create the mutex
-	// PTHREAD_MUTEX_DEFAULT is not re-entrant
-	if(pthread_mutex_init(&self->mutex, NULL) != 0)
-	{
-		LOGE("pthread_mutex_init failed");
-		goto fail_mutex_init;
-	}
-
 	self->overlay = gears_overlay_new(self);
 	if(self->overlay == NULL)
 	{
@@ -210,8 +202,6 @@ gears_renderer_t* gears_renderer_new(gears_renderer_cmd_fn cmd_fn)
 
 	// failure
 	fail_overlay:
-		pthread_mutex_destroy(&self->mutex);
-	fail_mutex_init:
 		a3d_stack4f_delete(&self->mvm_stack);
 	fail_stack:
 		gear_delete(&self->gear3);
@@ -235,7 +225,6 @@ void gears_renderer_delete(gears_renderer_t** _self)
 		LOGD("debug");
 
 		gears_overlay_delete(&self->overlay);
-		pthread_mutex_destroy(&self->mutex);
 		a3d_stack4f_delete(&self->mvm_stack);
 		gear_delete(&self->gear3);
 		gear_delete(&self->gear2);
@@ -326,12 +315,8 @@ void gears_renderer_draw(gears_renderer_t* self)
 
 	// glxgears: event_loop
 	a3d_stack4f_push(self->mvm_stack, &self->mvm);
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
 	a3d_mat4f_scale(&self->mvm, 0, self->view_scale, self->view_scale, self->view_scale);
 	a3d_mat4f_rotateq(&self->mvm, 0, &self->view_q);
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
 
 	// Gear1
 	a3d_mat4f_t mvp;
@@ -374,9 +359,6 @@ void gears_renderer_touch(gears_renderer_t* self,
                           float x3, float y3)
 {
 	assert(self);
-
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
 
 	if(action == GEARS_TOUCH_ACTION_UP)
 	{
@@ -441,18 +423,12 @@ void gears_renderer_touch(gears_renderer_t* self,
 			self->touch_state = GEARS_TOUCH_STATE_ZOOM;
 		}
 	}
-
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
 }
 
 void gears_renderer_keyPress(gears_renderer_t* self,
                              int keycode, int meta)
 {
 	assert(self);
-
-	if(pthread_mutex_lock(&self->mutex) != 0)
-		LOGE("pthread_mutex_lock failed");
 
 	if(keycode == A3D_KEY_ESCAPE)
 	{
@@ -474,7 +450,4 @@ void gears_renderer_keyPress(gears_renderer_t* self,
 			}
 		}
 	}
-
-	if(pthread_mutex_unlock(&self->mutex) != 0)
-		LOGE("pthread_mutex_unlock failed");
 }
