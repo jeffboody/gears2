@@ -6,8 +6,8 @@ android {
         applicationId "com.jeffboody.GearsES2eclair"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 8
-        versionName "20180531"
+        versionCode 10
+        versionName "20180602"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
