@@ -266,13 +266,9 @@ void gears_renderer_resize(gears_renderer_t* self, GLsizei w, GLsizei h)
 {
 	assert(self);
 
-	if((self->w == w) && (self->h == h))
+	if((w*h == 0) || ((self->w == w) && (self->h == h)))
 	{
 		// no resize
-	}
-	else if(w*h == 0)
-	{
-		// ignore
 	}
 	else
 	{

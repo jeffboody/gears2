@@ -482,9 +482,12 @@ int main(int argc, char** argv)
 			}
 			else if(e.type == SDL_WINDOWEVENT)
 			{
-				gears_renderer_resize(gears_renderer,
-				                      screen_scale*e.window.data1,
-				                      screen_scale*e.window.data2);
+				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
+				{
+					gears_renderer_resize(gears_renderer,
+					                      screen_scale*e.window.data1,
+					                      screen_scale*e.window.data2);
+				}
 			}
 			else if(e.type == SDL_QUIT)
 			{
