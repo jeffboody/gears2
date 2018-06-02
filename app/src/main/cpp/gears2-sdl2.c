@@ -21,6 +21,12 @@
  *
  */
 
+#ifdef __EMSCRIPTEN__
+	#define GL_GLEXT_PROTOTYPES 1
+	#include <emscripten.h>
+	#include <SDL_opengles2.h>
+	#include <SDL.h>
+#endif
 #include <stdlib.h>
 #include <assert.h>
 #include "a3d/a3d_timestamp.h"
@@ -36,9 +42,12 @@
 
 static gears_renderer_t* gears_renderer = NULL;
 
-static int           gRunning = 1;
-static SDL_Window*   gWindow = NULL;
 static SDL_GLContext gContext;
+static SDL_Window*   gWindow  = NULL;
+static int           gRunning = 1;
+static int           gScreenW = 1920;
+static int           gScreenH = 1080;
+static int           gScreenS = 1;
 
 static void cmd_fn(int cmd, const char* msg)
 {
@@ -311,11 +320,87 @@ static int keyPress(SDL_Keysym* keysym,
 
 	return 1;
 }
+
 /***********************************************************
 * main                                                     *
 ***********************************************************/
 
+void main_loop(void)
+{
+	SDL_Event e;
+	while(SDL_PollEvent(&e))
+	{
+		int keycode = 0;
+		int meta    = 0;
+		if((e.type == SDL_KEYUP) ||
+		   ((e.type == SDL_KEYDOWN) && (e.key.repeat)))
+		{
+			if(keyPress(&e.key.keysym, &keycode, &meta))
+			{
+				gears_renderer_keyPress(gears_renderer,
+				                        keycode, meta);
+			}
+		}
+		else if(e.type == SDL_MOUSEBUTTONUP)
+		{
+			float  x  = (float) gScreenS*e.button.x;
+			float  y  = (float) gScreenS*e.button.y;
+			double ts = a3d_timestamp();
+			gears_renderer_touch(gears_renderer,
+			                     GEARS_TOUCH_ACTION_UP,
+			                     1, ts, x, y,
+			                     0.0f, 0.0f,
+			                     0.0f, 0.0f,
+			                     0.0f, 0.0f);
+		}
+		else if(e.type == SDL_MOUSEBUTTONDOWN)
+		{
+			float  x  = (float) gScreenS*e.button.x;
+			float  y  = (float) gScreenS*e.button.y;
+			double ts = a3d_timestamp();
+			gears_renderer_touch(gears_renderer,
+			                     GEARS_TOUCH_ACTION_DOWN,
+			                     1, ts, x, y,
+			                     0.0f, 0.0f,
+			                     0.0f, 0.0f,
+			                     0.0f, 0.0f);
+		}
+		else if(e.type == SDL_MOUSEMOTION)
+		{
+			float  x  = (float) gScreenS*e.button.x;
+			float  y  = (float) gScreenS*e.button.y;
+			double ts = a3d_timestamp();
+			gears_renderer_touch(gears_renderer,
+			                     GEARS_TOUCH_ACTION_MOVE,
+			                     1, ts, x, y,
+			                     0.0f, 0.0f,
+			                     0.0f, 0.0f,
+			                     0.0f, 0.0f);
+		}
+		else if(e.type == SDL_WINDOWEVENT)
+		{
+			if(e.window.event == SDL_WINDOWEVENT_RESIZED)
+			{
+				gears_renderer_resize(gears_renderer,
+				                      gScreenS*e.window.data1,
+				                      gScreenS*e.window.data2);
+			}
+		}
+		else if(e.type == SDL_QUIT)
+		{
+			gRunning = 0;
+		}
+	}
+
+	gears_renderer_draw(gears_renderer);
+	SDL_GL_SwapWindow(gWindow);
+}
+
+#ifdef __EMSCRIPTEN__
+int main()
+#else
 int main(int argc, char** argv)
+#endif
 {
 	SDL_version version;
 	SDL_VERSION(&version);
@@ -335,14 +420,12 @@ int main(int argc, char** argv)
 
 	// set the default screen size
 	SDL_DisplayMode dpy;
-	int   screen_width      = 1920;
-	int   screen_height     = 1080;
 	float screen_density    = 1.0;
 	int   screen_fullscreen = 1;
 	if(SDL_GetCurrentDisplayMode(0, &dpy) == 0)
 	{
-		screen_width  = dpy.w;
-		screen_height = dpy.h;
+		gScreenW = dpy.w;
+		gScreenH = dpy.h;
 	}
 
 	// override the default screen size
@@ -350,8 +433,8 @@ int main(int argc, char** argv)
 	if(f)
 	{
 		if(fscanf(f, "%i %i %f %i",
-		          &screen_width,
-		          &screen_height,
+		          &gScreenW,
+		          &gScreenH,
 		          &screen_density,
 		          &screen_fullscreen) != 4)
 		{
@@ -369,24 +452,27 @@ int main(int argc, char** argv)
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 
 	#ifdef __APPLE__
-	int screen_flags = (screen_fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) |
-	                   SDL_WINDOW_ALLOW_HIGHDPI |
-	                   SDL_WINDOW_RESIZABLE     |
-	                   SDL_WINDOW_OPENGL        |
-	                   SDL_WINDOW_SHOWN;
-	int screen_scale = 2;
+		int screen_flags = (screen_fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) |
+		                   SDL_WINDOW_ALLOW_HIGHDPI |
+		                   SDL_WINDOW_RESIZABLE     |
+		                   SDL_WINDOW_OPENGL        |
+		                   SDL_WINDOW_SHOWN;
+		gScreenS = 2;
+	#elif defined(__EMSCRIPTEN__)
+		int screen_flags = SDL_WINDOW_FULLSCREEN |
+		                   SDL_WINDOW_OPENGL     |
+		                   SDL_WINDOW_SHOWN;
 	#else
-	int screen_flags = (screen_fullscreen ? SDL_WINDOW_FULLSCREEN : 0) |
-	                   SDL_WINDOW_RESIZABLE |
-	                   SDL_WINDOW_OPENGL    |
-	                   SDL_WINDOW_SHOWN;
-	int screen_scale = 1;
+		int screen_flags = (screen_fullscreen ? SDL_WINDOW_FULLSCREEN : 0) |
+		                   SDL_WINDOW_RESIZABLE |
+		                   SDL_WINDOW_OPENGL    |
+		                   SDL_WINDOW_SHOWN;
 	#endif
 	gWindow = SDL_CreateWindow("gears2",
 	                           SDL_WINDOWPOS_UNDEFINED,
 	                           SDL_WINDOWPOS_UNDEFINED,
-	                           screen_width,
-	                           screen_height,
+	                           gScreenW,
+	                           gScreenH,
 	                           screen_flags);
 	if(gWindow == NULL)
 	{
@@ -407,7 +493,11 @@ int main(int argc, char** argv)
 	}
 
 	// Initialize Glew
-	#ifndef __APPLE__
+	#ifdef __APPLE__
+		// ignore
+	#elif defined(__EMSCRIPTEN__)
+		// ignore
+	#else
 		GLenum glew_error = glewInit();
 		if(GLEW_OK != glew_error)
 		{
@@ -423,81 +513,19 @@ int main(int argc, char** argv)
 		goto fail_renderer;
 	}
 
-	SDL_GL_GetDrawableSize(gWindow, &screen_width, &screen_height);
-	gears_renderer_resize(gears_renderer, screen_width, screen_height);
+	SDL_GL_GetDrawableSize(gWindow, &gScreenW, &gScreenH);
+	gears_renderer_resize(gears_renderer, gScreenW, gScreenH);
 	gears_renderer_density(gears_renderer, screen_density);
 
 	// main loop
-	while(gRunning)
-	{
-		SDL_Event e;
-		while(SDL_PollEvent(&e))
+	#ifdef __EMSCRIPTEN__
+		emscripten_set_main_loop(main_loop, 0, 1);
+	#else
+		while(gRunning)
 		{
-			int keycode = 0;
-			int meta    = 0;
-			if((e.type == SDL_KEYUP) ||
-			   ((e.type == SDL_KEYDOWN) && (e.key.repeat)))
-			{
-				if(keyPress(&e.key.keysym, &keycode, &meta))
-				{
-					gears_renderer_keyPress(gears_renderer,
-					                        keycode, meta);
-				}
-			}
-			else if(e.type == SDL_MOUSEBUTTONUP)
-			{
-				float  x  = (float) screen_scale*e.button.x;
-				float  y  = (float) screen_scale*e.button.y;
-				double ts = a3d_timestamp();
-				gears_renderer_touch(gears_renderer,
-				                     GEARS_TOUCH_ACTION_UP,
-				                     1, ts, x, y,
-				                     0.0f, 0.0f,
-				                     0.0f, 0.0f,
-				                     0.0f, 0.0f);
-			}
-			else if(e.type == SDL_MOUSEBUTTONDOWN)
-			{
-				float  x  = (float) screen_scale*e.button.x;
-				float  y  = (float) screen_scale*e.button.y;
-				double ts = a3d_timestamp();
-				gears_renderer_touch(gears_renderer,
-				                     GEARS_TOUCH_ACTION_DOWN,
-				                     1, ts, x, y,
-				                     0.0f, 0.0f,
-				                     0.0f, 0.0f,
-				                     0.0f, 0.0f);
-			}
-			else if(e.type == SDL_MOUSEMOTION)
-			{
-				float  x  = (float) screen_scale*e.button.x;
-				float  y  = (float) screen_scale*e.button.y;
-				double ts = a3d_timestamp();
-				gears_renderer_touch(gears_renderer,
-				                     GEARS_TOUCH_ACTION_MOVE,
-				                     1, ts, x, y,
-				                     0.0f, 0.0f,
-				                     0.0f, 0.0f,
-				                     0.0f, 0.0f);
-			}
-			else if(e.type == SDL_WINDOWEVENT)
-			{
-				if(e.window.event == SDL_WINDOWEVENT_RESIZED)
-				{
-					gears_renderer_resize(gears_renderer,
-					                      screen_scale*e.window.data1,
-					                      screen_scale*e.window.data2);
-				}
-			}
-			else if(e.type == SDL_QUIT)
-			{
-				gRunning = 0;
-			}
+			main_loop();
 		}
-
-		gears_renderer_draw(gears_renderer);
-		SDL_GL_SwapWindow(gWindow);
-	}
+	#endif
 
 	// success
 	gears_renderer_delete(&gears_renderer);

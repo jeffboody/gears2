@@ -129,7 +129,6 @@ static const char* CYLINDER_FSHADER =
 	"precision mediump int;\n"
 	"#endif\n"
 	"\n"
-	"uniform mat3 nm;\n"
 	"uniform vec4 color;\n"
 	"varying vec4 varying_normal;\n"
 	"\n"

@@ -1,0 +1,38 @@
+TARGET   = gears2.js
+CLASSES  = gears_renderer gear gears_overlay gears_layerHud gears_viewAbout
+BCLIBS   = a3d/liba3d.bc libpak/libpak.bc texgz/libtexgz.bc libexpat/expat/lib/libexpat.bc
+SOURCE   = gears2-sdl2.c $(CLASSES:%=%.c)
+OBJECTS  = $(SOURCE:.c=.bc)
+HFILES   = $(CLASSES:%=%.h)
+EMCC     = emcc
+FLAGS    = -O2 -Wall -DA3D_GLESv2 -s WASM=1 -s USE_SDL=2 -s USE_ZLIB=1
+PRELOAD  = --preload-file ../res/raw/resource.raw@resource.pak
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS) a3d libpak texgz libexpat
+	$(EMCC) $(BCLIBS) $(OBJECTS) $(FLAGS) -o $(TARGET) $(PRELOAD)
+
+.PHONY: a3d libpak texgz libexpat
+
+a3d:
+	$(MAKE) -C a3d -f Makefile.wasm
+
+libpak:
+	$(MAKE) -C libpak -f Makefile.wasm
+
+texgz:
+	$(MAKE) -C texgz -f Makefile.wasm
+
+libexpat:
+	$(MAKE) -C libexpat/expat/lib -f Makefile.wasm
+
+clean:
+	rm -f $(OBJECTS) *~ \#*\# $(TARGET) gears2.wasm gears2.data
+	$(MAKE) -C a3d -f Makefile.wasm clean
+	$(MAKE) -C libpak -f Makefile.wasm clean
+	$(MAKE) -C texgz -f Makefile.wasm clean
+	$(MAKE) -C libexpat/expat/lib -f Makefile.wasm clean
+
+%.bc: %.c $(HFILES)
+	$(EMCC) $(FLAGS) $< -o $@
