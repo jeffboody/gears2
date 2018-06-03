@@ -1,15 +1,15 @@
 [submodule "app/src/main/java/com/jeffboody/a3d"]
 	path = app/src/main/java/com/jeffboody/a3d
-	url = git://github.com/jeffboody/a3d-java.git
+	url = git@github.com:jeffboody/a3d-java.git
 [submodule "app/src/main/cpp/texgz"]
 	path = app/src/main/cpp/texgz
-	url = git://github.com/jeffboody/texgz
+	url = git@github.com:jeffboody/texgz
 [submodule "app/src/main/cpp/libpak"]
 	path = app/src/main/cpp/libpak
-	url = git://github.com/jeffboody/libpak.git
+	url = git@github.com:jeffboody/libpak.git
 [submodule "app/src/main/cpp/a3d"]
 	path = app/src/main/cpp/a3d
-	url = git://github.com/jeffboody/a3d-native.git
+	url = git@github.com:jeffboody/a3d-native.git
 [submodule "app/src/main/cpp/libexpat"]
 	path = app/src/main/cpp/libexpat
 	url = git@github.com:jeffboody/libexpat.git
