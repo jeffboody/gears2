@@ -643,14 +643,7 @@ void gears_viewAbout_delete(gears_viewAbout_t** _self)
 	gears_viewAbout_t* self = *_self;
 	if(self)
 	{
-		// empty listbox
-		a3d_listitem_t* iter;
-		iter = a3d_list_head(self->listbox->list);
-		while(iter)
-		{
-			a3d_list_remove(self->listbox->list, &iter);
-		}
-
+		a3d_listbox_clear(self->listbox);
 		a3d_textbox_delete(&self->linkbox_expat);
 		a3d_textbox_delete(&self->linkbox_barlow);
 		a3d_textbox_delete(&self->linkbox_icons);

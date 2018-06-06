@@ -148,16 +148,7 @@ void gears_layerHud_delete(gears_layerHud_t** _self)
 	gears_layerHud_t* self = *_self;
 	if(self)
 	{
-		LOGD("debug");
-
-		// empty layer
-		a3d_layer_t*    layer = (a3d_layer_t*) self;
-		a3d_listitem_t* iter  = a3d_list_head(layer->list);
-		while(iter)
-		{
-			a3d_list_remove(layer->list, &iter);
-		}
-
+		a3d_layer_clear((a3d_layer_t*) self);
 		a3d_text_delete(&self->text_fps);
 		a3d_bulletbox_delete(&self->bulletbox_about);
 		a3d_layer_delete((a3d_layer_t**) _self);

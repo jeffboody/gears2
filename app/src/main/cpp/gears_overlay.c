@@ -166,13 +166,7 @@ void gears_overlay_delete(gears_overlay_t** _self)
 	gears_overlay_t* self = *_self;
 	if(self)
 	{
-		// empty layer
-		a3d_listitem_t* iter = a3d_list_head(self->layer_show->list);
-		while(iter)
-		{
-			a3d_list_remove(self->layer_show->list, &iter);
-		}
-
+		a3d_layer_clear(self->layer_show);
 		gears_viewAbout_delete(&self->view_about);
 		gears_layerHud_delete(&self->layer_hud);
 		a3d_layer_delete(&self->layer_show);
