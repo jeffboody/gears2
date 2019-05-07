@@ -158,6 +158,19 @@ static const char* CYLINDER_FSHADER =
 
 static void gear_angle(int i, int teeth, float* a0, float* a1, float* a2, float* a3)
 {
+	/*
+	 *              +-----+      r2
+	 *             /       \
+	 *            /         \
+	 *           /           \
+	 *          /             \
+	 *   +-----+               + r1
+	 *
+	 *         a3   a2   a1    a0
+	 *
+	 *   +-----+---------------+ r0
+	 */
+
 	float angle = i * 2.0f * M_PI / teeth;
 	float da = 2.0f * M_PI / teeth / 4.0f;
 	*a0 = angle;
@@ -210,6 +223,10 @@ static int gear_generate(gear_t* self,
 		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), dz);
 		a3d_glsm_vertex3f(glsm, r1 * cosf(a0), r1 * sinf(a0), dz);
 		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), dz);
+		a3d_glsm_vertex3f(glsm, r2 * cosf(a1), r2 * sinf(a1), dz);
+		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), dz);
+		a3d_glsm_vertex3f(glsm, r2 * cosf(a2), r2 * sinf(a2), dz);
+		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), dz);
 		a3d_glsm_vertex3f(glsm, r1 * cosf(a3), r1 * sinf(a3), dz);
 	}
 	a3d_glsm_vertex3f(glsm, r0 * cosf(0.0f), r0 * sinf(0.0f), dz);
@@ -222,29 +239,6 @@ static int gear_generate(gear_t* self,
 	glBindBuffer(GL_ARRAY_BUFFER, self->front_vid);
 	glBufferData(GL_ARRAY_BUFFER, 3 * glsm->ec * sizeof(GLfloat), glsm->vb, GL_STATIC_DRAW);
 
-	// draw front sides of teeth
-	// GL_TRIANGLES
-	a3d_glsm_begin(glsm);
-	for(i = 0; i < teeth; i++)
-	{
-		gear_angle(i, teeth, &a0, &a1, &a2, &a3);
-
-		a3d_glsm_vertex3f(glsm, r1 * cosf(a0), r1 * sinf(a0), dz);   // 0
-		a3d_glsm_vertex3f(glsm, r2 * cosf(a1), r2 * sinf(a1), dz);   // 1
-		a3d_glsm_vertex3f(glsm, r2 * cosf(a2), r2 * sinf(a2), dz);   // 2
-
-		a3d_glsm_vertex3f(glsm, r1 * cosf(a0), r1 * sinf(a0), dz);   // 0
-		a3d_glsm_vertex3f(glsm, r2 * cosf(a2), r2 * sinf(a2), dz);   // 2
-		a3d_glsm_vertex3f(glsm, r1 * cosf(a3), r1 * sinf(a3), dz);   // 3
-	}
-	a3d_glsm_end(glsm);
-
-	// buffer front sides of teeth
-	if(a3d_glsm_status(glsm) != A3D_GLSM_COMPLETE) goto fail;
-	self->front_teeth_ec = glsm->ec;
-	glBindBuffer(GL_ARRAY_BUFFER, self->front_teeth_vid);
-	glBufferData(GL_ARRAY_BUFFER, 3 * glsm->ec * sizeof(GLfloat), glsm->vb, GL_STATIC_DRAW);
-
 	// draw back face
 	// GL_TRIANGLE_STRIP
 	a3d_glsm_begin(glsm);
@@ -253,6 +247,10 @@ static int gear_generate(gear_t* self,
 		gear_angle(i, teeth, &a0, &a1, &a2, &a3);
 
 		a3d_glsm_vertex3f(glsm, r1 * cosf(a0), r1 * sinf(a0), -dz);
+		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), -dz);
+		a3d_glsm_vertex3f(glsm, r2 * cosf(a1), r2 * sinf(a1), -dz);
+		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), -dz);
+		a3d_glsm_vertex3f(glsm, r2 * cosf(a2), r2 * sinf(a2), -dz);
 		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), -dz);
 		a3d_glsm_vertex3f(glsm, r1 * cosf(a3), r1 * sinf(a3), -dz);
 		a3d_glsm_vertex3f(glsm, r0 * cosf(a0), r0 * sinf(a0), -dz);
@@ -265,29 +263,6 @@ static int gear_generate(gear_t* self,
 	if(a3d_glsm_status(glsm) != A3D_GLSM_COMPLETE) goto fail;
 	self->back_ec = glsm->ec;
 	glBindBuffer(GL_ARRAY_BUFFER, self->back_vid);
-	glBufferData(GL_ARRAY_BUFFER, 3 * glsm->ec * sizeof(GLfloat), glsm->vb, GL_STATIC_DRAW);
-
-	// draw back sides of teeth
-	// GL_TRIANGLES
-	a3d_glsm_begin(glsm);
-	for(i = 0; i < teeth; i++)
-	{
-		gear_angle(i, teeth, &a0, &a1, &a2, &a3);
-
-		a3d_glsm_vertex3f(glsm, r1 * cosf(a3), r1 * sinf(a3), -dz);   // 0
-		a3d_glsm_vertex3f(glsm, r2 * cosf(a2), r2 * sinf(a2), -dz);   // 1
-		a3d_glsm_vertex3f(glsm, r2 * cosf(a1), r2 * sinf(a1), -dz);   // 2
-
-		a3d_glsm_vertex3f(glsm, r1 * cosf(a3), r1 * sinf(a3), -dz);   // 0
-		a3d_glsm_vertex3f(glsm, r2 * cosf(a1), r2 * sinf(a1), -dz);   // 2
-		a3d_glsm_vertex3f(glsm, r1 * cosf(a0), r1 * sinf(a0), -dz);   // 3
-	}
-	a3d_glsm_end(glsm);
-
-	// buffer back sides of teeth
-	if(a3d_glsm_status(glsm) != A3D_GLSM_COMPLETE) goto fail;
-	self->back_teeth_ec = glsm->ec;
-	glBindBuffer(GL_ARRAY_BUFFER, self->back_teeth_vid);
 	glBufferData(GL_ARRAY_BUFFER, 3 * glsm->ec * sizeof(GLfloat), glsm->vb, GL_STATIC_DRAW);
 
 	// draw outward faces of teeth
@@ -462,9 +437,7 @@ gear_t* gear_new(const a3d_vec4f_t* color,
 	// initialize gear
 	a3d_vec4f_copy(color, &self->color);
 	glGenBuffers(1, &self->front_vid);
-	glGenBuffers(1, &self->front_teeth_vid);
 	glGenBuffers(1, &self->back_vid);
-	glGenBuffers(1, &self->back_teeth_vid);
 	glGenBuffers(1, &self->outward_vid);
 	glGenBuffers(1, &self->outward_nid);
 	glGenBuffers(1, &self->cylinder_vid);
@@ -492,9 +465,7 @@ gear_t* gear_new(const a3d_vec4f_t* color,
 		glDeleteBuffers(1, &self->cylinder_vid);
 		glDeleteBuffers(1, &self->outward_nid);
 		glDeleteBuffers(1, &self->outward_vid);
-		glDeleteBuffers(1, &self->back_teeth_vid);
 		glDeleteBuffers(1, &self->back_vid);
-		glDeleteBuffers(1, &self->front_teeth_vid);
 		glDeleteBuffers(1, &self->front_vid);
 		free(self);
 	return NULL;
@@ -516,9 +487,7 @@ void gear_delete(gear_t** _self)
 		glDeleteBuffers(1, &self->cylinder_vid);
 		glDeleteBuffers(1, &self->outward_nid);
 		glDeleteBuffers(1, &self->outward_vid);
-		glDeleteBuffers(1, &self->back_teeth_vid);
 		glDeleteBuffers(1, &self->back_vid);
-		glDeleteBuffers(1, &self->front_teeth_vid);
 		glDeleteBuffers(1, &self->front_vid);
 		free(self);
 		*_self = NULL;
@@ -567,10 +536,6 @@ void gear_draw(gear_t* self, a3d_mat4f_t* mvp, a3d_mat4f_t* mvm)
 	glVertexAttribPointer(self->face_attribute_vertex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, self->front_ec);
 
-	glBindBuffer(GL_ARRAY_BUFFER, self->front_teeth_vid);
-	glVertexAttribPointer(self->face_attribute_vertex, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glDrawArrays(GL_TRIANGLES, 0, self->front_teeth_ec);
-
 	// compute color for flat shaded surface
 	a3d_vec3f_t normal_back;
 	a3d_vec3f_load(&normal_back, 0.0f, 0.0f, -1.0f);
@@ -594,10 +559,6 @@ void gear_draw(gear_t* self, a3d_mat4f_t* mvp, a3d_mat4f_t* mvm)
 	glBindBuffer(GL_ARRAY_BUFFER, self->back_vid);
 	glVertexAttribPointer(self->face_attribute_vertex, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, self->back_ec);
-
-	glBindBuffer(GL_ARRAY_BUFFER, self->back_teeth_vid);
-	glVertexAttribPointer(self->face_attribute_vertex, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glDrawArrays(GL_TRIANGLES, 0, self->back_teeth_ec);
 
 	glDisableVertexAttribArray(self->face_attribute_vertex);
 

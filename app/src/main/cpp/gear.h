@@ -45,12 +45,8 @@ typedef struct
 	// nid: normal id
 	GLsizei front_ec;
 	GLuint  front_vid;
-	GLsizei front_teeth_ec;
-	GLuint  front_teeth_vid;
 	GLsizei back_ec;
 	GLuint  back_vid;
-	GLsizei back_teeth_ec;
-	GLuint  back_teeth_vid;
 	GLsizei outward_ec;
 	GLuint  outward_vid;
 	GLuint  outward_nid;
