@@ -45,8 +45,10 @@ typedef struct
 	// nid: normal id
 	GLsizei front_ec;
 	GLuint  front_vid;
+	GLuint  front_nid;
 	GLsizei back_ec;
 	GLuint  back_vid;
+	GLuint  back_nid;
 	GLsizei outward_ec;
 	GLuint  outward_vid;
 	GLuint  outward_nid;
@@ -55,24 +57,12 @@ typedef struct
 	GLuint  cylinder_nid;
 
 	// shader state
-	GLuint face_program;
-	GLint  face_attribute_vertex;
-	GLint  face_uniform_color;
-	GLint  face_uniform_mvp;
-
-	GLuint outward_program;
-	GLint  outward_attribute_vertex;
-	GLint  outward_attribute_normal;
-	GLint  outward_uniform_color;
-	GLint  outward_uniform_nm;
-	GLint  outward_uniform_mvp;
-
-	GLuint cylinder_program;
-	GLint  cylinder_attribute_vertex;
-	GLint  cylinder_attribute_normal;
-	GLint  cylinder_uniform_color;
-	GLint  cylinder_uniform_nm;
-	GLint  cylinder_uniform_mvp;
+	GLuint program;
+	GLint  attribute_vertex;
+	GLint  attribute_normal;
+	GLint  uniform_color;
+	GLint  uniform_nm;
+	GLint  uniform_mvp;
 } gear_t;
 
 gear_t* gear_new(const a3d_vec4f_t* color,
