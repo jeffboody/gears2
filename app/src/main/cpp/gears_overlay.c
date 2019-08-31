@@ -114,8 +114,7 @@ gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer)
 	                                 A3D_WIDGET_STRETCH_ASPECT,
 	                                 1.0f,
 	                                 A3D_WIDGET_BORDER_NONE,
-	                                 A3D_WIDGET_LINE_NONE,
-	                                 &clear, &clear,
+	                                 &clear,
 	                                 A3D_LAYER_MODE_FRONT);
 	if(self->layer_show == NULL)
 	{

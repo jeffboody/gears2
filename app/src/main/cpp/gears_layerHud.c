@@ -73,8 +73,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	                                       A3D_WIDGET_STRETCH_ASPECT,
 	                                       1.0f,
 	                                       A3D_WIDGET_BORDER_LARGE,
-	                                       A3D_WIDGET_LINE_NONE,
-	                                       &clear, &clear,
+	                                       &clear,
 	                                       A3D_LAYER_MODE_LAYERED);
 	if(self == NULL)
 	{
@@ -86,9 +85,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	                                          0,
 	                                          A3D_WIDGET_ANCHOR_TL,
 	                                          A3D_WIDGET_BORDER_MEDIUM,
-	                                          A3D_WIDGET_LINE_NONE,
 	                                          A3D_TEXT_STYLE_MEDIUM,
-	                                          &clear, &clear, &white, &white,
+	                                          &clear, &white, &white,
 	                                          16, 1,
 	                                          clickAbout,
 	                                          NULL);
@@ -105,9 +103,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	                              0,
 	                              A3D_WIDGET_ANCHOR_BR,
 	                              A3D_WIDGET_BORDER_NONE,
-	                              A3D_WIDGET_LINE_NONE,
 	                              A3D_TEXT_STYLE_SMALL,
-	                              &clear, &clear, &yellow,
+	                              &clear, &yellow,
 	                              16,
 	                              NULL,
 	                              NULL);
