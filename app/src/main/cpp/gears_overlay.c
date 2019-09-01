@@ -108,7 +108,6 @@ gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer)
 
 	self->layer_show = a3d_layer_new(self->screen,
 	                                 0,
-	                                 A3D_WIDGET_ANCHOR_TL,
 	                                 A3D_WIDGET_WRAP_STRETCH_PARENT,
 	                                 A3D_WIDGET_WRAP_STRETCH_PARENT,
 	                                 A3D_WIDGET_STRETCH_ASPECT,

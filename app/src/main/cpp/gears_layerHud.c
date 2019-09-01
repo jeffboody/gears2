@@ -67,7 +67,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	gears_layerHud_t* self = (gears_layerHud_t*)
 	                         a3d_layer_new(overlay->screen,
 	                                       sizeof(gears_layerHud_t),
-	                                       A3D_WIDGET_ANCHOR_TL,
 	                                       A3D_WIDGET_WRAP_STRETCH_PARENT,
 	                                       A3D_WIDGET_WRAP_STRETCH_PARENT,
 	                                       A3D_WIDGET_STRETCH_ASPECT,
@@ -83,7 +82,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 
 	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
 	                                          0,
-	                                          A3D_WIDGET_ANCHOR_TL,
 	                                          A3D_WIDGET_BORDER_MEDIUM,
 	                                          A3D_TEXT_STYLE_MEDIUM,
 	                                          &clear, &white, &white,
@@ -101,7 +99,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 
 	self->text_fps = a3d_text_new(overlay->screen,
 	                              0,
-	                              A3D_WIDGET_ANCHOR_BR,
 	                              A3D_WIDGET_BORDER_NONE,
 	                              A3D_TEXT_STYLE_SMALL,
 	                              &clear, &yellow,
@@ -112,6 +109,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	{
 		goto fail_text_fps;
 	}
+	a3d_widget_anchor((a3d_widget_t*) self->text_fps,
+	                  A3D_WIDGET_ANCHOR_BR);
 	a3d_text_printf(self->text_fps, "%s", "0 fps");
 	self->fps = 0;
 
