@@ -83,9 +83,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
 	                                          0,
 	                                          A3D_WIDGET_BORDER_MEDIUM,
-	                                          A3D_TEXT_STYLE_MEDIUM,
-	                                          &clear, &white, &white,
-	                                          16, 1,
+	                                          A3D_TEXT_SIZE_MEDIUM,
+	                                          &white, 16, 1,
 	                                          clickAbout,
 	                                          NULL);
 	if(self->bulletbox_about == NULL)
@@ -100,7 +99,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	self->text_fps = a3d_text_new(overlay->screen,
 	                              0,
 	                              A3D_WIDGET_BORDER_NONE,
-	                              A3D_TEXT_STYLE_SMALL,
+	                              A3D_TEXT_SIZE_SMALL,
 	                              &clear, &yellow,
 	                              16,
 	                              NULL,
