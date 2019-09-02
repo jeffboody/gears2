@@ -66,10 +66,12 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 
 	a3d_widgetLayout_t layout_hud =
 	{
-		.wrapx          = A3D_WIDGET_WRAP_STRETCH_PARENT,
-		.wrapy          = A3D_WIDGET_WRAP_STRETCH_PARENT,
-		.stretch_mode   = A3D_WIDGET_STRETCH_ASPECT,
-		.stretch_factor = 1.0f
+		.wrapx    = A3D_WIDGET_WRAP_STRETCH_PARENT,
+		.wrapy    = A3D_WIDGET_WRAP_STRETCH_PARENT,
+		.aspectx  = A3D_WIDGET_ASPECT_DEFAULT,
+		.aspecty  = A3D_WIDGET_ASPECT_DEFAULT,
+		.stretchx = 1.0f,
+		.stretchy = 1.0f
 	};
 
 	gears_layerHud_t* self;

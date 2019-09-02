@@ -108,10 +108,12 @@ gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer)
 
 	a3d_widgetLayout_t layout_show =
 	{
-		.wrapx          = A3D_WIDGET_WRAP_STRETCH_PARENT,
-		.wrapy          = A3D_WIDGET_WRAP_STRETCH_PARENT,
-		.stretch_mode   = A3D_WIDGET_STRETCH_ASPECT,
-		.stretch_factor = 1.0f
+		.wrapx    = A3D_WIDGET_WRAP_STRETCH_PARENT,
+		.wrapy    = A3D_WIDGET_WRAP_STRETCH_PARENT,
+		.aspectx  = A3D_WIDGET_ASPECT_DEFAULT,
+		.aspecty  = A3D_WIDGET_ASPECT_DEFAULT,
+		.stretchx = 1.0f,
+		.stretchy = 1.0f
 	};
 
 	self->layer_show = a3d_layer_new(self->screen,

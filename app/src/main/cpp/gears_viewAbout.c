@@ -139,10 +139,12 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 
 	a3d_widgetLayout_t layout_listbox =
 	{
-		.wrapx          = A3D_WIDGET_WRAP_STRETCH_PARENT,
-		.wrapy          = A3D_WIDGET_WRAP_SHRINK,
-		.stretch_mode   = A3D_WIDGET_STRETCH_NA,
-		.stretch_factor = 1.0f
+		.wrapx    = A3D_WIDGET_WRAP_STRETCH_PARENT,
+		.wrapy    = A3D_WIDGET_WRAP_SHRINK,
+		.aspectx  = A3D_WIDGET_ASPECT_DEFAULT,
+		.aspecty  = A3D_WIDGET_ASPECT_DEFAULT,
+		.stretchx = 1.0f,
+		.stretchy = 1.0f
 	};
 
 	a3d_listbox_t* listbox;
@@ -164,10 +166,12 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 
 	a3d_widgetLayout_t layout_about =
 	{
-		.wrapx          = A3D_WIDGET_WRAP_SHRINK,
-		.wrapy          = A3D_WIDGET_WRAP_STRETCH_PARENT,
-		.stretch_mode   = A3D_WIDGET_STRETCH_NA,
-		.stretch_factor = 1.0f
+		.wrapx    = A3D_WIDGET_WRAP_SHRINK,
+		.wrapy    = A3D_WIDGET_WRAP_STRETCH_PARENT,
+		.aspectx  = A3D_WIDGET_ASPECT_DEFAULT,
+		.aspecty  = A3D_WIDGET_ASPECT_DEFAULT,
+		.stretchx = 1.0f,
+		.stretchy = 1.0f
 	};
 
 	gears_viewAbout_t* self;
@@ -273,10 +277,12 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 
 	a3d_widgetLayout_t layout_textbox =
 	{
-		.wrapx          = A3D_WIDGET_WRAP_STRETCH_PARENT,
-		.wrapy          = A3D_WIDGET_WRAP_SHRINK,
-		.stretch_mode   = A3D_WIDGET_STRETCH_NA,
-		.stretch_factor = 1.0f
+		.wrapx    = A3D_WIDGET_WRAP_STRETCH_PARENT,
+		.wrapy    = A3D_WIDGET_WRAP_SHRINK,
+		.aspectx  = A3D_WIDGET_ASPECT_DEFAULT,
+		.aspecty  = A3D_WIDGET_ASPECT_DEFAULT,
+		.stretchx = 1.0f,
+		.stretchy = 1.0f
 	};
 
 	a3d_textbox_t* textbox_intro;
