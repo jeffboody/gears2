@@ -110,8 +110,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	                              A3D_TEXT_SIZE_SMALL,
 	                              &clear, &yellow,
 	                              16,
-	                              NULL,
-	                              NULL);
+	                              NULL, NULL,
+	                              NULL, NULL);
 	if(self->text_fps == NULL)
 	{
 		goto fail_text_fps;

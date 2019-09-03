@@ -39,7 +39,7 @@ typedef struct
 } gears_viewAbout_t;
 
 gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
-                                       a3d_widget_click_fn clickBack);
+                                       a3d_widget_clickFn clickBack);
 void               gears_viewAbout_delete(gears_viewAbout_t** _self);
 
 #endif
