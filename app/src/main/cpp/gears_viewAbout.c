@@ -183,7 +183,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                       &white, &blue,
 	                       A3D_WIDGET_BORDER_MEDIUM,
 	                       A3D_TEXT_SIZE_MEDIUM,
-	                       &white, 16,
+	                       &white,
 	                       "$ic_arrow_back_white_24dp.texz",
 	                       clickBack,
 	                       (void*) overlay,
@@ -201,7 +201,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                          A3D_WIDGET_BORDER_MEDIUM,
 	                          A3D_TEXT_SIZE_MEDIUM,
 	                          &clear, &black,
-	                          80,
 	                          NULL, NULL,
 	                          NULL, NULL);
 	if(text_intro == NULL)
@@ -217,7 +216,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                          A3D_WIDGET_BORDER_MEDIUM,
 	                          A3D_TEXT_SIZE_MEDIUM,
 	                          &clear, &black,
-	                          80,
 	                          NULL, NULL,
 	                          NULL, NULL);
 	if(text_icons == NULL)
@@ -233,7 +231,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                           A3D_WIDGET_BORDER_MEDIUM,
 	                           A3D_TEXT_SIZE_MEDIUM,
 	                           &clear, &black,
-	                           80,
 	                           NULL, NULL,
 	                           NULL, NULL);
 	if(text_barlow == NULL)
@@ -249,7 +246,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                          A3D_WIDGET_BORDER_MEDIUM,
 	                          A3D_TEXT_SIZE_MEDIUM,
 	                          &clear, &black,
-	                          80,
 	                          NULL, NULL,
 	                          NULL, NULL);
 	if(text_expat == NULL)
@@ -265,7 +261,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                            A3D_WIDGET_BORDER_MEDIUM,
 	                            A3D_TEXT_SIZE_MEDIUM,
 	                            &clear, &black,
-	                            80,
 	                            NULL, NULL,
 	                            NULL, NULL);
 	if(text_license == NULL)

@@ -92,7 +92,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	                                          0,
 	                                          A3D_WIDGET_BORDER_MEDIUM,
 	                                          A3D_TEXT_SIZE_MEDIUM,
-	                                          &white, 16, 1,
+	                                          &white, 1,
 	                                          clickAbout,
 	                                          NULL);
 	if(self->bulletbox_about == NULL)
@@ -109,7 +109,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	                              A3D_WIDGET_BORDER_NONE,
 	                              A3D_TEXT_SIZE_SMALL,
 	                              &clear, &yellow,
-	                              16,
 	                              NULL, NULL,
 	                              NULL, NULL);
 	if(self->text_fps == NULL)
