@@ -153,16 +153,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                          A3D_LISTBOX_ORIENTATION_VERTICAL,
 	                          &layout_listbox,
 	                          A3D_WIDGET_BORDER_LARGE,
-	                          &clear,
+	                          &clear, 1, &ltgray, &dkgray,
 	                          NULL,
 	                          NULL);
 	if(listbox == NULL)
 	{
 		return NULL;
 	}
-
-	a3d_widget_scrollbar((a3d_widget_t*) listbox,
-	                     &ltgray, &dkgray);
 
 	a3d_widgetLayout_t layout_about =
 	{
@@ -290,7 +287,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_TEXT_WRAP_SHRINK,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &black, 80, NULL);
+	                                &black, 80, 0, &clear,
+	                                &clear, NULL);
 	if(textbox_intro == NULL)
 	{
 		goto fail_textbox_intro;
@@ -307,7 +305,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_TEXT_WRAP_SHRINK,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &black, 80, NULL);
+	                                &black, 80, 0, &clear,
+	                                &clear, NULL);
 	if(textbox_icons == NULL)
 	{
 		goto fail_textbox_icons;
@@ -324,7 +323,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                 A3D_TEXT_WRAP_SHRINK,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
 	                                 A3D_TEXT_SIZE_MEDIUM,
-	                                 &black, 80, NULL);
+	                                 &black, 80, 0, &clear,
+	                                 &clear, NULL);
 	if(textbox_barlow == NULL)
 	{
 		goto fail_textbox_barlow;
@@ -341,7 +341,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_TEXT_WRAP_SHRINK,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &black, 80, NULL);
+	                                &black, 80, 0, &clear,
+	                                &clear, NULL);
 	if(textbox_expat == NULL)
 	{
 		goto fail_textbox_expat;
@@ -358,7 +359,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                  A3D_TEXT_WRAP_SHRINK,
 	                                  A3D_WIDGET_BORDER_MEDIUM,
 	                                  A3D_TEXT_SIZE_MEDIUM,
-	                                  &black, 80, NULL);
+	                                  &black, 80, 0, &clear,
+	                                  &clear, NULL);
 	if(textbox_license == NULL)
 	{
 		goto fail_textbox_license;
@@ -375,7 +377,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                 A3D_TEXT_WRAP_SHRINK,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
 	                                 A3D_TEXT_SIZE_MEDIUM,
-	                                 &blue, 80, clickGithub);
+	                                 &blue, 80, 0, &clear,
+	                                 &clear, clickGithub);
 	if(linkbox_github == NULL)
 	{
 		goto fail_linkbox_github;
@@ -394,7 +397,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_TEXT_WRAP_SHRINK,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &blue, 80, clickIcons);
+	                                &blue, 80, 0, &clear,
+	                                &clear, clickIcons);
 	if(linkbox_icons == NULL)
 	{
 		goto fail_linkbox_icons;
@@ -413,7 +417,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                 A3D_TEXT_WRAP_SHRINK,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
 	                                 A3D_TEXT_SIZE_MEDIUM,
-	                                 &blue, 80, clickBarlow);
+	                                 &blue, 80, 0, &clear,
+	                                 &clear, clickBarlow);
 	if(linkbox_barlow == NULL)
 	{
 		goto fail_linkbox_barlow;
@@ -432,7 +437,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_TEXT_WRAP_SHRINK,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &blue, 80, clickExpat);
+	                                &blue, 80, 0, &clear,
+	                                &clear, clickExpat);
 	if(linkbox_expat == NULL)
 	{
 		goto fail_linkbox_expat;
