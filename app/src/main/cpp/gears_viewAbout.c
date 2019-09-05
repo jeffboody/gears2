@@ -16,15 +16,16 @@
 ***********************************************************/
 
 static int clickGithub(a3d_widget_t* widget,
-                       int state,
+                       void* priv, int state,
                        float x, float y)
 {
 	assert(widget);
+	assert(priv);
 	LOGD("debug x=%f, y=%f", x, y);
 
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
-		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_overlay_t*  overlay  = (gears_overlay_t*) priv;
 		gears_renderer_t* renderer = overlay->renderer;
 		gears_renderer_loadURL(renderer, "https://github.com/jeffboody/gears2/");
 	}
@@ -32,15 +33,16 @@ static int clickGithub(a3d_widget_t* widget,
 }
 
 static int clickIcons(a3d_widget_t* widget,
-                      int state,
+                      void* priv, int state,
                       float x, float y)
 {
 	assert(widget);
+	assert(priv);
 	LOGD("debug x=%f, y=%f", x, y);
 
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
-		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_overlay_t*  overlay  = (gears_overlay_t*) priv;
 		gears_renderer_t* renderer = overlay->renderer;
 		gears_renderer_loadURL(renderer, "https://github.com/google/material-design-icons/");
 	}
@@ -48,15 +50,16 @@ static int clickIcons(a3d_widget_t* widget,
 }
 
 static int clickBarlow(a3d_widget_t* widget,
-                       int state,
+                       void* priv, int state,
                        float x, float y)
 {
 	assert(widget);
+	assert(priv);
 	LOGD("debug x=%f, y=%f", x, y);
 
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
-		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_overlay_t*  overlay  = (gears_overlay_t*) priv;
 		gears_renderer_t* renderer = overlay->renderer;
 		gears_renderer_loadURL(renderer, "https://github.com/jpt/barlow/");
 	}
@@ -64,15 +67,16 @@ static int clickBarlow(a3d_widget_t* widget,
 }
 
 static int clickExpat(a3d_widget_t* widget,
-                      int state,
+                      void* priv, int state,
                       float x, float y)
 {
 	assert(widget);
+	assert(priv);
 	LOGD("debug x=%f, y=%f", x, y);
 
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
-		gears_overlay_t*  overlay  = (gears_overlay_t*) widget->priv;
+		gears_overlay_t*  overlay  = (gears_overlay_t*) priv;
 		gears_renderer_t* renderer = overlay->renderer;
 		gears_renderer_loadURL(renderer, "https://github.com/jeffboody/libexpat/");
 	}
@@ -154,8 +158,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                          &layout_listbox,
 	                          A3D_WIDGET_BORDER_LARGE,
 	                          &clear, 1, &ltgray, &dkgray,
-	                          NULL,
-	                          NULL);
+	                          NULL, NULL, NULL, NULL);
 	if(listbox == NULL)
 	{
 		return NULL;
@@ -182,8 +185,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                       A3D_TEXT_SIZE_MEDIUM,
 	                       &white,
 	                       "$ic_arrow_back_white_24dp.texz",
-	                       clickBack,
 	                       (void*) overlay,
+	                       clickBack,
 	                       (a3d_widget_t*) listbox,
 	                       NULL);
 	if(self == NULL)
@@ -288,7 +291,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
 	                                &black, 80, 0, &clear,
-	                                &clear, NULL);
+	                                &clear, NULL, NULL);
 	if(textbox_intro == NULL)
 	{
 		goto fail_textbox_intro;
@@ -306,7 +309,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
 	                                &black, 80, 0, &clear,
-	                                &clear, NULL);
+	                                &clear, NULL, NULL);
 	if(textbox_icons == NULL)
 	{
 		goto fail_textbox_icons;
@@ -324,7 +327,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
 	                                 A3D_TEXT_SIZE_MEDIUM,
 	                                 &black, 80, 0, &clear,
-	                                 &clear, NULL);
+	                                 &clear, NULL, NULL);
 	if(textbox_barlow == NULL)
 	{
 		goto fail_textbox_barlow;
@@ -342,7 +345,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
 	                                &black, 80, 0, &clear,
-	                                &clear, NULL);
+	                                &clear, NULL, NULL);
 	if(textbox_expat == NULL)
 	{
 		goto fail_textbox_expat;
@@ -360,7 +363,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                  A3D_WIDGET_BORDER_MEDIUM,
 	                                  A3D_TEXT_SIZE_MEDIUM,
 	                                  &black, 80, 0, &clear,
-	                                  &clear, NULL);
+	                                  &clear, NULL, NULL);
 	if(textbox_license == NULL)
 	{
 		goto fail_textbox_license;
@@ -378,14 +381,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
 	                                 A3D_TEXT_SIZE_MEDIUM,
 	                                 &blue, 80, 0, &clear,
-	                                 &clear, clickGithub);
+	                                 &clear, (void*) overlay,
+	                                 clickGithub);
 	if(linkbox_github == NULL)
 	{
 		goto fail_linkbox_github;
 	}
 	self->linkbox_github = linkbox_github;
-	a3d_widget_t* widget_github = (a3d_widget_t*) linkbox_github;
-	a3d_widget_priv(widget_github, (void*) overlay);
 
 	a3d_textbox_t* linkbox_icons;
 	linkbox_icons = a3d_textbox_new(overlay->screen,
@@ -398,14 +400,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
 	                                &blue, 80, 0, &clear,
-	                                &clear, clickIcons);
+	                                &clear, (void*) overlay,
+	                                clickIcons);
 	if(linkbox_icons == NULL)
 	{
 		goto fail_linkbox_icons;
 	}
 	self->linkbox_icons = linkbox_icons;
-	a3d_widget_t* widget_icons = (a3d_widget_t*) linkbox_icons;
-	a3d_widget_priv(widget_icons, (void*) overlay);
 
 	a3d_textbox_t* linkbox_barlow;
 	linkbox_barlow = a3d_textbox_new(overlay->screen,
@@ -418,14 +419,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
 	                                 A3D_TEXT_SIZE_MEDIUM,
 	                                 &blue, 80, 0, &clear,
-	                                 &clear, clickBarlow);
+	                                 &clear, (void*) overlay,
+	                                 clickBarlow);
 	if(linkbox_barlow == NULL)
 	{
 		goto fail_linkbox_barlow;
 	}
 	self->linkbox_barlow = linkbox_barlow;
-	a3d_widget_t* widget_barlow = (a3d_widget_t*) linkbox_barlow;
-	a3d_widget_priv(widget_barlow, (void*) overlay);
 
 	a3d_textbox_t* linkbox_expat;
 	linkbox_expat = a3d_textbox_new(overlay->screen,
@@ -438,14 +438,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	                                A3D_WIDGET_BORDER_MEDIUM,
 	                                A3D_TEXT_SIZE_MEDIUM,
 	                                &blue, 80, 0, &clear,
-	                                &clear, clickExpat);
+	                                &clear, (void*) overlay,
+	                                clickExpat);
 	if(linkbox_expat == NULL)
 	{
 		goto fail_linkbox_expat;
 	}
 	self->linkbox_expat = linkbox_expat;
-	a3d_widget_t* widget_expat = (a3d_widget_t*) linkbox_expat;
-	a3d_widget_priv(widget_expat, (void*) overlay);
 
 	a3d_viewbox_textPrintf(&self->viewbox, "%s", "About");
 

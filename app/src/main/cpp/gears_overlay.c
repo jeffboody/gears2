@@ -35,13 +35,14 @@
 ***********************************************************/
 
 static int clickBack(a3d_widget_t* widget,
-                     int state,
+                     void* priv, int state,
                      float x, float y)
 {
 	assert(widget);
+	assert(priv);
 	LOGD("debug x=%f, y=%f", x, y);
 
-	gears_overlay_t* overlay = (gears_overlay_t*) widget->priv;
+	gears_overlay_t* overlay = (gears_overlay_t*) priv;
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
 		overlay->draw_mode = GEARS_OVERLAY_DRAWMODE_HUD;

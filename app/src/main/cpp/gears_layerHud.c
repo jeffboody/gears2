@@ -16,12 +16,13 @@
 ***********************************************************/
 
 static int clickAbout(a3d_widget_t* widget,
-                      int state,
+                      void* priv, int state,
                       float x, float y)
 {
 	assert(widget);
+	assert(priv);
 
-	gears_overlay_t* overlay = (gears_overlay_t*) widget->priv;
+	gears_overlay_t* overlay = (gears_overlay_t*) priv;
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
 		overlay->draw_mode = GEARS_OVERLAY_DRAWMODE_ABOUT;
@@ -85,21 +86,19 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	{
 		return NULL;
 	}
-	a3d_widget_priv((a3d_widget_t*) self, (void*) overlay);
 
 	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
 	                                          0,
 	                                          A3D_WIDGET_BORDER_MEDIUM,
 	                                          A3D_TEXT_SIZE_MEDIUM,
 	                                          &white, 1,
+	                                          (void*) overlay,
 	                                          clickAbout,
 	                                          NULL);
 	if(self->bulletbox_about == NULL)
 	{
 		goto fail_bulletbox_about;
 	}
-	a3d_widget_priv((a3d_widget_t*) self->bulletbox_about,
-	                (void*) overlay);
 	a3d_bulletbox_textPrintf(self->bulletbox_about,
 	                         "%s", "Gears");
 
