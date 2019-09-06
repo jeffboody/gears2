@@ -109,14 +109,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 		.a = 1.0f
 	};
 
-	a3d_vec4f_t black =
-	{
-		.r = 0.0f,
-		.g = 0.0f,
-		.b = 0.0f,
-		.a = 1.0f
-	};
-
 	a3d_vec4f_t dkgray =
 	{
 		.r = 0.4f,
@@ -154,10 +146,10 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_listbox_t* listbox;
 	listbox = a3d_listbox_new(overlay->screen,
 	                          0,
-	                          A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                          &layout_listbox,
 	                          A3D_WIDGET_BORDER_LARGE,
-	                          &clear, 1, &ltgray, &dkgray,
+	                          &layout_listbox,
+	                          A3D_LISTBOX_ORIENTATION_VERTICAL,
+	                          1, &ltgray, &dkgray,
 	                          NULL, NULL, NULL, NULL);
 	if(listbox == NULL)
 	{
@@ -174,100 +166,108 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 		.stretchy = 1.0f
 	};
 
+	a3d_textStyle_t text_style_about =
+	{
+		.font_type = A3D_SCREEN_FONT_BOLD,
+		.size      = A3D_TEXT_SIZE_MEDIUM,
+		.color     =
+		{
+			.r = 1.0f,
+			.g = 1.0f,
+			.b = 1.0f,
+			.a = 1.0f,
+		}
+	};
+
 	gears_viewAbout_t* self;
 	self = (gears_viewAbout_t*)
 	       a3d_viewbox_new(overlay->screen,
 	                       sizeof(gears_viewAbout_t),
-	                       &layout_about,
 	                       A3D_WIDGET_BORDER_NONE,
-	                       &white, &blue,
+	                       &layout_about,
+	                       &blue, &white,
 	                       A3D_WIDGET_BORDER_MEDIUM,
-	                       A3D_TEXT_SIZE_MEDIUM,
-	                       &white,
+	                       &text_style_about,
 	                       "$ic_arrow_back_white_24dp.texz",
-	                       (void*) overlay,
-	                       clickBack,
 	                       (a3d_widget_t*) listbox,
-	                       NULL);
+	                       NULL,
+	                       (void*) overlay,
+	                       clickBack);
 	if(self == NULL)
 	{
 		goto fail_view;
 	}
 	self->listbox = listbox;
 
+	a3d_textStyle_t text_style_heading =
+	{
+		.font_type = A3D_SCREEN_FONT_BOLD,
+		.size      = A3D_TEXT_SIZE_MEDIUM,
+		.color     =
+		{
+			.r = 0.0f,
+			.g = 0.0f,
+			.b = 0.0f,
+			.a = 1.0f,
+		}
+	};
+
+	a3d_textFn_t text_fn_heading;
+	memset(&text_fn_heading, 0, sizeof(a3d_textFn_t));
+
 	a3d_text_t* text_intro;
-	text_intro = a3d_text_new(overlay->screen,
-	                          0,
+	text_intro = a3d_text_new(overlay->screen, 0,
 	                          A3D_WIDGET_BORDER_MEDIUM,
-	                          A3D_TEXT_SIZE_MEDIUM,
-	                          &clear, &black,
-	                          NULL, NULL,
-	                          NULL, NULL);
+	                          &text_style_heading,
+	                          &text_fn_heading);
 	if(text_intro == NULL)
 	{
 		goto fail_text_intro;
 	}
-	a3d_text_font(text_intro, A3D_SCREEN_FONT_BOLD);
 	self->text_intro = text_intro;
 
 	a3d_text_t* text_icons;
-	text_icons = a3d_text_new(overlay->screen,
-	                          0,
+	text_icons = a3d_text_new(overlay->screen, 0,
 	                          A3D_WIDGET_BORDER_MEDIUM,
-	                          A3D_TEXT_SIZE_MEDIUM,
-	                          &clear, &black,
-	                          NULL, NULL,
-	                          NULL, NULL);
+	                          &text_style_heading,
+	                          &text_fn_heading);
 	if(text_icons == NULL)
 	{
 		goto fail_text_icons;
 	}
-	a3d_text_font(text_icons, A3D_SCREEN_FONT_BOLD);
 	self->text_icons = text_icons;
 
 	a3d_text_t* text_barlow;
-	text_barlow = a3d_text_new(overlay->screen,
-	                           0,
+	text_barlow = a3d_text_new(overlay->screen, 0,
 	                           A3D_WIDGET_BORDER_MEDIUM,
-	                           A3D_TEXT_SIZE_MEDIUM,
-	                           &clear, &black,
-	                           NULL, NULL,
-	                           NULL, NULL);
+	                           &text_style_heading,
+	                           &text_fn_heading);
 	if(text_barlow == NULL)
 	{
 		goto fail_text_barlow;
 	}
-	a3d_text_font(text_barlow, A3D_SCREEN_FONT_BOLD);
 	self->text_barlow = text_barlow;
 
 	a3d_text_t* text_expat;
-	text_expat = a3d_text_new(overlay->screen,
-	                          0,
+	text_expat = a3d_text_new(overlay->screen, 0,
 	                          A3D_WIDGET_BORDER_MEDIUM,
-	                          A3D_TEXT_SIZE_MEDIUM,
-	                          &clear, &black,
-	                          NULL, NULL,
-	                          NULL, NULL);
+	                          &text_style_heading,
+	                          &text_fn_heading);
 	if(text_expat == NULL)
 	{
 		goto fail_text_expat;
 	}
-	a3d_text_font(text_expat, A3D_SCREEN_FONT_BOLD);
 	self->text_expat = text_expat;
 
 	a3d_text_t* text_license;
-	text_license = a3d_text_new(overlay->screen,
-	                            0,
+	text_license = a3d_text_new(overlay->screen, 0,
 	                            A3D_WIDGET_BORDER_MEDIUM,
-	                            A3D_TEXT_SIZE_MEDIUM,
-	                            &clear, &black,
-	                            NULL, NULL,
-	                            NULL, NULL);
+	                            &text_style_heading,
+	                            &text_fn_heading);
 	if(text_license == NULL)
 	{
 		goto fail_text_license;
 	}
-	a3d_text_font(text_license, A3D_SCREEN_FONT_BOLD);
 	self->text_license = text_license;
 
 	a3d_widgetLayout_t layout_textbox =
@@ -280,18 +280,27 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 		.stretchy = 1.0f
 	};
 
+	a3d_textStyle_t text_style_textbox =
+	{
+		.font_type = A3D_SCREEN_FONT_REGULAR,
+		.size      = A3D_TEXT_SIZE_MEDIUM,
+		.color     =
+		{
+			.r = 0.0f,
+			.g = 0.0f,
+			.b = 0.0f,
+			.a = 1.0f,
+		}
+	};
+
 	a3d_textbox_t* textbox_intro;
-	textbox_intro = a3d_textbox_new(overlay->screen,
-	                                0,
-	                                A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                &layout_textbox,
+	textbox_intro = a3d_textbox_new(overlay->screen, 0,
 	                                A3D_WIDGET_BORDER_NONE,
-	                                &clear,
-	                                A3D_TEXT_WRAP_SHRINK,
+	                                &layout_textbox,
 	                                A3D_WIDGET_BORDER_MEDIUM,
-	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &black, 80, 0, &clear,
-	                                &clear, NULL, NULL);
+	                                &text_style_textbox,
+	                                80, 0, &clear, &clear,
+	                                NULL, NULL);
 	if(textbox_intro == NULL)
 	{
 		goto fail_textbox_intro;
@@ -299,17 +308,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self->textbox_intro = textbox_intro;
 
 	a3d_textbox_t* textbox_icons;
-	textbox_icons = a3d_textbox_new(overlay->screen,
-	                                0,
-	                                A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                &layout_textbox,
+	textbox_icons = a3d_textbox_new(overlay->screen, 0,
 	                                A3D_WIDGET_BORDER_NONE,
-	                                &clear,
-	                                A3D_TEXT_WRAP_SHRINK,
+	                                &layout_textbox,
 	                                A3D_WIDGET_BORDER_MEDIUM,
-	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &black, 80, 0, &clear,
-	                                &clear, NULL, NULL);
+	                                &text_style_textbox,
+	                                80, 0, &clear, &clear,
+	                                NULL, NULL);
 	if(textbox_icons == NULL)
 	{
 		goto fail_textbox_icons;
@@ -317,17 +322,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self->textbox_icons = textbox_icons;
 
 	a3d_textbox_t* textbox_barlow;
-	textbox_barlow = a3d_textbox_new(overlay->screen,
-	                                 0,
-	                                 A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                 &layout_textbox,
+	textbox_barlow = a3d_textbox_new(overlay->screen, 0,
 	                                 A3D_WIDGET_BORDER_NONE,
-	                                 &clear,
-	                                 A3D_TEXT_WRAP_SHRINK,
+	                                 &layout_textbox,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
-	                                 A3D_TEXT_SIZE_MEDIUM,
-	                                 &black, 80, 0, &clear,
-	                                 &clear, NULL, NULL);
+	                                 &text_style_textbox,
+	                                 80, 0, &clear, &clear,
+	                                 NULL, NULL);
 	if(textbox_barlow == NULL)
 	{
 		goto fail_textbox_barlow;
@@ -335,17 +336,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self->textbox_barlow = textbox_barlow;
 
 	a3d_textbox_t* textbox_expat;
-	textbox_expat = a3d_textbox_new(overlay->screen,
-	                                0,
-	                                A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                &layout_textbox,
+	textbox_expat = a3d_textbox_new(overlay->screen, 0,
 	                                A3D_WIDGET_BORDER_NONE,
-	                                &clear,
-	                                A3D_TEXT_WRAP_SHRINK,
+	                                &layout_textbox,
 	                                A3D_WIDGET_BORDER_MEDIUM,
-	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &black, 80, 0, &clear,
-	                                &clear, NULL, NULL);
+	                                &text_style_textbox,
+	                                80, 0, &clear, &clear,
+	                                NULL, NULL);
 	if(textbox_expat == NULL)
 	{
 		goto fail_textbox_expat;
@@ -353,36 +350,40 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self->textbox_expat = textbox_expat;
 
 	a3d_textbox_t* textbox_license;
-	textbox_license = a3d_textbox_new(overlay->screen,
-	                                  0,
-	                                  A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                  &layout_textbox,
+	textbox_license = a3d_textbox_new(overlay->screen, 0,
 	                                  A3D_WIDGET_BORDER_NONE,
-	                                  &clear,
-	                                  A3D_TEXT_WRAP_SHRINK,
+	                                  &layout_textbox,
 	                                  A3D_WIDGET_BORDER_MEDIUM,
-	                                  A3D_TEXT_SIZE_MEDIUM,
-	                                  &black, 80, 0, &clear,
-	                                  &clear, NULL, NULL);
+	                                  &text_style_textbox,
+	                                  80, 0, &clear, &clear,
+	                                  NULL, NULL);
 	if(textbox_license == NULL)
 	{
 		goto fail_textbox_license;
 	}
 	self->textbox_license = textbox_license;
 
+	a3d_textStyle_t text_style_linkbox =
+	{
+		.font_type = A3D_SCREEN_FONT_REGULAR,
+		.size      = A3D_TEXT_SIZE_MEDIUM,
+		.color     =
+		{
+			.r = 0.04f,
+			.g = 0.54f,
+			.b = 0.89f,
+			.a = 1.0f
+		}
+	};
+
 	a3d_textbox_t* linkbox_github;
-	linkbox_github = a3d_textbox_new(overlay->screen,
-	                                 0,
-	                                 A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                 &layout_textbox,
+	linkbox_github = a3d_textbox_new(overlay->screen, 0,
 	                                 A3D_WIDGET_BORDER_NONE,
-	                                 &clear,
-	                                 A3D_TEXT_WRAP_SHRINK,
+	                                 &layout_textbox,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
-	                                 A3D_TEXT_SIZE_MEDIUM,
-	                                 &blue, 80, 0, &clear,
-	                                 &clear, (void*) overlay,
-	                                 clickGithub);
+	                                 &text_style_linkbox,
+	                                 80, 0, &clear, &clear,
+	                                 (void*) overlay, clickGithub);
 	if(linkbox_github == NULL)
 	{
 		goto fail_linkbox_github;
@@ -390,18 +391,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self->linkbox_github = linkbox_github;
 
 	a3d_textbox_t* linkbox_icons;
-	linkbox_icons = a3d_textbox_new(overlay->screen,
-	                                0,
-	                                A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                &layout_textbox,
+	linkbox_icons = a3d_textbox_new(overlay->screen, 0,
 	                                A3D_WIDGET_BORDER_NONE,
-	                                &clear,
-	                                A3D_TEXT_WRAP_SHRINK,
+	                                &layout_textbox,
 	                                A3D_WIDGET_BORDER_MEDIUM,
-	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &blue, 80, 0, &clear,
-	                                &clear, (void*) overlay,
-	                                clickIcons);
+	                                &text_style_linkbox,
+	                                80, 0, &clear, &clear,
+	                                (void*) overlay, clickIcons);
 	if(linkbox_icons == NULL)
 	{
 		goto fail_linkbox_icons;
@@ -409,18 +405,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self->linkbox_icons = linkbox_icons;
 
 	a3d_textbox_t* linkbox_barlow;
-	linkbox_barlow = a3d_textbox_new(overlay->screen,
-	                                 0,
-	                                 A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                 &layout_textbox,
+	linkbox_barlow = a3d_textbox_new(overlay->screen, 0,
 	                                 A3D_WIDGET_BORDER_NONE,
-	                                 &clear,
-	                                 A3D_TEXT_WRAP_SHRINK,
+	                                 &layout_textbox,
 	                                 A3D_WIDGET_BORDER_MEDIUM,
-	                                 A3D_TEXT_SIZE_MEDIUM,
-	                                 &blue, 80, 0, &clear,
-	                                 &clear, (void*) overlay,
-	                                 clickBarlow);
+	                                 &text_style_linkbox,
+	                                 80, 0, &clear, &clear,
+	                                 (void*) overlay, clickBarlow);
 	if(linkbox_barlow == NULL)
 	{
 		goto fail_linkbox_barlow;
@@ -428,18 +419,13 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self->linkbox_barlow = linkbox_barlow;
 
 	a3d_textbox_t* linkbox_expat;
-	linkbox_expat = a3d_textbox_new(overlay->screen,
-	                                0,
-	                                A3D_LISTBOX_ORIENTATION_VERTICAL,
-	                                &layout_textbox,
+	linkbox_expat = a3d_textbox_new(overlay->screen, 0,
 	                                A3D_WIDGET_BORDER_NONE,
-	                                &clear,
-	                                A3D_TEXT_WRAP_SHRINK,
+	                                &layout_textbox,
 	                                A3D_WIDGET_BORDER_MEDIUM,
-	                                A3D_TEXT_SIZE_MEDIUM,
-	                                &blue, 80, 0, &clear,
-	                                &clear, (void*) overlay,
-	                                clickExpat);
+	                                &text_style_linkbox,
+	                                80, 0, &clear, &clear,
+	                                (void*) overlay, clickExpat);
 	if(linkbox_expat == NULL)
 	{
 		goto fail_linkbox_expat;
@@ -462,8 +448,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_textbox_printf(textbox_intro, "%s", "The FPS (frames-per-second) counter is often used as a benchmark metric for");
 	a3d_textbox_printf(textbox_intro, "%s", "graphics programs. On Android the frame rate is limited by v-sync (typically");
 	a3d_textbox_printf(textbox_intro, "%s", "60 FPS) which is the fastest rate that a display can refresh the screen. Since");
-	a3d_textbox_printf(textbox_intro, "%s", "Gears is capable of rendering much faster than v-sync on most devices it provides");
-	a3d_textbox_printf(textbox_intro, "%s", "limited benchmarking value.");
+	a3d_textbox_printf(textbox_intro, "%s", "Gears is capable of rendering much faster than v-sync on most devices it");
+	a3d_textbox_printf(textbox_intro, "%s", "provides limited benchmarking value.");
 	a3d_textbox_printf(textbox_intro, "%s", "");
 	a3d_textbox_printf(textbox_intro, "%s", "Send questions or comments to Jeff Boody at jeffboody@gmail.com.");
 	a3d_textbox_printf(textbox_intro, "%s", "");

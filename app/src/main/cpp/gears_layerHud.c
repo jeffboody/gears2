@@ -48,22 +48,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 		.a = 0.0f
 	};
 
-	a3d_vec4f_t white =
-	{
-		.r = 1.0f,
-		.g = 1.0f,
-		.b = 1.0f,
-		.a = 1.0f
-	};
-
-	a3d_vec4f_t yellow =
-	{
-		.r = 1.0f,
-		.g = 1.0f,
-		.b = 0.235f,
-		.a = 1.0f
-	};
-
 	a3d_widgetLayout_t layout_hud =
 	{
 		.wrapx    = A3D_WIDGET_WRAP_STRETCH_PARENT,
@@ -78,8 +62,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	self = (gears_layerHud_t*)
 	       a3d_layer_new(overlay->screen,
 	                     sizeof(gears_layerHud_t),
-	                     &layout_hud,
 	                     A3D_WIDGET_BORDER_LARGE,
+	                     &layout_hud,
 	                     &clear,
 	                     A3D_LAYER_MODE_LAYERED);
 	if(self == NULL)
@@ -87,12 +71,24 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 		return NULL;
 	}
 
+	a3d_textStyle_t text_style_about =
+	{
+		.font_type = A3D_SCREEN_FONT_REGULAR,
+		.size      = A3D_TEXT_SIZE_MEDIUM,
+		.color     =
+		{
+			.r = 1.0f,
+			.g = 1.0f,
+			.b = 1.0f,
+			.a = 1.0f
+		}
+	};
+
 	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
 	                                          0,
 	                                          A3D_WIDGET_BORDER_MEDIUM,
-	                                          A3D_TEXT_SIZE_MEDIUM,
-	                                          &white, 1,
-	                                          (void*) overlay,
+	                                          &text_style_about,
+	                                          1, (void*) overlay,
 	                                          clickAbout,
 	                                          NULL);
 	if(self->bulletbox_about == NULL)
@@ -102,13 +98,26 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	a3d_bulletbox_textPrintf(self->bulletbox_about,
 	                         "%s", "Gears");
 
-	self->text_fps = a3d_text_new(overlay->screen,
-	                              0,
+	a3d_textStyle_t text_style_fps =
+	{
+		.font_type = A3D_SCREEN_FONT_REGULAR,
+		.size      = A3D_TEXT_SIZE_SMALL,
+		.color     =
+		{
+			.r = 1.0f,
+			.g = 1.0f,
+			.b = 0.235f,
+			.a = 1.0f
+		}
+	};
+
+	a3d_textFn_t text_fn_fps;
+	memset(&text_fn_fps, 0, sizeof(a3d_textFn_t));
+
+	self->text_fps = a3d_text_new(overlay->screen, 0,
 	                              A3D_WIDGET_BORDER_NONE,
-	                              A3D_TEXT_SIZE_SMALL,
-	                              &clear, &yellow,
-	                              NULL, NULL,
-	                              NULL, NULL);
+	                              &text_style_fps,
+	                              &text_fn_fps);
 	if(self->text_fps == NULL)
 	{
 		goto fail_text_fps;
