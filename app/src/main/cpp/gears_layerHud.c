@@ -84,13 +84,17 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 		}
 	};
 
+	a3d_bulletboxFn_t bulletbox_fn =
+	{
+		.priv     = (void*) overlay,
+		.click_fn = clickAbout,
+	};
+
 	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
 	                                          0,
 	                                          A3D_WIDGET_BORDER_MEDIUM,
 	                                          &text_style_about,
-	                                          1, (void*) overlay,
-	                                          clickAbout,
-	                                          NULL);
+	                                          1, &bulletbox_fn);
 	if(self->bulletbox_about == NULL)
 	{
 		goto fail_bulletbox_about;
