@@ -72,8 +72,9 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 
 	a3d_textStyle_t text_style_about =
 	{
-		.font_type = A3D_SCREEN_FONT_REGULAR,
+		.font_type = A3D_TEXT_FONTTYPE_REGULAR,
 		.size      = A3D_TEXT_SIZE_MEDIUM,
+		.spacing   = A3D_TEXT_SPACING_MEDIUM,
 		.color     =
 		{
 			.r = 1.0f,
@@ -91,7 +92,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 
 	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
 	                                          0,
-	                                          A3D_WIDGET_BORDER_MEDIUM,
 	                                          &text_style_about,
 	                                          1, &bulletbox_fn);
 	if(self->bulletbox_about == NULL)
@@ -103,7 +103,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 
 	a3d_textStyle_t text_style_fps =
 	{
-		.font_type = A3D_SCREEN_FONT_REGULAR,
+		.font_type = A3D_TEXT_FONTTYPE_REGULAR,
 		.size      = A3D_TEXT_SIZE_SMALL,
 		.color     =
 		{
@@ -118,7 +118,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	memset(&text_fn_fps, 0, sizeof(a3d_textFn_t));
 
 	self->text_fps = a3d_text_new(overlay->screen, 0,
-	                              A3D_WIDGET_BORDER_NONE,
 	                              &text_style_fps,
 	                              &text_fn_fps);
 	if(self->text_fps == NULL)
