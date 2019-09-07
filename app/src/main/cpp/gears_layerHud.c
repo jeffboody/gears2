@@ -50,6 +50,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 
 	a3d_widgetLayout_t layout_hud =
 	{
+		.border   = A3D_WIDGET_BORDER_LARGE,
 		.wrapx    = A3D_WIDGET_WRAP_STRETCH_PARENT,
 		.wrapy    = A3D_WIDGET_WRAP_STRETCH_PARENT,
 		.aspectx  = A3D_WIDGET_ASPECT_DEFAULT,
@@ -62,9 +63,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	self = (gears_layerHud_t*)
 	       a3d_layer_new(overlay->screen,
 	                     sizeof(gears_layerHud_t),
-	                     A3D_WIDGET_BORDER_LARGE,
-	                     &layout_hud,
-	                     &clear,
+	                     &layout_hud, &clear,
 	                     A3D_LAYER_MODE_LAYERED);
 	if(self == NULL)
 	{

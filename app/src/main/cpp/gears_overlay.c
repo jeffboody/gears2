@@ -117,11 +117,8 @@ gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer)
 		.stretchy = 1.0f
 	};
 
-	self->layer_show = a3d_layer_new(self->screen,
-	                                 0,
-	                                 A3D_WIDGET_BORDER_NONE,
-	                                 &layout_show,
-	                                 &clear,
+	self->layer_show = a3d_layer_new(self->screen, 0,
+	                                 &layout_show, &clear,
 	                                 A3D_LAYER_MODE_FRONT);
 	if(self->layer_show == NULL)
 	{
