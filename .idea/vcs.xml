@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/a3d" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/libexpat" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/libpak" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/cpp/texgz" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/app/src/main/java/com/jeffboody/a3d" vcs="Git" />
+  </component>
+</project>
