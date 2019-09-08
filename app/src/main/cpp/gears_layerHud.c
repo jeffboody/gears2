@@ -26,8 +26,9 @@ static int clickAbout(a3d_widget_t* widget,
 	if(state == A3D_WIDGET_POINTER_UP)
 	{
 		overlay->draw_mode = GEARS_OVERLAY_DRAWMODE_ABOUT;
-		a3d_layer_bringFront(overlay->layer_show,
-		                     (a3d_widget_t*) overlay->view_about);
+		a3d_layer_clear(overlay->layer_show);
+		a3d_layer_add(overlay->layer_show,
+		              (a3d_widget_t*) overlay->view_about);
 	}
 	return 1;
 }
@@ -63,8 +64,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	self = (gears_layerHud_t*)
 	       a3d_layer_new(overlay->screen,
 	                     sizeof(gears_layerHud_t),
-	                     &layout_hud, &clear,
-	                     A3D_LAYER_MODE_LAYERED);
+	                     &layout_hud, &clear);
 	if(self == NULL)
 	{
 		return NULL;
@@ -136,8 +136,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	}
 
 	a3d_layer_t* layer = (a3d_layer_t*) self;
-	a3d_list_push(layer->list, self->bulletbox_about);
-	a3d_list_push(layer->list, self->text_fps);
+	a3d_layer_add(layer, (a3d_widget_t*) self->bulletbox_about);
+	a3d_layer_add(layer, (a3d_widget_t*) self->text_fps);
 
 	// success
 	return self;
