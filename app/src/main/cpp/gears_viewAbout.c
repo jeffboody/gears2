@@ -304,7 +304,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	textbox_intro = a3d_textbox_new(overlay->screen, 0,
 	                                &layout_textbox,
 	                                &text_style_textbox,
-	                                80, &clear, &clear,
+	                                &clear, &clear,
 	                                &fn_textbox);
 	if(textbox_intro == NULL)
 	{
@@ -316,7 +316,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	textbox_icons = a3d_textbox_new(overlay->screen, 0,
 	                                &layout_textbox,
 	                                &text_style_textbox,
-	                                80, &clear, &clear,
+	                                &clear, &clear,
 	                                &fn_textbox);
 	if(textbox_icons == NULL)
 	{
@@ -328,7 +328,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	textbox_barlow = a3d_textbox_new(overlay->screen, 0,
 	                                 &layout_textbox,
 	                                 &text_style_textbox,
-	                                 80, &clear, &clear,
+	                                 &clear, &clear,
 	                                 &fn_textbox);
 	if(textbox_barlow == NULL)
 	{
@@ -340,7 +340,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	textbox_expat = a3d_textbox_new(overlay->screen, 0,
 	                                &layout_textbox,
 	                                &text_style_textbox,
-	                                80, &clear, &clear,
+	                                &clear, &clear,
 	                                &fn_textbox);
 	if(textbox_expat == NULL)
 	{
@@ -352,7 +352,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	textbox_license = a3d_textbox_new(overlay->screen, 0,
 	                                  &layout_textbox,
 	                                  &text_style_textbox,
-	                                  80, &clear, &clear,
+	                                  &clear, &clear,
 	                                  &fn_textbox);
 	if(textbox_license == NULL)
 	{
@@ -384,7 +384,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	linkbox_github = a3d_textbox_new(overlay->screen, 0,
 	                                 &layout_textbox,
 	                                 &text_style_linkbox,
-	                                 80, &clear, &clear,
+	                                 &clear, &clear,
 	                                 &fn_link);
 	if(linkbox_github == NULL)
 	{
@@ -397,7 +397,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	linkbox_icons = a3d_textbox_new(overlay->screen, 0,
 	                                &layout_textbox,
 	                                &text_style_linkbox,
-	                                80, &clear, &clear,
+	                                &clear, &clear,
 	                                &fn_link);
 	if(linkbox_icons == NULL)
 	{
@@ -410,7 +410,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	linkbox_barlow = a3d_textbox_new(overlay->screen, 0,
 	                                 &layout_textbox,
 	                                 &text_style_linkbox,
-	                                 80, &clear, &clear,
+	                                 &clear, &clear,
 	                                 &fn_link);
 	if(linkbox_barlow == NULL)
 	{
@@ -423,7 +423,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	linkbox_expat = a3d_textbox_new(overlay->screen, 0,
 	                                &layout_textbox,
 	                                &text_style_linkbox,
-	                                80, &clear, &clear,
+	                                &clear, &clear,
 	                                &fn_link);
 	if(linkbox_expat == NULL)
 	{
