@@ -3,6 +3,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 #include "gears_layerHud.h"
 #include "gears_overlay.h"
