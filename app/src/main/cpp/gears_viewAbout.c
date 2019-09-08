@@ -94,22 +94,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	assert(overlay);
 	assert(clickBack);
 
-	a3d_vec4f_t white =
-	{
-		.r = 1.0f,
-		.g = 1.0f,
-		.b = 1.0f,
-		.a = 1.0f
-	};
-
-	a3d_vec4f_t blue =
-	{
-		.r = 0.04f,
-		.g = 0.54f,
-		.b = 0.89f,
-		.a = 1.0f
-	};
-
 	a3d_widgetLayout_t layout_listbox =
 	{
 		.border     = A3D_WIDGET_BORDER_LARGE,
@@ -166,24 +150,45 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 		.stretchy = 1.0f
 	};
 
-	a3d_textStyle_t text_style_about =
-	{
-		.font_type = A3D_TEXT_FONTTYPE_BOLD,
-		.size      = A3D_TEXT_SIZE_MEDIUM,
-		.spacing   = A3D_TEXT_SPACING_SMALL,
-		.color     =
-		{
-			.r = 1.0f,
-			.g = 1.0f,
-			.b = 1.0f,
-			.a = 1.0f,
-		}
-	};
-
 	a3d_widgetFn_t fn_about =
 	{
 		.priv     = (void*) overlay,
 		.click_fn = clickBack
+	};
+
+	a3d_viewboxStyle_t viewbox_style =
+	{
+		.widget_style =
+		{
+			.color_header =
+			{
+				.r = 0.04f,
+				.g = 0.54f,
+				.b = 0.89f,
+				.a = 1.0f
+			},
+			.color_body =
+			{
+				.r = 1.0f,
+				.g = 1.0f,
+				.b = 1.0f,
+				.a = 1.0f
+			}
+
+		},
+		.text_style =
+		{
+			.font_type = A3D_TEXT_FONTTYPE_BOLD,
+			.size      = A3D_TEXT_SIZE_MEDIUM,
+			.spacing   = A3D_TEXT_SPACING_SMALL,
+			.color     =
+			{
+				.r = 1.0f,
+				.g = 1.0f,
+				.b = 1.0f,
+				.a = 1.0f,
+			}
+		}
 	};
 
 	gears_viewAbout_t* self;
@@ -191,16 +196,21 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	       a3d_viewbox_new(overlay->screen,
 	                       sizeof(gears_viewAbout_t),
 	                       &layout_about,
-	                       &blue, &white,
-	                       &text_style_about,
-	                       "$ic_arrow_back_white_24dp.texz",
-	                       (a3d_widget_t*) listbox, NULL,
-	                       &fn_about);
+	                       &fn_about,
+	                       &viewbox_style,
+	                       (a3d_widget_t*) listbox, NULL);
 	if(self == NULL)
 	{
 		goto fail_view;
 	}
 	self->listbox = listbox;
+
+	a3d_viewbox_t* viewbox = (a3d_viewbox_t*) self;
+	if(a3d_viewbox_spriteLoad(viewbox, 0,
+	                          "$ic_arrow_back_white_24dp.texz") == 0)
+	{
+		goto fail_sprite;
+	}
 
 	a3d_textStyle_t text_style_heading =
 	{
@@ -545,6 +555,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	fail_text_icons:
 		a3d_text_delete(&text_intro);
 	fail_text_intro:
+	fail_sprite:
 		a3d_viewbox_delete((a3d_viewbox_t**) &self);
 	fail_view:
 		a3d_listbox_delete(&listbox);
