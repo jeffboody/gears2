@@ -74,7 +74,7 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 		return NULL;
 	}
 
-	a3d_textStyle_t text_style_about =
+	a3d_textStyle_t style_about =
 	{
 		.font_type = A3D_TEXT_FONTTYPE_REGULAR,
 		.size      = A3D_TEXT_SIZE_MEDIUM,
@@ -95,9 +95,8 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	};
 
 	self->bulletbox_about = a3d_bulletbox_new(overlay->screen,
-	                                          0,
-	                                          &text_style_about,
-	                                          1, &fn);
+	                                          0, &fn,
+	                                          &style_about, 1);
 	if(self->bulletbox_about == NULL)
 	{
 		goto fail_bulletbox_about;

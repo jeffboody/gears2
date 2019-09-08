@@ -195,9 +195,8 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	self = (gears_viewAbout_t*)
 	       a3d_viewbox_new(overlay->screen,
 	                       sizeof(gears_viewAbout_t),
-	                       &layout_about,
-	                       &fn_about,
-	                       &viewbox_style,
+	                       &layout_about, &fn_about,
+	                       &viewbox_style, 1,
 	                       (a3d_widget_t*) listbox, NULL);
 	if(self == NULL)
 	{
