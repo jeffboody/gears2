@@ -47,8 +47,11 @@ static int clickBack(a3d_widget_t* widget,
 	{
 		overlay->draw_mode = GEARS_OVERLAY_DRAWMODE_HUD;
 		a3d_layer_clear(overlay->layer_show);
-		a3d_layer_add(overlay->layer_show,
-		              (a3d_widget_t*) overlay->layer_hud);
+
+		a3d_list_t* widgets;
+		widgets = a3d_layer_widgets(overlay->layer_show);
+		a3d_list_append(widgets, NULL,
+		                (const void*) overlay->layer_hud);
 	}
 	return 1;
 }
@@ -141,8 +144,10 @@ gears_overlay_t* gears_overlay_new(struct gears_renderer_s* renderer)
 	               (a3d_widget_t*) self->layer_show);
 	self->draw_mode = GEARS_OVERLAY_DRAWMODE_HUD;
 	a3d_layer_clear(self->layer_show);
-	a3d_layer_add(self->layer_show,
-	              (a3d_widget_t*) self->layer_hud);
+	a3d_list_t* widgets;
+	widgets = a3d_layer_widgets(self->layer_show);
+	a3d_list_append(widgets, NULL,
+	                (const void*) self->layer_hud);
 
 	// success
 	return self;
@@ -190,8 +195,11 @@ int gears_overlay_escape(gears_overlay_t* self)
 	{
 		self->draw_mode = GEARS_OVERLAY_DRAWMODE_HUD;
 		a3d_layer_clear(self->layer_show);
-		a3d_layer_add(self->layer_show,
-		              (a3d_widget_t*) self->layer_hud);
+
+		a3d_list_t* widgets;
+		widgets = a3d_layer_widgets(self->layer_show);
+		a3d_list_append(widgets, NULL,
+		                (const void*) self->layer_hud);
 		return 1;
 	}
 

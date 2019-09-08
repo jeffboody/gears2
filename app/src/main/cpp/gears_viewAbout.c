@@ -498,21 +498,21 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_textbox_printf(textbox_license, "%s", "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN");
 	a3d_textbox_printf(textbox_license, "%s", "THE SOFTWARE.");
 
-	a3d_list_t* list = listbox->list;
-	a3d_list_enqueue(list, (const void*) text_intro);
-	a3d_list_enqueue(list, (const void*) textbox_intro);
-	a3d_list_enqueue(list, (const void*) linkbox_github);
-	a3d_list_enqueue(list, (const void*) text_icons);
-	a3d_list_enqueue(list, (const void*) textbox_icons);
-	a3d_list_enqueue(list, (const void*) linkbox_icons);
-	a3d_list_enqueue(list, (const void*) text_barlow);
-	a3d_list_enqueue(list, (const void*) textbox_barlow);
-	a3d_list_enqueue(list, (const void*) linkbox_barlow);
-	a3d_list_enqueue(list, (const void*) text_expat);
-	a3d_list_enqueue(list, (const void*) textbox_expat);
-	a3d_list_enqueue(list, (const void*) linkbox_expat);
-	a3d_list_enqueue(list, (const void*) text_license);
-	a3d_list_enqueue(list, (const void*) textbox_license);
+	a3d_list_t* widgets = a3d_listbox_widgets(listbox);
+	a3d_list_enqueue(widgets, (const void*) text_intro);
+	a3d_list_enqueue(widgets, (const void*) textbox_intro);
+	a3d_list_enqueue(widgets, (const void*) linkbox_github);
+	a3d_list_enqueue(widgets, (const void*) text_icons);
+	a3d_list_enqueue(widgets, (const void*) textbox_icons);
+	a3d_list_enqueue(widgets, (const void*) linkbox_icons);
+	a3d_list_enqueue(widgets, (const void*) text_barlow);
+	a3d_list_enqueue(widgets, (const void*) textbox_barlow);
+	a3d_list_enqueue(widgets, (const void*) linkbox_barlow);
+	a3d_list_enqueue(widgets, (const void*) text_expat);
+	a3d_list_enqueue(widgets, (const void*) textbox_expat);
+	a3d_list_enqueue(widgets, (const void*) linkbox_expat);
+	a3d_list_enqueue(widgets, (const void*) text_license);
+	a3d_list_enqueue(widgets, (const void*) textbox_license);
 
 	// success
 	return self;
