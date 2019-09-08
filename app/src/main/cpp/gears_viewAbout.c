@@ -170,7 +170,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	{
 		.font_type = A3D_TEXT_FONTTYPE_BOLD,
 		.size      = A3D_TEXT_SIZE_MEDIUM,
-		.spacing   = A3D_TEXT_SPACING_MEDIUM,
+		.spacing   = A3D_TEXT_SPACING_SMALL,
 		.color     =
 		{
 			.r = 1.0f,
@@ -451,7 +451,6 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 	a3d_textbox_printf(textbox_intro, "%s", "it provides limited benchmarking value.");
 	a3d_textbox_printf(textbox_intro, "%s", "");
 	a3d_textbox_printf(textbox_intro, "%s", "Send questions or comments to Jeff Boody at jeffboody@gmail.com.");
-	a3d_textbox_printf(textbox_intro, "%s", "");
 	a3d_textbox_printf(linkbox_github, "%s", "https://github.com/jeffboody/gears2/");
 	a3d_textbox_printf(linkbox_github, "%s", "");
 
