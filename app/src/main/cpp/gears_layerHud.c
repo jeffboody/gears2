@@ -28,11 +28,8 @@ static int clickAbout(a3d_widget_t* widget,
 	{
 		overlay->draw_mode = GEARS_OVERLAY_DRAWMODE_ABOUT;
 		a3d_layer_clear(overlay->layer_show);
-
-		a3d_list_t* widgets;
-		widgets = a3d_layer_widgets(overlay->layer_show);
-		a3d_list_append(widgets, NULL,
-		                (const void**) overlay->view_about);
+		a3d_layer_add(overlay->layer_show, A3D_WIDGET_ANCHOR_TL,
+		              (a3d_widget_t*) overlay->view_about);
 	}
 	return 1;
 }
@@ -127,8 +124,6 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 	{
 		goto fail_text_fps;
 	}
-	a3d_widget_anchor((a3d_widget_t*) self->text_fps,
-	                  A3D_WIDGET_ANCHOR_BR);
 	a3d_text_printf(self->text_fps, "%s", "0 fps");
 	self->fps = 0;
 
@@ -138,12 +133,11 @@ gears_layerHud_t* gears_layerHud_new(struct gears_overlay_s* overlay)
 		goto fail_icon;
 	}
 
-	a3d_layer_t* layer   = (a3d_layer_t*) self;
-	a3d_list_t*  widgets = a3d_layer_widgets(layer);
-	a3d_list_append(widgets, NULL,
-	                (const void**) self->bulletbox_about);
-	a3d_list_append(widgets, NULL,
-	                (const void**) self->text_fps);
+	a3d_layer_t* layer = (a3d_layer_t*) self;
+	a3d_layer_add(layer, A3D_WIDGET_ANCHOR_TL,
+	              (a3d_widget_t*) self->bulletbox_about);
+	a3d_layer_add(layer, A3D_WIDGET_ANCHOR_BR,
+	              (a3d_widget_t*) self->text_fps);
 
 	// success
 	return self;
