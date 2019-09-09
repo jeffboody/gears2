@@ -141,7 +141,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 
 	a3d_widgetLayout_t layout_about =
 	{
-		.border   = A3D_WIDGET_BORDER_MEDIUM,
+		.border   = A3D_WIDGET_BORDER_NONE,
 		.wrapx    = A3D_WIDGET_WRAP_SHRINK,
 		.wrapy    = A3D_WIDGET_WRAP_STRETCH_PARENT,
 		.aspectx  = A3D_WIDGET_ASPECT_DEFAULT,
@@ -180,7 +180,7 @@ gears_viewAbout_t* gears_viewAbout_new(struct gears_overlay_s* overlay,
 		{
 			.font_type = A3D_TEXT_FONTTYPE_BOLD,
 			.size      = A3D_TEXT_SIZE_MEDIUM,
-			.spacing   = A3D_TEXT_SPACING_SMALL,
+			.spacing   = A3D_TEXT_SPACING_MEDIUM,
 			.color     =
 			{
 				.r = 1.0f,
